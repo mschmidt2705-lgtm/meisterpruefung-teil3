@@ -23,6 +23,11 @@
   --c-personal:#7A3B3B;
   --c-steuer:#4C6B4F;
   --c-marketing:#8B6A2E;
+  --c-sehhilfen:#4A5568;
+  --c-physiologie:#2E6B7A;
+  --c-finanzwirtschaft:#5A6B3D;
+  --c-qm:#6B4A7A;
+  --c-steuerrecht:#B8734A;
   --radius:2px;
   --shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
@@ -274,6 +279,7 @@ const DATA = {
         {q:'Was zeigt die Break-Even-Analyse?', a:'Den Punkt, an dem Erlöse und Gesamtkosten gleich hoch sind — ab dieser Menge wird Gewinn erzielt.'},
         {q:'Was ist der Unterschied zwischen Liquidität und Rentabilität?', a:'Liquidität = Fähigkeit, Zahlungsverpflichtungen fristgerecht zu erfüllen. Rentabilität = Verhältnis von Gewinn zu eingesetztem Kapital.'},
         {q:'Was ist Eigenkapitalrentabilität?', a:'Gewinn geteilt durch eingesetztes Eigenkapital, mal 100 — zeigt, wie sich das eigene Kapital verzinst hat.'},
+        {q:'In welche Teile lässt sich die Kosten- und Leistungsrechnung gliedern?', a:'Kostenartenrechnung, Kostenstellenrechnung, Kostenträgerrechnung.'},
       ],
       glossary:[
         {t:'Deckungsbeitrag', d:'Differenz zwischen Erlös und variablen Kosten je Einheit.'},
@@ -301,6 +307,12 @@ const DATA = {
         {q:'Wozu dient die Handwerksrolle?', a:'Verzeichnis der zulassungspflichtigen Handwerksbetriebe bei der Handwerkskammer; Eintragung ist Voraussetzung für die selbstständige Ausübung eines zulassungspflichtigen Handwerks.'},
         {q:'Was regelt die Gewährleistung beim Werkvertrag?', a:'Ansprüche des Bestellers bei Mängeln: Nacherfüllung, Selbstvornahme, Minderung, Rücktritt, Schadensersatz — Frist i. d. R. 2 Jahre.'},
         {q:'Was ist der Unterschied zwischen OHG und KG?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt; bei der KG gibt es mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur beschränkt haftenden Kommanditisten.'},
+        {q:'Wer ist nicht geschäftsfähig?', a:'Als nicht geschäftsfähig gelten Personen, die das 7. Lebensjahr noch nicht vollendet haben, oder sich in einem die Willensbestimmung ausschließenden Zustand krankhafter Störung oder Geistestätigkeit befinden.'},
+        {q:'Vervollständige den Satz: Im Rahmen des BGB werden als "Sachen" ... beschrieben.', a:'...nur körperliche Gegenstände.'},
+        {q:'Was ist nach BGB der Unterschied zwischen Eigentum und Besitz?', a:'Eigentum bezeichnet die rechtliche Verfügungsgewalt über eine Sache. Der Eigentümer kann darüber wie er möchte verfügen, soweit er keine Gesetze oder Rechte anderer Personen bricht. Besitz bezeichnet die tatsächliche Verfügungsgewalt über eine Sache.'},
+        {q:'Was ist ein "Kannkaufmann"?', a:'Dies ist ein Gewerbetreibender, der zwar ins Handelsregister eingetragen ist, aber nicht unter § 1 HGB fällt.'},
+        {q:'Was versteht man unter einem "Formkaufmann"?', a:'Hierbei handelt es sich um Handels- und Kapitalgesellschaften und Vereine, die durch eine Rechtsform ihre Kaufmannsgemeinschaft erhalten.'},
+        {q:'Eine Person bekommt von einer Bank ein Darlehen. Einen Monat später erfährt die Bank, dass der Kreditnehmer sich in finanziellen Schwierigkeiten befindet und ficht den Vertrag an. Mit welchen Folgen ist zu rechnen?', a:'Der Vertrag ist wirksam, da die Frist abgelaufen ist. Eine Anfechtung muss nach § 121 BGB unverzüglich erfolgen.'},
       ],
       glossary:[
         {t:'GbR', d:'Gesellschaft bürgerlichen Rechts — einfachste Form der Personengesellschaft, unbeschränkte Haftung aller Gesellschafter.'},
@@ -329,6 +341,10 @@ const DATA = {
         {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.'},
         {q:'Ab wie vielen wahlberechtigten Arbeitnehmern kann ein Betriebsrat gewählt werden?', a:'Ab 5 wahlberechtigten Arbeitnehmern, von denen mindestens 3 wählbar sein müssen.'},
         {q:'Wie kann ein Ausbildungsverhältnis während der Probezeit beendet werden?', a:'Jederzeit fristlos, ohne Angabe von Gründen, von beiden Seiten.'},
+        {q:'Was bedeutet Friedenspflicht im Rahmen eines laufenden Tarifvertrages?', a:'Während eines laufenden Tarifvertrags dürfen keine Kampfmaßnahmen stattfinden. Wurde innerhalb der Friedenspflicht ein Tarifvertrag abgeschlossen, sind keine Arbeitskämpfe möglich.'},
+        {q:'Die Kosten des Betriebsrats trägt...', a:'...der Arbeitgeber.'},
+        {q:'Nenne Formen von Arbeitskämpfen.', a:'Aussperrung, Streik.'},
+        {q:'Nenne die 5 Säulen der Sozialversicherung.', a:'Arbeitslosenversicherung, Rentenversicherung, Pflegeversicherung, Unfallversicherung, Krankenversicherung.'},
       ],
       glossary:[
         {t:'KSchG', d:'Kündigungsschutzgesetz — schützt Arbeitnehmer vor sozial ungerechtfertigter Kündigung.'},
@@ -382,6 +398,8 @@ const DATA = {
         {q:'Was ist der Unterschied zwischen Kundenakquise und Kundenbindung?', a:'Akquise zielt auf die Gewinnung neuer Kunden, Bindung auf den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
         {q:'Was ist eine SWOT-Analyse?', a:'Analyse von Stärken (Strengths), Schwächen (Weaknesses), Chancen (Opportunities) und Risiken (Threats) eines Unternehmens.'},
         {q:'Was versteht man unter Preispolitik?', a:'Alle Entscheidungen zur Festlegung von Preisen, Rabatten, Zahlungs- und Lieferbedingungen.'},
+        {q:'Was ist der Unterschied zwischen operativen und strategischen Marketingzielen?', a:'Operative Marketingziele sind kurzfristig erzielbar, während strategische langfristige Ziele sind.'},
+        {q:'Nenne Beispiele für die Marktdurchdringung.', a:'Cross-Selling erhöhen — so besteht die Möglichkeit, bereits bestehende Kunden mehr zu binden. Kunden von Konkurrenten abwerben. Neukundengewinnung.'},
       ],
       glossary:[
         {t:'Marketing-Mix', d:'Kombination der 4 P: Product, Price, Place, Promotion.'},
@@ -395,6 +413,128 @@ const DATA = {
         {q:'Was analysiert eine SWOT-Analyse?', options:['Nur die Konkurrenz','Stärken, Schwächen, Chancen und Risiken','Nur den Umsatz','Nur die Kundenzufriedenheit'], correct:1, explain:'SWOT steht für Strengths, Weaknesses, Opportunities, Threats.'},
         {q:'Was bezeichnet USP?', options:['Eine Steuerart','Das Alleinstellungsmerkmal eines Angebots','Eine Rechtsform','Einen Vertriebskanal'], correct:1, explain:'USP = Unique Selling Proposition, das, was ein Angebot einzigartig macht.'},
         {q:'Kundenbindung zielt vor allem darauf ab...', options:['neue Kunden erstmalig zu gewinnen','bestehende Kunden langfristig zu halten','Preise zu senken','die Produktion zu steigern'], correct:1, explain:'Kundenbindung fokussiert den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
+      ]
+    },
+    {
+      id:'sehhilfen', name:'Versorgung mit Sehhilfen (Fachwissen)', accent:'var(--c-sehhilfen)',
+      flashcards:[
+        {q:'Wie sollte eine Augenoptiker/in vorgehen, wenn keine Angaben über die Form einer Anisometropie vorliegen?', a:'Sollte mit Hilfe subjektiver Prüfverfahren ermittelt werden, da der subjektive Sehkomfort des Kunden entscheidend ist.'},
+        {q:'In welchem Fall empfiehlt sich der Einsatz von Hartschichten?', a:'Bei hochbrechenden organischen Gläsern mit hoher Kratzempfindlichkeit, weshalb es erforderlich ist, die Oberfläche zu härten.'},
+        {q:'Nenne die beim Brillenglas auftretenden Reflexe.', a:'Vorderer Reflex, Rückwärtiger Reflex, Innerer Reflex, Hornhautreflex.'},
+        {q:'Erkläre das Funktionsprinzip des Clean-Coats.', a:'Der Clean-Coat hat eine sehr glatte Oberfläche, wodurch deutlich weniger Verunreinigungen am Glas anhaften können. Er kann auch antistatische Eigenschaften besitzen und antistatisch sein.'},
+        {q:'Nenne die Veredelungsschichten aufsteigend nach ihrer ungefähren Dicke.', a:'Clean-Coat: wenige Nanometer. Entspiegelungsschicht: bis zu mehrere hundert nm (je nach Anzahl der Schichten). Hartschicht: mehrere tausend nm.'},
+        {q:'Welche Veredelungen könntest du Kunden empfehlen?', a:'Verspiegelungen, Entspiegelungen, Clean-Coat/Sauber Schicht.'},
+        {q:'Über welche Informationen muss ein/e Augenoptiker/in verfügen, um dem Kunden eine passende Seh- oder Arbeitshilfe empfehlen zu können?', a:'Lesefähigkeit des Probanden, verfügbarer Visus c.c., Kontrast- und Farbwahrnehmung, Lage und Größe vorhandener Skotome, manuelle Fertigkeit, erforderliche Arbeitsentfernung.'},
+        {q:'Beschreibe den Ablauf der Brillenglaszentrierung.', a:'1. Bezugspunkt anzeichnen. 2. Horizontale und vertikale Zentriermaße ermitteln. 3. Rohkantige Gläser aufblocken. 4. Gerandete Gläser einsetzen. 5. Brille auf Abgabefähigkeit prüfen.'},
+        {q:'Ein Kunde möchte bezüglich der einzelnen Veredelungen organisch hochbrechendes Glas beraten werden. Was sollten deine Mitarbeiter ihm empfehlen?', a:'Das hochbrechende Glas erfordert eine Hartschicht. Aufgrund des hohen Reflexes sollte es ebenfalls entspiegelt sein. Da durch die Entspiegelung Verschmutzungen stärker auftreten, ist ein Clean-Coat empfehlenswert, der durch den reduzierten Reinigungsaufwand wiederum zusätzlich geringere mechanische Belastung der Gläser mit sich bringt.'},
+        {q:'Welche Punkte sind für die Zentrierung des Brillenglases wichtig?', a:'Bezugspunkt B: Dieser Punkt liegt auf der Vorderseite vom Glas. In ihm liegt die dioptrische Wirkung. Optischer Mittelpunkt O: Hier werden die Scheitelpunkte von der optischen Achse durchstoßen. Geometrischer Mittelpunkt G: Die Linse hat an diesem Punkt keine brechende Wirkung.'},
+        {q:'Nenne die Kürzel für die Zentriermaße nach DIN EN ISO 13666.', a:'u_FBL (horizontale Dezentration des Zentrierpunktes), v_FBL (vertikale Dezentration des Zentrierpunktes), x_FBL (horizontales Maß bis zur nasalen Kastenseite), y_FBL (horizontales Maß bis zur nasalen Kastenseite).'},
+        {q:'Welches Material würdest du für die Entspiegelung mineralischer Gläser verwenden?', a:'Magnesiumfluorid MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung von mineralischen Gläsern genutzt. Die Amplitudenbedingung ns = √nGlas wäre gut erfüllt bei hochbrechenden Brillenglaswerkstoffen. Für andere Gläser kann man es auch anwenden, aber die interferierenden Wellen löschen sich dann nicht komplett aus.'},
+        {q:'Welche Beschichtungen können auf Brillengläsern angebracht werden?', a:'Hartschicht, Farbschicht, Clean-Coat, Entspiegelungsschicht.'},
+        {q:'Was ist ein Sturmsches Konoid?', a:'Ein Sturmsches Konoid ist ein räumlich ausgedehntes Bild bei einer Abbildung durch eine astigmatische Linse.'},
+        {q:'Was sind charakteristische Merkmale von Edelstahlfassungen?', a:'Hohe Festigkeit, schwierige Umformbarkeit, Korrosionssicherheit, problematisch lötbar.'},
+        {q:'Was könnte man einem Kunden zusätzlich zum Gebrauch einer Lupe als Unterstützung empfehlen?', a:'In ihrer Neigung angepasste Lesepulte können die Nutzung der Lupe in angenehmer und gewohnter Körperhaltung unterstützen.'},
+        {q:'In welche Richtung wirkt ein Zylinder mit Achslage = 30°?', a:'Er wirkt in Richtung 120°/300°.'},
+        {q:'Was besagt die Bedarfsgegenständeverordnung BedGgstV bezüglich des Nickelgehalts einer Legierung?', a:'Eine Legierung darf im Verlauf einer Woche nicht mehr als 0,5 Mikrogramm Nickel freisetzen.'},
+        {q:'Nenne die Lupenausführungen (Linsen).', a:'Asymmetrisch bikonvex, Asphärisch, Aplanatisch, Aplanatisch-achromatisch, anastigmatisch.'},
+        {q:'Wozu dient der Einsatz eines Blaublockers?', a:'Der Blaublocker absorbiert den kurzwelligen Teil des sichtbaren Spektrums, da die Energie von Photonen mit sinkender Wellenlänge steigt. So wird das Auge vor energiereicher Strahlung geschützt.'},
+        {q:'Nenne Eigenschaften, die Werkstoffe zur Herstellung von Brillenfassungen aufweisen sollten.', a:'Elastizität, geringes Gewicht, UV-Beständigkeit, Stabilität, Korrosionssicherheit, Hautfreundlichkeit, Härte.'},
+        {q:'Was können die Ursachen für einen Achsfehler sein?', a:'Ungenaue Angaben des Kunden, inkorrekte Dokumentation der ermittelten Achslage (z. B. durch Runden der Werte), Fehler beim Aufblocken, Fehler beim Anzeichnen mit dem Scheitelbrechwertmessinstrument, Fehler bei der Formrandung, Fehler beim Einsetzen des Glases.'},
+        {q:'Du übergibst einem Kunden eine Brille mit medizinischem Filter. Worauf musst du ihn hinweisen?', a:'Beim Tragen der Gläser darf der Kunde kein Fahrzeug führen. Medizinische Filter bedingen eine hohe Farbverfälschung. Die Signallichttauglichkeit kann dadurch beeinträchtigt sein.'},
+        {q:'Gemäß TABO-Gradbogenschema: in welcher Richtung liegt "außen"?', a:'links: 0°; rechts: 180°.'},
+        {q:'Was besagt das Testergebnis "wahr negativ"?', a:'Das Testergebnis war negativ und eine Erkrankung lag wirklich nicht vor.'},
+        {q:'Was stellen Transmissionskurven dar?', a:'Transmissionskurven zeigen graphisch die Transmission des Glases in Abhängigkeit von der Wellenlänge.'},
+        {q:'Wie geht ein/e Augenoptiker/in vor, um die Hauptdurchblickpunkte reproduzierbar festzulegen?', a:'1. Anatomisch voranpassen. 2. Rechte und linke Pupillendistanz messen. 3. Rechte und linke Pupillendistanz rückseitig auf die Musterverglasung übertragen. 4. Kunden für Nullblickrichtung die eigenen Pupillen im Spiegel fixieren lassen. 5. Kopf nach hinten neigen lassen, bis die Fassungsebene senkrecht zum Boden steht. 6. Höhe der Pupillenmitte schätzen. 7. Höhe der Pupillenmitte vorn auf die Musterverglasung übertragen. 8. Unter identischen Rahmenbedingungen kontrollieren.'},
+        {q:'In welchen Fällen eignen sich welche Filterfarben beim medizinischen Einsatz reduzierender Gläser?', a:'Blauzapfenmonochromasie: gelb bis rötlich (oder blau). Diabetische Retinopathie: gelblich bis rötlich. Retinopathia pigmentosa: gelblich bis rötlich.'},
+        {q:'Ein Kunde möchte ein möglichst geringes Brillengewicht. Wie kannst du dies ermöglichen?', a:'Organische Materialien wählen, da diese etwa halb so viel wiegen wie mineralische Gläser bei ähnlichen Brechzahlen. Geringe Fassungsgröße empfehlen, besonders bei Plusgläsern, deren mittlere Dicke vom Durchmesser der Linse abhängt.'},
+        {q:'Welche Nachteile sollen durch den Einsatz von Lentikulargläsern kompensiert werden?', a:'Große Randdicken bei Minusglas, abgeschwächte Abbildungsfähigkeit im Randbereich, hohes Gewicht der Gläser, hohe Mittendicke und Vorwölbung bei Plusglas.'},
+        {q:'Beschreibe den Aufbau eines Lentikularglases.', a:'Bei einem Lentikularglas beansprucht das optisch wirksame Areal nur einen Teil vom Rohglas. Um diese Zone herum ist ein mit keiner Wirkung versehener Tragrand.'},
+        {q:'Die Gläser welcher Kategorie kannst du einem Kunden empfehlen, der nachts mit dem Auto fahren möchte?', a:'Nachtfahrtauglichkeit ist bei den Gläsern der Kategorie 0 und 1 gegeben.'},
+        {q:'Was versteht man unter dem sogenannten "Slab-Off"?', a:'Es handelt sich um eine Schleifart, mit der man ein durch Anisometropie ausgelöstes Vertikalprisma im Nahbereich von einem Mehrstärkenglas kompensieren kann.'},
+      ],
+      glossary:[
+        {t:'Anisometropie', d:'Unterschiedliche Fehlsichtigkeit beider Augen.'},
+        {t:'Clean-Coat', d:'Sehr glatte, wenige Nanometer dünne Beschichtung, die Verunreinigungen am Glas reduziert.'},
+        {t:'Hartschicht', d:'Beschichtung zur Erhöhung der Kratzfestigkeit, mehrere tausend nm dick.'},
+        {t:'Hornhautreflex', d:'Einer der beim Brillenglas auftretenden Reflexe.'},
+        {t:'Bezugspunkt B', d:'Punkt auf der Vorderseite des Glases, in dem die dioptrische Wirkung liegt.'},
+        {t:'Optischer Mittelpunkt O', d:'Punkt, an dem die Scheitelpunkte von der optischen Achse durchstoßen werden.'},
+        {t:'Geometrischer Mittelpunkt G', d:'Punkt am Glas ohne brechende Wirkung.'},
+        {t:'MgF2 (Magnesiumfluorid)', d:'Material zur Entspiegelung mineralischer Gläser, Brechzahl 1,38.'},
+      ],
+      quiz:[
+        {q:'Wann empfiehlt sich der Einsatz von Hartschichten?', options:['Bei niedrigbrechenden Gläsern','Bei hochbrechenden, kratzempfindlichen organischen Gläsern','Nur bei Sonnenbrillen','Nur bei Kunststoffrahmen'], correct:1, explain:'Hochbrechende organische Gläser besitzen eine besonders kratzempfindliche Oberfläche, die gehärtet werden sollte.'},
+        {q:'Welche Reflexart tritt NICHT am Brillenglas auf?', options:['Vorderer Reflex','Rückwärtiger Reflex','Innerer Reflex','Seitlicher Randreflex'], correct:3, explain:'Die vier Reflexe sind vorderer, rückwärtiger, innerer Reflex und Hornhautreflex.'},
+        {q:'Was ist das Funktionsprinzip des Clean-Coats?', options:['Erhöhte Kratzfestigkeit','Sehr glatte Oberfläche gegen Verunreinigungen, teils antistatisch','Färbung des Glases','Erhöhte Lichtdurchlässigkeit'], correct:1, explain:'Der Clean-Coat sorgt durch seine glatte Oberfläche dafür, dass weniger Schmutz und Fett anhaften.'},
+        {q:'Welche Veredelungsschicht ist am dicksten?', options:['Clean-Coat','Entspiegelungsschicht','Hartschicht','Alle sind gleich dick'], correct:2, explain:'Die Hartschicht ist mit mehreren tausend nm deutlich dicker als Clean-Coat und Entspiegelungsschicht.'},
+      ]
+    },
+    {
+      id:'physiologie', name:'Physiologie des Sehens', accent:'var(--c-physiologie)',
+      flashcards:[
+        {q:'Wie groß ist das vom Menschen wahrnehmbare elektromagnetische Spektrum?', a:'Das vom Menschen wahrnehmbare elektromagnetische Spektrum liegt zwischen 380 nm – 780 nm.'},
+        {q:'Vervollständige den Satz: Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', a:'...höhere... Pluswirkung als die Fernkorrektion.'},
+        {q:'Was ist der Unterschied zwischen additiver und subtraktiver Farbmischung?', a:'Additive Farbmischung: Licht wird mit Licht überlagert (=Addition), damit wird die Mischung heller. Subtraktive Farbmischung: Ein Teil des Lichts wird entnommen (es wird also "subtrahiert"), daher wird die Mischung dunkler.'},
+        {q:'Was versteht man unter "direktem Sehen"?', a:'Als direktes Sehen bezeichnet man es, wenn ein Auge ein Objekt direkt zentriert, die Abbildung in die Foveola, also auf die Netzhautstelle mit dem höchsten Auflösungsvermögen fällt.'},
+      ],
+      glossary:[
+        {t:'Sichtbares Spektrum', d:'Der vom Menschen wahrnehmbare Bereich des elektromagnetischen Spektrums, 380–780 nm.'},
+        {t:'Presbyopie', d:'Altersbedingte Weitsichtigkeit; Korrektionsmittel für die Nähe hat stets eine höhere Pluswirkung als für die Ferne.'},
+      ],
+      quiz:[
+        {q:'In welchem Bereich liegt das vom Menschen wahrnehmbare elektromagnetische Spektrum?', options:['200–400 nm','380–780 nm','780–1200 nm','100–380 nm'], correct:1, explain:'Das sichtbare Licht für den Menschen liegt zwischen 380 nm und 780 nm.'},
+      ]
+    },
+    {
+      id:'finanzwirtschaft', name:'Finanzwirtschaft', accent:'var(--c-finanzwirtschaft)',
+      flashcards:[
+        {q:'Worum handelt es sich beim "Interest Rate Swap"?', a:'Der Interest Rate Swap ist ein Zinsderivat, bei dem die zwei Partner zu vereinbarten Zeitpunkten Zinszahlungen auf vereinbarte Nennbeträge austauschen. Meist zahlt hierbei eine Partei einen fixierten, und die andere einen variablen Zinssatz.'},
+        {q:'Vervollständige den Satz: Bei der Rentabilitätsvergleichsrechnung wird neben der Gewinnvergleichsrechnung auch das ... berücksichtigt.', a:'...eingesetzte Kapital.'},
+        {q:'Worauf basiert die statische Amortisationsrechnung als einziges Investitionsrechenverfahren?', a:'Es basiert auf Zahlungsgrößen.'},
+        {q:'Wie ist die Gründung einer offenen Handelsgesellschaft (OHG) rechtlich festgelegt?', a:'Die Gründung einer OHG ist formfrei. Sie muss aber in das Handelsregister eingetragen werden und auf den Betrieb von einem Handelsgewerbe unter gemeinschaftlicher Firma ausgelegt sein.'},
+        {q:'Wer kann zu den Gründungsmitgliedern einer Gesellschaft bürgerlichen Rechts (GbR) zählen?', a:'Gründungsmitglieder einer GbR können natürliche Personen, juristische Personen und andere Personengesellschaften sein.'},
+        {q:'Welche Daten sollen bei der Investitionsplanung zusammengestellt werden?', a:'Investitionsbezeichnung, Investitionszeitpunkt, Kaufpreis bei Hinzuziehung von Nebenkosten (z. B. Installationen, Transportkosten etc.).'},
+        {q:'Wozu dient die Kostenvergleichsrechnung?', a:'Hier werden die Kosten von Investitionen miteinander verglichen.'},
+        {q:'Nenne Risiken, denen ein Unternehmen im internationalen Geschäft ausgesetzt ist.', a:'Zinsänderungsrisiken, Länderrisiken, Wechselkursrisiken.'},
+      ],
+      glossary:[
+        {t:'Interest Rate Swap', d:'Zinsderivat zum Austausch von Zinszahlungen (meist fix gegen variabel) auf einen vereinbarten Nennbetrag.'},
+        {t:'Amortisationsrechnung', d:'Statisches Investitionsrechenverfahren, das auf Zahlungsgrößen basiert.'},
+      ],
+      quiz:[
+        {q:'Was tauschen die Partner bei einem Interest Rate Swap in der Regel aus?', options:['Aktien gegen Anleihen','Einen fixierten gegen einen variablen Zinssatz','Fremdwährungen','Immobilienwerte'], correct:1, explain:'Meist zahlt eine Partei einen fixierten Zinssatz, die andere einen variablen Zinssatz auf denselben Nennbetrag.'},
+        {q:'Worauf basiert die statische Amortisationsrechnung?', options:['Auf Gewinngrößen','Auf Zahlungsgrößen','Auf Abschreibungen','Auf Zinssätzen'], correct:1, explain:'Als einziges der klassischen statischen Verfahren basiert die Amortisationsrechnung auf Zahlungsgrößen.'},
+      ]
+    },
+    {
+      id:'qm', name:'Qualitätsmanagement', accent:'var(--c-qm)',
+      flashcards:[
+        {q:'Welche Voraussetzungen müssen vorliegen, damit QM in einem Unternehmen erfolgreich umgesetzt werden kann?', a:'Möglichst alle Mitarbeiter/innen sollten beteiligt sein und mitarbeiten. Demotivierende Faktoren sollten ausgemacht und abgebaut werden. Innerhalb der gesamten Gruppe sollten Minimalstandards gefunden werden, die dann eingehalten werden.'},
+      ],
+      glossary:[
+        {t:'QM (Qualitätsmanagement)', d:'Systematische Steuerung von Prozessen zur Sicherung und Verbesserung der Qualität, erfolgreich nur mit breiter Mitarbeiterbeteiligung.'},
+      ],
+      quiz:[
+        {q:'Was ist eine wichtige Voraussetzung für erfolgreiches QM im Unternehmen?', options:['Nur die Führungsebene sollte beteiligt sein','Möglichst alle Mitarbeiter sollten beteiligt sein und mitarbeiten','QM sollte extern ohne Mitarbeiterbeteiligung entwickelt werden','Individuelle Standards für jeden Mitarbeiter'], correct:1, explain:'Erfolgreiches QM setzt breite Mitarbeiterbeteiligung sowie gemeinsame Minimalstandards voraus.'},
+      ]
+    },
+    {
+      id:'steuerrecht', name:'Steuer und Recht', accent:'var(--c-steuerrecht)',
+      flashcards:[
+        {q:'Welche Steuersätze im Umsatzsteuerrecht werden unterschieden?', a:'Üblicherweise beträgt der Steuersatz für die Umsatzsteuer 19 %. Unter Anderem für Bücher oder Lebensmittel gibt es einen ermäßigten Steuersatz von 7 %. Zuletzt gibt es nicht steuerbare Umsätze.'},
+        {q:'Welche Einkunftsarten gibt es im Einkommensteuerrecht?', a:'Einkünfte aus Gewerbebetrieb, Nichtselbstständiger Arbeit, Selbstständiger Arbeit, Land- und Forstwirtschaft, Vermietung/Verpachtung, Kapitalvermögen, andere Einkünfte.'},
+        {q:'Nenne ein Beispiel für ein geringwertiges Wirtschaftsgut gemäß § 6 Abs. 2 EStG.', a:'Hierzu zählen Wirtschaftsgüter, die beweglich und abnutzbar sind, selbstständig genutzt werden, zum Anlagevermögen gehören, Anschaffungskosten zwischen 150 € und 1000 € beanspruchen. Beispiel: Die Anschaffung eines Laptops für 700 €.'},
+        {q:'Wer ist unbeschränkt steuerpflichtig?', a:'Als unbeschränkt steuerpflichtig gelten alle natürlichen Personen, die einen Wohnsitz im Bundesgebiet haben und sich dort üblicherweise aufhalten.'},
+      ],
+      glossary:[
+        {t:'Umsatzsteuer', d:'19 % Regelsteuersatz, 7 % ermäßigter Satz (z. B. Bücher, Lebensmittel), sowie nicht steuerbare Umsätze.'},
+        {t:'Geringwertiges Wirtschaftsgut (GWG)', d:'Bewegliches, abnutzbares, selbstständig nutzbares Anlagevermögen mit Anschaffungskosten zwischen 150 € und 1000 € (§ 6 Abs. 2 EStG).'},
+        {t:'Unbeschränkte Steuerpflicht', d:'Gilt für natürliche Personen mit Wohnsitz und gewöhnlichem Aufenthalt im Bundesgebiet.'},
+      ],
+      quiz:[
+        {q:'Wie hoch ist der reguläre Umsatzsteuersatz in Deutschland?', options:['7 %','9 %','19 %','21 %'], correct:2, explain:'Der reguläre Umsatzsteuersatz beträgt 19 %, der ermäßigte Satz 7 %.'},
+        {q:'Welche Einkunftsart zählt NICHT zu den 7 Einkunftsarten des Einkommensteuerrechts?', options:['Gewerbebetrieb','Kapitalvermögen','Erbschaften','Vermietung/Verpachtung'], correct:2, explain:'Erbschaften unterliegen der Erbschaftsteuer, nicht den 7 Einkunftsarten der Einkommensteuer.'},
+        {q:'In welcher Preisspanne müssen die Anschaffungskosten eines geringwertigen Wirtschaftsguts liegen?', options:['Unter 150 €','150 € – 1000 €','1000 € – 5000 €','Über 5000 €'], correct:1, explain:'Geringwertige Wirtschaftsgüter nach § 6 Abs. 2 EStG liegen zwischen 150 € und 1000 € Anschaffungskosten.'},
       ]
     }
   ]
