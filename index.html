@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meisterprüfung Teil III — Prüfungswerkstatt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C2B45;
+  --ink-2:#26375A;
+  --paper:#F2ECDD;
+  --paper-dim:#E4DCC6;
+  --brass:#B8862F;
+  --brass-light:#D6A94F;
+  --ok:#4C6B4F;
+  --warn:#8B3A2E;
+  --text-on-paper:#241E14;
+  --text-on-ink:#EDE6D2;
+  --c-bwl:#7A5B3A;
+  --c-recht:#3E5C76;
+  --c-personal:#7A3B3B;
+  --c-steuer:#4C6B4F;
+  --c-marketing:#8B6A2E;
+  --radius:2px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 10%, #223757 0%, var(--ink) 45%, #16223A 100%);
+  color:var(--text-on-ink);
+  font-family:'IBM Plex Sans', sans-serif;
+  min-height:100vh;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 20px 80px;}
+
+/* HEADER */
+header.app-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding-bottom:28px;
+  border-bottom:1px solid rgba(237,230,210,0.18);
+  margin-bottom:28px;
+}
+.title-block h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:clamp(24px,4vw,34px);
+  margin:0 0 4px;
+  letter-spacing:0.2px;
+}
+.title-block .subtitle{
+  font-size:13px;
+  color:#B9AF93;
+  letter-spacing:0.4px;
+  text-transform:uppercase;
+}
+.seal{
+  position:relative;
+  width:88px;height:88px;
+  border-radius:50%;
+  border:2px solid var(--brass);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  background:radial-gradient(circle at 35% 30%, #2E3F63, #1A2740);
+  box-shadow: inset 0 0 0 1px rgba(214,169,79,0.25), 0 0 0 6px rgba(184,134,47,0.06);
+}
+.seal .pct{
+  font-family:'IBM Plex Mono', monospace;
+  font-weight:600;
+  font-size:20px;
+  color:var(--brass-light);
+}
+.seal svg{position:absolute; top:-2px; left:-2px;}
+.seal .ring-bg{stroke:rgba(237,230,210,0.12);}
+.seal .ring-fg{stroke:var(--brass-light); transition:stroke-dashoffset 0.6s ease;}
+
+/* TABS */
+nav.tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:28px;
+  flex-wrap:wrap;
+}
+nav.tabs button{
+  font-family:'IBM Plex Sans', sans-serif;
+  font-size:13.5px;
+  font-weight:500;
+  letter-spacing:0.2px;
+  padding:10px 18px;
+  border:1px solid rgba(237,230,210,0.2);
+  border-bottom:none;
+  background:rgba(237,230,210,0.04);
+  color:#C9BFA3;
+  cursor:pointer;
+  border-radius:var(--radius) var(--radius) 0 0;
+  transition:background 0.15s, color 0.15s;
+}
+nav.tabs button:hover{background:rgba(237,230,210,0.09); color:var(--paper);}
+nav.tabs button.active{
+  background:var(--paper);
+  color:var(--text-on-paper);
+  font-weight:600;
+}
+
+/* PANEL */
+.panel{
+  background:var(--paper);
+  color:var(--text-on-paper);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:32px;
+  min-height:420px;
+}
+.panel h2{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:600;
+  margin:0 0 4px;
+}
+.panel .lede{color:#5C5341; font-size:14px; margin-bottom:24px;}
+
+/* DASHBOARD CARDS */
+.cat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;}
+.cat-card{
+  border:1px solid var(--paper-dim);
+  border-left:5px solid var(--accent);
+  background:#fff8;
+  padding:16px 18px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:transform 0.12s, box-shadow 0.12s;
+}
+.cat-card:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,0.12);}
+.cat-card .name{font-weight:600; font-size:14.5px; margin-bottom:10px;}
+.cat-card .bar-bg{height:7px; background:var(--paper-dim); border-radius:4px; overflow:hidden;}
+.cat-card .bar-fg{height:100%; background:var(--accent); border-radius:4px; transition:width 0.4s;}
+.cat-card .stat{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:#6b6045; margin-top:8px;}
+
+/* FLASHCARDS */
+.fc-select{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.fc-select button{
+  padding:7px 14px; border-radius:20px; border:1px solid var(--paper-dim);
+  background:transparent; font-size:12.5px; cursor:pointer; color:#5C5341;
+}
+.fc-select button.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+.card-stage{display:flex; flex-direction:column; align-items:center; gap:18px;}
+.flashcard{
+  width:100%; max-width:560px; min-height:200px;
+  background:#fff; border:1px solid var(--paper-dim);
+  border-radius:6px; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:28px; cursor:pointer; position:relative;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  perspective:1000px;
+}
+.flashcard .face{font-size:17px; line-height:1.5;}
+.flashcard .hint{position:absolute; bottom:10px; right:14px; font-size:10.5px; color:#a89c78; letter-spacing:0.3px;}
+.flashcard.is-answer .face{color:var(--ink-2); font-weight:500;}
+.stamp-mark{
+  position:absolute; top:10px; left:14px; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; padding:3px 8px; border-radius:3px; opacity:0; transform:scale(1.4) rotate(-8deg);
+  transition:opacity 0.25s, transform 0.25s;
+}
+.stamp-mark.show{opacity:1; transform:scale(1) rotate(-8deg);}
+.stamp-mark.known{border:1.5px solid var(--ok); color:var(--ok);}
+.stamp-mark.unknown{border:1.5px solid var(--warn); color:var(--warn);}
+.fc-actions{display:flex; gap:12px;}
+.fc-actions button{
+  font-family:'IBM Plex Sans'; font-weight:600; font-size:13px;
+  padding:10px 20px; border-radius:4px; cursor:pointer; border:1.5px solid transparent;
+}
+.btn-unknown{background:transparent; border-color:var(--warn); color:var(--warn);}
+.btn-known{background:transparent; border-color:var(--ok); color:var(--ok);}
+.btn-unknown:hover{background:var(--warn); color:#fff;}
+.btn-known:hover{background:var(--ok); color:#fff;}
+.fc-progress{font-family:'IBM Plex Mono', monospace; font-size:12px; color:#6b6045;}
+
+/* QUIZ */
+.quiz-setup{display:flex; flex-direction:column; gap:16px; max-width:480px;}
+.quiz-setup select, .quiz-setup .num-input{
+  padding:10px; border:1px solid var(--paper-dim); border-radius:4px; font-family:inherit; font-size:14px;
+}
+.quiz-timer{
+  font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600;
+  color:var(--ink); padding:6px 14px; border:1.5px solid var(--ink); border-radius:4px;
+  display:inline-block;
+}
+.quiz-timer.low{color:var(--warn); border-color:var(--warn);}
+.quiz-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
+.q-text{font-size:16.5px; font-weight:500; margin-bottom:18px; line-height:1.5;}
+.q-options{display:flex; flex-direction:column; gap:10px;}
+.q-option{
+  text-align:left; padding:12px 16px; border:1px solid var(--paper-dim); border-radius:4px;
+  background:#fff; cursor:pointer; font-size:14px; font-family:inherit;
+}
+.q-option:hover{border-color:var(--brass);}
+.q-option.correct{border-color:var(--ok); background:#eaf1ea;}
+.q-option.wrong{border-color:var(--warn); background:#f6e9e7;}
+.q-explain{margin-top:14px; font-size:13px; color:#5c5341; background:var(--paper-dim); padding:12px 14px; border-radius:4px;}
+.quiz-nav{margin-top:20px; display:flex; justify-content:flex-end;}
+.quiz-nav button, .quiz-setup button{
+  font-family:'IBM Plex Sans'; font-weight:600; font-size:13.5px;
+  padding:10px 22px; border-radius:4px; border:none; background:var(--ink); color:var(--paper); cursor:pointer;
+}
+.quiz-result{text-align:center; padding:20px 0;}
+.quiz-result .big{font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:var(--ink);}
+
+/* GLOSSAR */
+.glossar-search{
+  width:100%; padding:11px 14px; border:1px solid var(--paper-dim); border-radius:4px;
+  font-family:inherit; font-size:14px; margin-bottom:20px;
+}
+.glossar-list dt{font-weight:600; margin-top:16px; color:var(--ink-2);}
+.glossar-list dd{margin:4px 0 0; font-size:13.5px; color:#3d3626; line-height:1.5;}
+.g-cat-tag{font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:#a89c78; margin-left:8px;}
+
+footer.note{
+  text-align:center; font-size:11.5px; color:#8a8064; margin-top:26px; line-height:1.6;
+}
+@media (max-width:600px){
+  .panel{padding:20px 16px;}
+  header.app-header{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app-header">
+    <div class="title-block">
+      <div class="subtitle">Prüfungswerkstatt</div>
+      <h1>Meisterprüfung Teil III</h1>
+    </div>
+    <div class="seal">
+      <svg width="88" height="88">
+        <circle class="ring-bg" cx="44" cy="44" r="38" fill="none" stroke-width="3"></circle>
+        <circle id="ringFg" class="ring-fg" cx="44" cy="44" r="38" fill="none" stroke-width="3"
+          stroke-dasharray="238.76" stroke-dashoffset="238.76" transform="rotate(-90 44 44)"></circle>
+      </svg>
+      <div class="pct" id="overallPct">0%</div>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-view="dashboard" class="active">Übersicht</button>
+    <button data-view="flashcards">Lernkarten</button>
+    <button data-view="quiz">Klausursimulation</button>
+    <button data-view="glossar">Glossar</button>
+  </nav>
+
+  <div class="panel" id="panel"></div>
+
+  <footer class="note">
+    Dein Fortschritt wird lokal in diesem Browser gespeichert (localStorage) — sobald du die Seite selbst hostest,
+    bleibt er dort dauerhaft erhalten. Diese Vorschau hier im Chat kann den Speicher ggf. nicht behalten.
+  </footer>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const DATA = {
+  categories: [
+    {
+      id:'bwl', name:'Betriebswirtschaft & Kalkulation', accent:'var(--c-bwl)',
+      flashcards:[
+        {q:'Was unterscheidet fixe von variablen Kosten?', a:'Fixe Kosten fallen unabhängig von der produzierten Menge an (z. B. Miete), variable Kosten verändern sich mit der Ausbringungsmenge (z. B. Materialkosten).'},
+        {q:'Was ist der Deckungsbeitrag?', a:'Verkaufspreis minus variable Kosten pro Stück — der Betrag, der zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
+        {q:'Wie berechnet man den Verkaufspreis bei der Zuschlagskalkulation (vereinfacht)?', a:'Selbstkosten + Gewinnzuschlag = Barverkaufspreis; darauf ggf. Skonto, Rabatt und Kundenprovision aufschlagen, um den Zielverkaufspreis zu erhalten.'},
+        {q:'Was zeigt die Break-Even-Analyse?', a:'Den Punkt, an dem Erlöse und Gesamtkosten gleich hoch sind — ab dieser Menge wird Gewinn erzielt.'},
+        {q:'Was ist der Unterschied zwischen Liquidität und Rentabilität?', a:'Liquidität = Fähigkeit, Zahlungsverpflichtungen fristgerecht zu erfüllen. Rentabilität = Verhältnis von Gewinn zu eingesetztem Kapital.'},
+        {q:'Was ist Eigenkapitalrentabilität?', a:'Gewinn geteilt durch eingesetztes Eigenkapital, mal 100 — zeigt, wie sich das eigene Kapital verzinst hat.'},
+      ],
+      glossary:[
+        {t:'Deckungsbeitrag', d:'Differenz zwischen Erlös und variablen Kosten je Einheit.'},
+        {t:'Skonto', d:'Preisnachlass für schnelle Zahlung innerhalb einer festgelegten Frist.'},
+        {t:'Liquidität', d:'Fähigkeit eines Betriebs, fällige Zahlungen jederzeit zu leisten.'},
+        {t:'Break-Even-Point', d:'Absatzmenge, bei der Kosten und Erlöse identisch sind (Gewinnschwelle).'},
+        {t:'Cashflow', d:'Zahlungsmittelüberschuss, der einem Betrieb aus laufender Tätigkeit zufließt.'},
+        {t:'Kalkulationszuschlag', d:'Prozentualer Aufschlag auf die Selbstkosten zur Deckung von Gewinn und Risiko.'},
+      ],
+      quiz:[
+        {q:'Ein Betrieb hat Fixkosten von 20.000 € und einen Deckungsbeitrag von 40 € je Stück. Wie viele Stück müssen mindestens verkauft werden, um die Fixkosten zu decken?', options:['400 Stück','500 Stück','800 Stück','200 Stück'], correct:1, explain:'20.000 € / 40 € = 500 Stück (Break-Even-Menge).'},
+        {q:'Welche Kostenart bleibt bei steigender Produktionsmenge konstant?', options:['Variable Kosten','Fixkosten','Gesamtkosten','Stückkosten'], correct:1, explain:'Fixkosten sind unabhängig von der Produktionsmenge, z. B. Miete oder Versicherungen.'},
+        {q:'Was drückt die Eigenkapitalquote aus?', options:['Verhältnis von Umsatz zu Gewinn','Anteil des Eigenkapitals am Gesamtkapital','Verhältnis von Fixkosten zu variablen Kosten','Höhe der Bankverbindlichkeiten'], correct:1, explain:'Eigenkapitalquote = Eigenkapital / Gesamtkapital × 100 — zeigt die finanzielle Stabilität.'},
+        {q:'Wofür steht Skonto?', options:['Mengenrabatt', 'Preisnachlass bei schneller Zahlung', 'Zuschlag für Sonderanfertigungen', 'Steuerermäßigung'], correct:1, explain:'Skonto ist ein Nachlass für Zahlung innerhalb einer kurzen Frist.'},
+        {q:'Was ist bei der Deckungsbeitragsrechnung im Fokus?', options:['Nur die Fixkosten','Der Beitrag jedes Produkts zur Deckung der Fixkosten','Die Höhe der Löhne','Der Materialeinkaufspreis'], correct:1, explain:'Sie zeigt, wie viel jedes Produkt zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
+        {q:'Welche Aussage zur Liquidität stimmt?', options:['Sie beschreibt die Rentabilität eines Betriebs','Sie beschreibt die Fähigkeit, Zahlungen fristgerecht zu leisten','Sie ist identisch mit dem Gewinn','Sie wird nur einmal jährlich berechnet'], correct:1, explain:'Liquidität betrifft die Zahlungsfähigkeit, nicht den Gewinn.'},
+      ]
+    },
+    {
+      id:'recht', name:'Rechtsformen & Unternehmensrecht', accent:'var(--c-recht)',
+      flashcards:[
+        {q:'Wer haftet bei einem Einzelunternehmen?', a:'Der Inhaber haftet unbeschränkt mit seinem gesamten Privat- und Betriebsvermögen.'},
+        {q:'Was ist der wesentliche Unterschied zwischen GmbH und Einzelunternehmen bei der Haftung?', a:'Bei der GmbH haftet grundsätzlich nur das Gesellschaftsvermögen, nicht das Privatvermögen der Gesellschafter.'},
+        {q:'Was ist ein Werkvertrag?', a:'Ein Vertrag, bei dem ein bestimmter Erfolg geschuldet wird (§ 631 BGB), z. B. die Herstellung eines Werkstücks — im Gegensatz zum Dienstvertrag, der nur Tätigkeit schuldet.'},
+        {q:'Wozu dient die Handwerksrolle?', a:'Verzeichnis der zulassungspflichtigen Handwerksbetriebe bei der Handwerkskammer; Eintragung ist Voraussetzung für die selbstständige Ausübung eines zulassungspflichtigen Handwerks.'},
+        {q:'Was regelt die Gewährleistung beim Werkvertrag?', a:'Ansprüche des Bestellers bei Mängeln: Nacherfüllung, Selbstvornahme, Minderung, Rücktritt, Schadensersatz — Frist i. d. R. 2 Jahre.'},
+        {q:'Was ist der Unterschied zwischen OHG und KG?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt; bei der KG gibt es mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur beschränkt haftenden Kommanditisten.'},
+      ],
+      glossary:[
+        {t:'GbR', d:'Gesellschaft bürgerlichen Rechts — einfachste Form der Personengesellschaft, unbeschränkte Haftung aller Gesellschafter.'},
+        {t:'Komplementär', d:'Vollhaftender Gesellschafter einer KG.'},
+        {t:'Kommanditist', d:'Nur mit seiner Einlage haftender Gesellschafter einer KG.'},
+        {t:'Handwerksrolle', d:'Verzeichnis zulassungspflichtiger Handwerksbetriebe bei der HWK.'},
+        {t:'Gewährleistung', d:'Gesetzliche Haftung für Mängel einer Leistung.'},
+        {t:'UWG', d:'Gesetz gegen den unlauteren Wettbewerb — regelt faires Marktverhalten.'},
+      ],
+      quiz:[
+        {q:'Wer haftet bei einer GmbH grundsätzlich für Verbindlichkeiten?', options:['Die Gesellschafter privat und unbeschränkt','Nur das Gesellschaftsvermögen','Der Geschäftsführer allein','Die Handwerkskammer'], correct:1, explain:'Die GmbH ist eine Kapitalgesellschaft — Haftung ist grundsätzlich auf das Gesellschaftsvermögen beschränkt.'},
+        {q:'Welche Rechtsform hat mindestens einen unbeschränkt und einen beschränkt haftenden Gesellschafter?', options:['GbR','OHG','KG','GmbH'], correct:2, explain:'Die KG hat Komplementäre (unbeschränkt) und Kommanditisten (beschränkt haftend).'},
+        {q:'Ein Werkvertrag unterscheidet sich vom Dienstvertrag dadurch, dass...', options:['nur Tätigkeit geschuldet wird','ein bestimmter Erfolg geschuldet wird','keine Vergütung vereinbart wird','er nur mündlich geschlossen werden kann'], correct:1, explain:'Beim Werkvertrag wird ein Erfolg (z. B. fertiges Werkstück) geschuldet, § 631 BGB.'},
+        {q:'Wofür ist die Eintragung in die Handwerksrolle Voraussetzung?', options:['Für die Mitgliedschaft im Betriebsrat','Für die selbstständige Ausübung eines zulassungspflichtigen Handwerks','Für den Abschluss von Ausbildungsverträgen','Für die Anmeldung beim Finanzamt'], correct:1, explain:'Ohne Eintragung darf ein zulassungspflichtiges Handwerk nicht selbstständig ausgeübt werden.'},
+        {q:'Wie lange beträgt die gesetzliche Gewährleistungsfrist bei einem Werkvertrag i. d. R.?', options:['6 Monate','1 Jahr','2 Jahre','5 Jahre'], correct:2, explain:'Die regelmäßige Gewährleistungsfrist beträgt 2 Jahre (bei Bauwerken 5 Jahre).'},
+        {q:'Was regelt das UWG?', options:['Arbeitszeiten','Unlauteren Wettbewerb','Steuerpflichten','Ausbildungsvergütung'], correct:1, explain:'Das Gesetz gegen den unlauteren Wettbewerb schützt faires Marktverhalten.'},
+      ]
+    },
+    {
+      id:'personal', name:'Personal & Arbeitsrecht', accent:'var(--c-personal)',
+      flashcards:[
+        {q:'Wie lautet die gesetzliche Grundkündigungsfrist nach § 622 BGB?', a:'4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
+        {q:'Ab wann gilt das Kündigungsschutzgesetz (KSchG)?', a:'Ab 6 Monaten Betriebszugehörigkeit und in Betrieben mit mehr als 10 Arbeitnehmern.'},
+        {q:'Welche 3 Kündigungsgründe kennt das KSchG?', a:'Personenbedingt, verhaltensbedingt und betriebsbedingt.'},
+        {q:'Wie lang darf die tägliche Arbeitszeit laut ArbZG maximal sein?', a:'Grundsätzlich 8 Stunden, ausnahmsweise bis zu 10 Stunden, wenn im Schnitt über 6 Monate 8 Std./Tag nicht überschritten werden.'},
+        {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.'},
+        {q:'Ab wie vielen wahlberechtigten Arbeitnehmern kann ein Betriebsrat gewählt werden?', a:'Ab 5 wahlberechtigten Arbeitnehmern, von denen mindestens 3 wählbar sein müssen.'},
+        {q:'Wie kann ein Ausbildungsverhältnis während der Probezeit beendet werden?', a:'Jederzeit fristlos, ohne Angabe von Gründen, von beiden Seiten.'},
+      ],
+      glossary:[
+        {t:'KSchG', d:'Kündigungsschutzgesetz — schützt Arbeitnehmer vor sozial ungerechtfertigter Kündigung.'},
+        {t:'ArbZG', d:'Arbeitszeitgesetz — regelt Höchstarbeitszeiten, Pausen und Ruhezeiten.'},
+        {t:'BBiG', d:'Berufsbildungsgesetz — regelt die betriebliche Berufsausbildung.'},
+        {t:'BetrVG', d:'Betriebsverfassungsgesetz — regelt Mitbestimmung von Betriebsräten.'},
+        {t:'Nachweisgesetz', d:'Verpflichtet den Arbeitgeber, wesentliche Vertragsbedingungen schriftlich niederzulegen.'},
+        {t:'Abmahnung', d:'Formelle Rüge eines Fehlverhaltens vor einer verhaltensbedingten Kündigung.'},
+      ],
+      quiz:[
+        {q:'Wie lang ist die gesetzliche Grundkündigungsfrist für den Arbeitgeber laut § 622 BGB?', options:['2 Wochen','4 Wochen zum 15. oder Monatsende','1 Monat zum Monatsende','6 Wochen zum Quartalsende'], correct:1, explain:'Die Grundfrist beträgt 4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
+        {q:'Welche Voraussetzungen müssen für die Anwendung des KSchG erfüllt sein?', options:['Nur Betriebszugehörigkeit von 6 Monaten','Nur mehr als 10 Beschäftigte','6 Monate Betriebszugehörigkeit UND mehr als 10 Beschäftigte','Mindestens 1 Jahr Betriebszugehörigkeit'], correct:2, explain:'Beide Voraussetzungen müssen gemeinsam erfüllt sein.'},
+        {q:'Welcher Kündigungsgrund liegt vor, wenn ein Arbeitnehmer wiederholt unentschuldigt fehlt?', options:['Betriebsbedingt','Personenbedingt','Verhaltensbedingt','Außerordentlich ohne Grund'], correct:2, explain:'Ein steuerbares Fehlverhalten ist verhaltensbedingt (i. d. R. nach vorheriger Abmahnung).'},
+        {q:'Wie viele Stunden Ruhezeit müssen zwischen zwei Arbeitstagen mindestens liegen?', options:['8 Stunden','9 Stunden','11 Stunden','12 Stunden'], correct:2, explain:'Das ArbZG schreibt mindestens 11 Stunden ununterbrochene Ruhezeit vor.'},
+        {q:'Wie kann ein Ausbildungsverhältnis nach der Probezeit vom Azubi gekündigt werden?', options:['Gar nicht mehr','Nur fristlos','Mit 4-wöchiger Frist bei Aufgabe der Berufsausbildung','Nur durch den Ausbilder'], correct:2, explain:'Nach der Probezeit kann der Azubi mit 4 Wochen Frist kündigen, wenn er den Beruf aufgibt oder wechselt.'},
+        {q:'Welcher Führungsstil überlässt den Mitarbeitenden weitgehend eigene Entscheidungen?', options:['Autoritär','Kooperativ','Laissez-faire','Patriarchalisch'], correct:2, explain:'Beim Laissez-faire-Stil greift die Führungskraft kaum in Entscheidungen ein.'},
+        {q:'Ab wann kann ein Betriebsrat gebildet werden?', options:['Ab 1 Arbeitnehmer','Ab 5 wahlberechtigten Arbeitnehmern','Ab 20 Arbeitnehmern','Nur in Kapitalgesellschaften'], correct:1, explain:'Das BetrVG erlaubt die Wahl eines Betriebsrats ab 5 wahlberechtigten Arbeitnehmern.'},
+      ]
+    },
+    {
+      id:'steuer', name:'Steuern & Versicherungen', accent:'var(--c-steuer)',
+      flashcards:[
+        {q:'Welche Steuer zahlt ein Einzelunternehmer auf seinen Gewinn?', a:'Einkommensteuer (der Gewinn zählt zu den Einkünften aus Gewerbebetrieb).'},
+        {q:'Was ist die Umsatzsteuer aus Sicht des Unternehmers?', a:'Ein durchlaufender Posten — der Unternehmer zieht die gezahlte Vorsteuer von der vereinnahmten Umsatzsteuer ab und führt die Differenz ans Finanzamt ab.'},
+        {q:'Wer zahlt Gewerbesteuer?', a:'Gewerbebetriebe (Personen- und Kapitalgesellschaften); Freiberufler sind i. d. R. davon befreit.'},
+        {q:'Nenne die 5 Säulen der Sozialversicherung.', a:'Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung.'},
+        {q:'Wer trägt die Beiträge zur Unfallversicherung?', a:'Allein der Arbeitgeber.'},
+        {q:'Was ist eine Betriebshaftpflichtversicherung?', a:'Versicherung, die Schäden abdeckt, die der Betrieb Dritten gegenüber verursacht (Personen-, Sach-, Vermögensschäden).'},
+      ],
+      glossary:[
+        {t:'Vorsteuer', d:'Die vom Unternehmer beim Einkauf gezahlte Umsatzsteuer, die er vom Finanzamt erstattet bekommt.'},
+        {t:'Gewerbesteuer', d:'Kommunale Steuer auf den Gewerbeertrag eines Betriebs.'},
+        {t:'Sozialversicherung', d:'Pflichtversicherungssystem aus Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung.'},
+        {t:'Betriebshaftpflicht', d:'Versicherung gegen Schadensersatzansprüche Dritter aus der betrieblichen Tätigkeit.'},
+        {t:'Lohnsteuer', d:'Vorauszahlung auf die Einkommensteuer der Arbeitnehmer, vom Arbeitgeber einbehalten und abgeführt.'},
+        {t:'Berufsgenossenschaft', d:'Träger der gesetzlichen Unfallversicherung für Betriebe.'},
+      ],
+      quiz:[
+        {q:'Welche Steuer entrichtet ein Einzelunternehmer auf seinen unternehmerischen Gewinn?', options:['Körperschaftsteuer','Einkommensteuer','Kapitalertragsteuer','Erbschaftsteuer'], correct:1, explain:'Der Gewinn eines Einzelunternehmers unterliegt der Einkommensteuer.'},
+        {q:'Was versteht man unter Vorsteuer?', options:['Steuer auf den Gewinn','Beim Einkauf gezahlte Umsatzsteuer, die erstattet wird','Steuer auf Löhne','Eine kommunale Steuer'], correct:1, explain:'Vorsteuer ist die gezahlte Umsatzsteuer auf Eingangsleistungen, die mit der Umsatzsteuerschuld verrechnet wird.'},
+        {q:'Wer trägt die Beiträge zur gesetzlichen Unfallversicherung?', options:['Arbeitnehmer allein','Arbeitgeber allein','Je zur Hälfte','Der Staat'], correct:1, explain:'Die Unfallversicherung wird ausschließlich vom Arbeitgeber finanziert.'},
+        {q:'Welche der folgenden Versicherungen gehört NICHT zu den 5 Säulen der Sozialversicherung?', options:['Krankenversicherung','Rentenversicherung','Betriebshaftpflichtversicherung','Pflegeversicherung'], correct:2, explain:'Die Betriebshaftpflicht ist eine freiwillige betriebliche Versicherung, keine Sozialversicherung.'},
+        {q:'Was ist die Bemessungsgrundlage der Gewerbesteuer?', options:['Der Umsatz','Der Gewerbeertrag','Die Lohnsumme','Das Anlagevermögen'], correct:1, explain:'Die Gewerbesteuer bemisst sich am Gewerbeertrag des Betriebs.'},
+      ]
+    },
+    {
+      id:'marketing', name:'Marketing & Unternehmensführung', accent:'var(--c-marketing)',
+      flashcards:[
+        {q:'Was umfasst der Marketing-Mix (4 P)?', a:'Product (Produktpolitik), Price (Preispolitik), Place (Distributionspolitik), Promotion (Kommunikationspolitik).'},
+        {q:'Was ist eine Zielgruppenanalyse?', a:'Die systematische Untersuchung, welche Kundengruppen für ein Angebot relevant sind, um Marketingmaßnahmen gezielt auszurichten.'},
+        {q:'Was ist der Unterschied zwischen Kundenakquise und Kundenbindung?', a:'Akquise zielt auf die Gewinnung neuer Kunden, Bindung auf den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
+        {q:'Was ist eine SWOT-Analyse?', a:'Analyse von Stärken (Strengths), Schwächen (Weaknesses), Chancen (Opportunities) und Risiken (Threats) eines Unternehmens.'},
+        {q:'Was versteht man unter Preispolitik?', a:'Alle Entscheidungen zur Festlegung von Preisen, Rabatten, Zahlungs- und Lieferbedingungen.'},
+      ],
+      glossary:[
+        {t:'Marketing-Mix', d:'Kombination der 4 P: Product, Price, Place, Promotion.'},
+        {t:'Zielgruppe', d:'Die Gruppe potenzieller Kunden, an die sich ein Angebot richtet.'},
+        {t:'SWOT-Analyse', d:'Analyse-Werkzeug für Stärken, Schwächen, Chancen und Risiken.'},
+        {t:'USP', d:'Unique Selling Proposition — das Alleinstellungsmerkmal eines Angebots.'},
+        {t:'Kundenbindung', d:'Maßnahmen, um bestehende Kunden langfristig zu halten.'},
+      ],
+      quiz:[
+        {q:'Welche der folgenden gehört NICHT zu den klassischen 4 P des Marketing-Mix?', options:['Product','Price','Personal','Promotion'], correct:2, explain:'Die 4 P sind Product, Price, Place und Promotion — "Personal" ist Teil erweiterter Modelle (7P), nicht der Basis-4P.'},
+        {q:'Was analysiert eine SWOT-Analyse?', options:['Nur die Konkurrenz','Stärken, Schwächen, Chancen und Risiken','Nur den Umsatz','Nur die Kundenzufriedenheit'], correct:1, explain:'SWOT steht für Strengths, Weaknesses, Opportunities, Threats.'},
+        {q:'Was bezeichnet USP?', options:['Eine Steuerart','Das Alleinstellungsmerkmal eines Angebots','Eine Rechtsform','Einen Vertriebskanal'], correct:1, explain:'USP = Unique Selling Proposition, das, was ein Angebot einzigartig macht.'},
+        {q:'Kundenbindung zielt vor allem darauf ab...', options:['neue Kunden erstmalig zu gewinnen','bestehende Kunden langfristig zu halten','Preise zu senken','die Produktion zu steigern'], correct:1, explain:'Kundenbindung fokussiert den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
+      ]
+    }
+  ]
+};
+
+/* ---------------- STORAGE ---------------- */
+const STORAGE_KEY = 'meister3_progress_v1';
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {flash:{}, quizHistory:[]};
+}
+function saveProgress(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+}
+let progress = loadProgress();
+
+/* ---------------- HELPERS ---------------- */
+function catFlashStats(cat){
+  const total = cat.flashcards.length;
+  let known = 0;
+  cat.flashcards.forEach((fc,i)=>{
+    const key = cat.id+'_'+i;
+    if(progress.flash[key] === 'known') known++;
+  });
+  return {known, total};
+}
+function overallProgressPct(){
+  let known=0, total=0;
+  DATA.categories.forEach(cat=>{
+    const s = catFlashStats(cat);
+    known += s.known; total += s.total;
+  });
+  return total ? Math.round(known/total*100) : 0;
+}
+function updateSeal(){
+  const pct = overallProgressPct();
+  document.getElementById('overallPct').textContent = pct+'%';
+  const circumference = 238.76;
+  const offset = circumference - (circumference*pct/100);
+  document.getElementById('ringFg').style.strokeDashoffset = offset;
+}
+
+/* ---------------- VIEW ROUTER ---------------- */
+const panel = document.getElementById('panel');
+let currentView = 'dashboard';
+
+document.getElementById('tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentView = btn.dataset.view;
+  render();
+});
+
+function render(){
+  if(currentView==='dashboard') renderDashboard();
+  else if(currentView==='flashcards') renderFlashcards();
+  else if(currentView==='quiz') renderQuiz();
+  else if(currentView==='glossar') renderGlossar();
+  updateSeal();
+}
+
+/* ---------------- DASHBOARD ---------------- */
+function renderDashboard(){
+  let cards = DATA.categories.map(cat=>{
+    const s = catFlashStats(cat);
+    const pct = s.total ? Math.round(s.known/s.total*100) : 0;
+    return `<div class="cat-card" style="--accent:${cat.accent}" data-cat="${cat.id}">
+      <div class="name">${cat.name}</div>
+      <div class="bar-bg"><div class="bar-fg" style="width:${pct}%"></div></div>
+      <div class="stat">${s.known}/${s.total} Lernkarten sicher &middot; ${pct}%</div>
+    </div>`;
+  }).join('');
+  panel.innerHTML = `
+    <h2>Übersicht</h2>
+    <p class="lede">Dein Stand pro Themenbereich. Klick auf einen Bereich, um direkt mit den Lernkarten zu starten.</p>
+    <div class="cat-grid">${cards}</div>
+  `;
+  panel.querySelectorAll('.cat-card').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      fcState.catId = el.dataset.cat;
+      fcState.index = 0;
+      fcState.showAnswer = false;
+      document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+      document.querySelector('[data-view="flashcards"]').classList.add('active');
+      currentView='flashcards';
+      render();
+    });
+  });
+}
+
+/* ---------------- FLASHCARDS ---------------- */
+let fcState = {catId: DATA.categories[0].id, index:0, showAnswer:false, lastMark:null};
+
+function renderFlashcards(){
+  const cat = DATA.categories.find(c=>c.id===fcState.catId);
+  const selectBtns = DATA.categories.map(c=>
+    `<button data-cat="${c.id}" class="${c.id===cat.id?'active':''}">${c.name}</button>`
+  ).join('');
+
+  const fc = cat.flashcards[fcState.index];
+  const key = cat.id+'_'+fcState.index;
+  const mark = progress.flash[key];
+  const s = catFlashStats(cat);
+
+  panel.innerHTML = `
+    <h2>Lernkarten</h2>
+    <p class="lede">Karte antippen zum Umdrehen. Danach ehrlich einschätzen, ob du es sicher weißt.</p>
+    <div class="fc-select">${selectBtns}</div>
+    <div class="card-stage">
+      <div class="flashcard ${fcState.showAnswer?'is-answer':''}" id="fcCard">
+        <span class="stamp-mark ${mark==='known'?'known show':''} ${mark==='unknown'?'unknown show':''}">${mark==='known'?'BEHERRSCHT':(mark==='unknown'?'ÜBEN':'')}</span>
+        <div class="face">${fcState.showAnswer ? fc.a : fc.q}</div>
+        <div class="hint">${fcState.showAnswer ? 'Antwort — Klick für Frage' : 'Frage — Klick für Antwort'}</div>
+      </div>
+      <div class="fc-actions">
+        <button class="btn-unknown">Nochmal üben</button>
+        <button class="btn-known">Kenn ich sicher</button>
+      </div>
+      <div class="fc-progress">Karte ${fcState.index+1} / ${cat.flashcards.length} &middot; ${s.known}/${s.total} sicher in diesem Bereich</div>
+    </div>
+  `;
+
+  panel.querySelectorAll('.fc-select button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      fcState.catId=b.dataset.cat; fcState.index=0; fcState.showAnswer=false; render();
+    });
+  });
+  document.getElementById('fcCard').addEventListener('click', ()=>{
+    fcState.showAnswer = !fcState.showAnswer;
+    render();
+  });
+  panel.querySelector('.btn-known').addEventListener('click', ()=>{
+    progress.flash[key]='known'; saveProgress(); nextCard(cat);
+  });
+  panel.querySelector('.btn-unknown').addEventListener('click', ()=>{
+    progress.flash[key]='unknown'; saveProgress(); nextCard(cat);
+  });
+}
+function nextCard(cat){
+  fcState.index = (fcState.index+1) % cat.flashcards.length;
+  fcState.showAnswer = false;
+  render();
+}
+
+/* ---------------- QUIZ ---------------- */
+let quizState = null;
+
+function renderQuiz(){
+  if(!quizState || quizState.stage==='setup'){
+    const opts = DATA.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    panel.innerHTML = `
+      <h2>Klausursimulation</h2>
+      <p class="lede">Wähle einen Bereich (oder alle gemischt) und ein Zeitlimit. So übst du echten Prüfungsdruck.</p>
+      <div class="quiz-setup">
+        <label>Bereich<br>
+          <select id="quizCat">
+            <option value="all">Alle Bereiche gemischt</option>
+            ${opts}
+          </select>
+        </label>
+        <label>Zeitlimit pro Frage (Sekunden)<br>
+          <input class="num-input" id="quizTime" type="number" value="45" min="10" max="180" style="width:100px">
+        </label>
+        <button id="startQuiz">Klausur starten</button>
+      </div>
+    `;
+    document.getElementById('startQuiz').addEventListener('click', ()=>{
+      const catId = document.getElementById('quizCat').value;
+      const timeLimit = parseInt(document.getElementById('quizTime').value)||45;
+      let pool = [];
+      if(catId==='all'){
+        DATA.categories.forEach(c=> c.quiz.forEach(q=> pool.push({...q, cat:c.name})));
+      } else {
+        const c = DATA.categories.find(c=>c.id===catId);
+        c.quiz.forEach(q=> pool.push({...q, cat:c.name}));
+      }
+      pool = pool.sort(()=>Math.random()-0.5);
+      quizState = {stage:'running', pool, i:0, correctCount:0, timeLimit, timeLeft:timeLimit, timer:null, answered:false, wrongList:[]};
+      startTimer();
+      renderQuiz();
+    });
+    return;
+  }
+
+  if(quizState.stage==='running'){
+    const q = quizState.pool[quizState.i];
+    const timerClass = quizState.timeLeft<=10 ? 'quiz-timer low' : 'quiz-timer';
+    panel.innerHTML = `
+      <div class="quiz-head">
+        <h2 style="margin:0">Frage ${quizState.i+1} / ${quizState.pool.length}</h2>
+        <span class="${timerClass}" id="timerDisp">${quizState.timeLeft}s</span>
+      </div>
+      <p class="lede" style="margin-bottom:6px">${q.cat}</p>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options" id="qOptions">
+        ${q.options.map((o,i)=>`<button class="q-option" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div id="qExplainWrap"></div>
+      <div class="quiz-nav"><button id="nextQ" style="display:none">Nächste Frage</button></div>
+    `;
+    panel.querySelectorAll('.q-option').forEach(btn=>{
+      btn.addEventListener('click', ()=> answerQuestion(parseInt(btn.dataset.i)));
+    });
+    document.getElementById('nextQ').addEventListener('click', nextQuestion);
+    return;
+  }
+
+  if(quizState.stage==='result'){
+    const pct = Math.round(quizState.correctCount/quizState.pool.length*100);
+    panel.innerHTML = `
+      <h2>Ergebnis</h2>
+      <div class="quiz-result">
+        <div class="big">${pct}%</div>
+        <p>${quizState.correctCount} von ${quizState.pool.length} Fragen richtig beantwortet.</p>
+        ${quizState.wrongList.length ? `<p class="lede">Nochmal ansehen: ${quizState.wrongList.map(w=>w.cat).join(', ')}</p>` : '<p class="lede">Stark — alles richtig!</p>'}
+        <button id="restartQuiz" style="margin-top:14px">Neue Klausur starten</button>
+      </div>
+    `;
+    document.getElementById('restartQuiz').addEventListener('click', ()=>{ quizState={stage:'setup'}; renderQuiz(); });
+  }
+}
+
+function startTimer(){
+  clearInterval(quizState.timer);
+  quizState.timeLeft = quizState.timeLimit;
+  quizState.answered = false;
+  quizState.timer = setInterval(()=>{
+    quizState.timeLeft--;
+    const disp = document.getElementById('timerDisp');
+    if(disp){
+      disp.textContent = quizState.timeLeft+'s';
+      if(quizState.timeLeft<=10) disp.classList.add('low');
+    }
+    if(quizState.timeLeft<=0){
+      clearInterval(quizState.timer);
+      if(!quizState.answered) answerQuestion(-1);
+    }
+  },1000);
+}
+
+function answerQuestion(chosenIdx){
+  if(quizState.answered) return;
+  quizState.answered = true;
+  clearInterval(quizState.timer);
+  const q = quizState.pool[quizState.i];
+  const options = document.querySelectorAll('.q-option');
+  options.forEach((btn,i)=>{
+    if(i===q.correct) btn.classList.add('correct');
+    else if(i===chosenIdx) btn.classList.add('wrong');
+    btn.disabled = true;
+  });
+  if(chosenIdx===q.correct){
+    quizState.correctCount++;
+  } else {
+    quizState.wrongList.push(q);
+  }
+  document.getElementById('qExplainWrap').innerHTML = `<div class="q-explain">${q.explain}</div>`;
+  document.getElementById('nextQ').style.display = 'inline-block';
+}
+
+function nextQuestion(){
+  quizState.i++;
+  if(quizState.i >= quizState.pool.length){
+    quizState.stage='result';
+    progress.quizHistory.push({date:new Date().toISOString(), pct:Math.round(quizState.correctCount/quizState.pool.length*100)});
+    saveProgress();
+    renderQuiz();
+  } else {
+    startTimer();
+    renderQuiz();
+  }
+}
+
+/* ---------------- GLOSSAR ---------------- */
+function renderGlossar(){
+  panel.innerHTML = `
+    <h2>Glossar</h2>
+    <p class="lede">Nachschlagewerk aller Fachbegriffe. Einfach tippen zum Filtern.</p>
+    <input class="glossar-search" id="gSearch" placeholder="Begriff suchen…">
+    <dl class="glossar-list" id="gList"></dl>
+  `;
+  const allTerms = [];
+  DATA.categories.forEach(c=> c.glossary.forEach(g=> allTerms.push({...g, cat:c.name})));
+  allTerms.sort((a,b)=>a.t.localeCompare(b.t,'de'));
+
+  function draw(filter){
+    const f = (filter||'').toLowerCase();
+    const list = document.getElementById('gList');
+    const filtered = allTerms.filter(t => t.t.toLowerCase().includes(f) || t.d.toLowerCase().includes(f));
+    list.innerHTML = filtered.map(t=>`<dt>${t.t}<span class="g-cat-tag">${t.cat}</span></dt><dd>${t.d}</dd>`).join('') || '<p class="lede">Keine Treffer.</p>';
+  }
+  draw('');
+  document.getElementById('gSearch').addEventListener('input', e=> draw(e.target.value));
+}
+
+/* ---------------- INIT ---------------- */
+render();
+</script>
+</body>
+</html>
