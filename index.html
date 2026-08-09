@@ -231,9 +231,41 @@ footer.note{
   .panel{padding:20px 16px;}
   header.app-header{flex-direction:column; align-items:flex-start;}
 }
+
+/* PASSWORT-GATE */
+#gate{
+  position:fixed; inset:0; z-index:999;
+  background: radial-gradient(circle at 20% 10%, #223757 0%, var(--ink) 45%, #16223A 100%);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+#gate .box{
+  background:var(--paper); border-radius:6px; padding:36px 32px; max-width:360px; width:100%;
+  text-align:center; box-shadow:var(--shadow);
+}
+#gate h2{font-family:'Fraunces',serif; font-size:20px; margin:0 0 6px; color:var(--text-on-paper);}
+#gate p{font-size:13px; color:#6b6045; margin:0 0 20px;}
+#gate input{
+  width:100%; padding:11px 14px; border:1px solid var(--paper-dim); border-radius:4px;
+  font-family:inherit; font-size:14px; margin-bottom:12px; box-sizing:border-box;
+}
+#gate button{
+  width:100%; padding:11px; border:none; border-radius:4px; background:var(--ink); color:var(--paper);
+  font-family:'IBM Plex Sans'; font-weight:600; font-size:14px; cursor:pointer;
+}
+#gate .err{color:var(--warn); font-size:12.5px; margin-top:10px; display:none;}
+body.locked > .wrap{display:none;}
 </style>
 </head>
-<body>
+<body class="locked">
+<div id="gate">
+  <div class="box">
+    <h2>Prüfungswerkstatt</h2>
+    <p>Bitte Passwort eingeben, um fortzufahren.</p>
+    <input type="password" id="gatePw" placeholder="Passwort" autofocus>
+    <button id="gateBtn">Freischalten</button>
+    <div class="err" id="gateErr">Falsches Passwort. Nochmal versuchen.</div>
+  </div>
+</div>
 <div class="wrap">
 
   <header class="app-header">
@@ -837,6 +869,45 @@ function renderGlossar(){
 
 /* ---------------- INIT ---------------- */
 render();
+
+/* ---------------- PASSWORT-GATE ---------------- */
+(function(){
+  const PW_HASH = '1d97ca430c7126b0a890d402d8c81dc6ff0afdf7d4262c5b4b9791ae4ff7c178';
+  const SESSION_KEY = 'meister3_unlocked';
+
+  async function sha256(text){
+    const enc = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  function unlock(){
+    document.body.classList.remove('locked');
+    document.getElementById('gate').style.display = 'none';
+  }
+
+  if(sessionStorage.getItem(SESSION_KEY) === 'true'){
+    unlock();
+  }
+
+  const btn = document.getElementById('gateBtn');
+  const input = document.getElementById('gatePw');
+  const err = document.getElementById('gateErr');
+
+  async function tryUnlock(){
+    const hash = await sha256(input.value);
+    if(hash === PW_HASH){
+      sessionStorage.setItem(SESSION_KEY, 'true');
+      unlock();
+    } else {
+      err.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+  btn.addEventListener('click', tryUnlock);
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+})();
 </script>
 </body>
 </html>
