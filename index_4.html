@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meisterprüfung Teil III — Prüfungswerkstatt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C2B45;
+  --ink-2:#26375A;
+  --paper:#F2ECDD;
+  --paper-dim:#E4DCC6;
+  --brass:#B8862F;
+  --brass-light:#D6A94F;
+  --ok:#4C6B4F;
+  --warn:#8B3A2E;
+  --text-on-paper:#241E14;
+  --text-on-ink:#EDE6D2;
+  --c-bwl:#7A5B3A;
+  --c-recht:#3E5C76;
+  --c-personal:#7A3B3B;
+  --c-steuer:#4C6B4F;
+  --c-marketing:#8B6A2E;
+  --c-sehhilfen:#4A5568;
+  --c-physiologie:#2E6B7A;
+  --c-finanzwirtschaft:#5A6B3D;
+  --c-qm:#6B4A7A;
+  --c-steuerrecht:#B8734A;
+  --radius:2px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 10%, #223757 0%, var(--ink) 45%, #16223A 100%);
+  color:var(--text-on-ink);
+  font-family:'IBM Plex Sans', sans-serif;
+  min-height:100vh;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 20px 80px;}
+
+/* HEADER */
+header.app-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding-bottom:28px;
+  border-bottom:1px solid rgba(237,230,210,0.18);
+  margin-bottom:28px;
+}
+.title-block h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:clamp(24px,4vw,34px);
+  margin:0 0 4px;
+  letter-spacing:0.2px;
+}
+.title-block .subtitle{
+  font-size:13px;
+  color:#B9AF93;
+  letter-spacing:0.4px;
+  text-transform:uppercase;
+}
+.seal{
+  position:relative;
+  width:88px;height:88px;
+  border-radius:50%;
+  border:2px solid var(--brass);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  background:radial-gradient(circle at 35% 30%, #2E3F63, #1A2740);
+  box-shadow: inset 0 0 0 1px rgba(214,169,79,0.25), 0 0 0 6px rgba(184,134,47,0.06);
+}
+.seal .pct{
+  font-family:'IBM Plex Mono', monospace;
+  font-weight:600;
+  font-size:20px;
+  color:var(--brass-light);
+}
+.seal svg{position:absolute; top:-2px; left:-2px;}
+.seal .ring-bg{stroke:rgba(237,230,210,0.12);}
+.seal .ring-fg{stroke:var(--brass-light); transition:stroke-dashoffset 0.6s ease;}
+
+/* TABS */
+nav.tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:28px;
+  flex-wrap:wrap;
+}
+nav.tabs button{
+  font-family:'IBM Plex Sans', sans-serif;
+  font-size:13.5px;
+  font-weight:500;
+  letter-spacing:0.2px;
+  padding:10px 18px;
+  border:1px solid rgba(237,230,210,0.2);
+  border-bottom:none;
+  background:rgba(237,230,210,0.04);
+  color:#C9BFA3;
+  cursor:pointer;
+  border-radius:var(--radius) var(--radius) 0 0;
+  transition:background 0.15s, color 0.15s;
+}
+nav.tabs button:hover{background:rgba(237,230,210,0.09); color:var(--paper);}
+nav.tabs button.active{
+  background:var(--paper);
+  color:var(--text-on-paper);
+  font-weight:600;
+}
+
+/* PANEL */
+.panel{
+  background:var(--paper);
+  color:var(--text-on-paper);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:32px;
+  min-height:420px;
+}
+.panel h2{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:600;
+  margin:0 0 4px;
+}
+.panel .lede{color:#5C5341; font-size:14px; margin-bottom:24px;}
+
+/* DASHBOARD CARDS */
+.cat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;}
+.cat-card{
+  border:1px solid var(--paper-dim);
+  border-left:5px solid var(--accent);
+  background:#fff8;
+  padding:16px 18px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:transform 0.12s, box-shadow 0.12s;
+}
+.cat-card:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,0.12);}
+.cat-card .name{font-weight:600; font-size:14.5px; margin-bottom:10px;}
+.cat-card .bar-bg{height:7px; background:var(--paper-dim); border-radius:4px; overflow:hidden;}
+.cat-card .bar-fg{height:100%; background:var(--accent); border-radius:4px; transition:width 0.4s;}
+.cat-card .stat{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:#6b6045; margin-top:8px;}
+
+/* FLASHCARDS */
+.fc-select{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.fc-select button{
+  padding:7px 14px; border-radius:20px; border:1px solid var(--paper-dim);
+  background:transparent; font-size:12.5px; cursor:pointer; color:#5C5341;
+}
+.fc-select button.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+.card-stage{display:flex; flex-direction:column; align-items:center; gap:18px;}
+.flashcard{
+  width:100%; max-width:560px; min-height:200px;
+  background:#fff; border:1px solid var(--paper-dim);
+  border-radius:6px; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:28px; cursor:pointer; position:relative;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  perspective:1000px;
+}
+.flashcard .face{font-size:17px; line-height:1.5;}
+.flashcard .hint{position:absolute; bottom:10px; right:14px; font-size:10.5px; color:#a89c78; letter-spacing:0.3px;}
+.flashcard.is-answer .face{color:var(--ink-2); font-weight:500;}
+.stamp-mark{
+  position:absolute; top:10px; left:14px; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; padding:3px 8px; border-radius:3px; opacity:0; transform:scale(1.4) rotate(-8deg);
+  transition:opacity 0.25s, transform 0.25s;
+}
+.stamp-mark.show{opacity:1; transform:scale(1) rotate(-8deg);}
+.stamp-mark.known{border:1.5px solid var(--ok); color:var(--ok);}
+.stamp-mark.unknown{border:1.5px solid var(--warn); color:var(--warn);}
+.fc-actions{display:flex; gap:12px;}
+.fc-actions button{
+  font-family:'IBM Plex Sans'; font-weight:600; font-size:13px;
+  padding:10px 20px; border-radius:4px; cursor:pointer; border:1.5px solid transparent;
+}
+.btn-unknown{background:transparent; border-color:var(--warn); color:var(--warn);}
+.btn-known{background:transparent; border-color:var(--ok); color:var(--ok);}
+.btn-unknown:hover{background:var(--warn); color:#fff;}
+.btn-known:hover{background:var(--ok); color:#fff;}
+.fc-progress{font-family:'IBM Plex Mono', monospace; font-size:12px; color:#6b6045;}
+
+/* QUIZ */
+.quiz-setup{display:flex; flex-direction:column; gap:16px; max-width:480px;}
+.quiz-setup select, .quiz-setup .num-input{
+  padding:10px; border:1px solid var(--paper-dim); border-radius:4px; font-family:inherit; font-size:14px;
+}
+.quiz-timer{
+  font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600;
+  color:var(--ink); padding:6px 14px; border:1.5px solid var(--ink); border-radius:4px;
+  display:inline-block;
+}
+.quiz-timer.low{color:var(--warn); border-color:var(--warn);}
+.quiz-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
+.q-text{font-size:16.5px; font-weight:500; margin-bottom:18px; line-height:1.5;}
+.q-options{display:flex; flex-direction:column; gap:10px;}
+.q-option{
+  text-align:left; padding:12px 16px; border:1px solid var(--paper-dim); border-radius:4px;
+  background:#fff; cursor:pointer; font-size:14px; font-family:inherit;
+}
+.q-option:hover{border-color:var(--brass);}
+.q-option.correct{border-color:var(--ok); background:#eaf1ea;}
+.q-option.wrong{border-color:var(--warn); background:#f6e9e7;}
+.q-explain{margin-top:14px; font-size:13px; color:#5c5341; background:var(--paper-dim); padding:12px 14px; border-radius:4px;}
+.quiz-nav{margin-top:20px; display:flex; justify-content:flex-end;}
+.quiz-nav button, .quiz-setup button{
+  font-family:'IBM Plex Sans'; font-weight:600; font-size:13.5px;
+  padding:10px 22px; border-radius:4px; border:none; background:var(--ink); color:var(--paper); cursor:pointer;
+}
+.quiz-result{text-align:center; padding:20px 0;}
+.quiz-result .big{font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:var(--ink);}
+
+/* GLOSSAR */
+.glossar-search{
+  width:100%; padding:11px 14px; border:1px solid var(--paper-dim); border-radius:4px;
+  font-family:inherit; font-size:14px; margin-bottom:20px;
+}
+.glossar-list dt{font-weight:600; margin-top:16px; color:var(--ink-2);}
+.glossar-list dd{margin:4px 0 0; font-size:13.5px; color:#3d3626; line-height:1.5;}
+.g-cat-tag{font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:#a89c78; margin-left:8px;}
+
+footer.note{
+  text-align:center; font-size:11.5px; color:#8a8064; margin-top:26px; line-height:1.6;
+}
+@media (max-width:600px){
+  .panel{padding:20px 16px;}
+  header.app-header{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app-header">
+    <div class="title-block">
+      <div class="subtitle">Prüfungswerkstatt</div>
+      <h1>Meisterprüfung Teil III</h1>
+    </div>
+    <div class="seal">
+      <svg width="88" height="88">
+        <circle class="ring-bg" cx="44" cy="44" r="38" fill="none" stroke-width="3"></circle>
+        <circle id="ringFg" class="ring-fg" cx="44" cy="44" r="38" fill="none" stroke-width="3"
+          stroke-dasharray="238.76" stroke-dashoffset="238.76" transform="rotate(-90 44 44)"></circle>
+      </svg>
+      <div class="pct" id="overallPct">0%</div>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-view="dashboard" class="active">Übersicht</button>
+    <button data-view="flashcards">Lernkarten</button>
+    <button data-view="quiz">Klausursimulation</button>
+    <button data-view="glossar">Glossar</button>
+  </nav>
+
+  <div class="panel" id="panel"></div>
+
+  <footer class="note">
+    Dein Fortschritt wird lokal in diesem Browser gespeichert (localStorage) — sobald du die Seite selbst hostest,
+    bleibt er dort dauerhaft erhalten. Diese Vorschau hier im Chat kann den Speicher ggf. nicht behalten.
+  </footer>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const DATA = {
+  categories: [
+    {
+      id:'bwl', name:'Betriebswirtschaft & Kalkulation', accent:'var(--c-bwl)',
+      flashcards:[
+        {q:'Was unterscheidet fixe von variablen Kosten?', a:'Fixe Kosten fallen unabhängig von der produzierten Menge an (z. B. Miete), variable Kosten verändern sich mit der Ausbringungsmenge (z. B. Materialkosten).'},
+        {q:'Was ist der Deckungsbeitrag?', a:'Verkaufspreis minus variable Kosten pro Stück — der Betrag, der zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
+        {q:'Wie berechnet man den Verkaufspreis bei der Zuschlagskalkulation (vereinfacht)?', a:'Selbstkosten + Gewinnzuschlag = Barverkaufspreis; darauf ggf. Skonto, Rabatt und Kundenprovision aufschlagen, um den Zielverkaufspreis zu erhalten.'},
+        {q:'Was zeigt die Break-Even-Analyse?', a:'Den Punkt, an dem Erlöse und Gesamtkosten gleich hoch sind — ab dieser Menge wird Gewinn erzielt.'},
+        {q:'Was ist der Unterschied zwischen Liquidität und Rentabilität?', a:'Liquidität = Fähigkeit, Zahlungsverpflichtungen fristgerecht zu erfüllen. Rentabilität = Verhältnis von Gewinn zu eingesetztem Kapital.'},
+        {q:'Was ist Eigenkapitalrentabilität?', a:'Gewinn geteilt durch eingesetztes Eigenkapital, mal 100 — zeigt, wie sich das eigene Kapital verzinst hat.'},
+        {q:'In welche Teile lässt sich die Kosten- und Leistungsrechnung gliedern?', a:'Kostenartenrechnung, Kostenstellenrechnung, Kostenträgerrechnung.'},
+      ],
+      glossary:[
+        {t:'Deckungsbeitrag', d:'Differenz zwischen Erlös und variablen Kosten je Einheit.'},
+        {t:'Skonto', d:'Preisnachlass für schnelle Zahlung innerhalb einer festgelegten Frist.'},
+        {t:'Liquidität', d:'Fähigkeit eines Betriebs, fällige Zahlungen jederzeit zu leisten.'},
+        {t:'Break-Even-Point', d:'Absatzmenge, bei der Kosten und Erlöse identisch sind (Gewinnschwelle).'},
+        {t:'Cashflow', d:'Zahlungsmittelüberschuss, der einem Betrieb aus laufender Tätigkeit zufließt.'},
+        {t:'Kalkulationszuschlag', d:'Prozentualer Aufschlag auf die Selbstkosten zur Deckung von Gewinn und Risiko.'},
+      ],
+      quiz:[
+        {q:'Ein Betrieb hat Fixkosten von 20.000 € und einen Deckungsbeitrag von 40 € je Stück. Wie viele Stück müssen mindestens verkauft werden, um die Fixkosten zu decken?', options:['400 Stück','500 Stück','800 Stück','200 Stück'], correct:1, explain:'20.000 € / 40 € = 500 Stück (Break-Even-Menge).'},
+        {q:'Welche Kostenart bleibt bei steigender Produktionsmenge konstant?', options:['Variable Kosten','Fixkosten','Gesamtkosten','Stückkosten'], correct:1, explain:'Fixkosten sind unabhängig von der Produktionsmenge, z. B. Miete oder Versicherungen.'},
+        {q:'Was drückt die Eigenkapitalquote aus?', options:['Verhältnis von Umsatz zu Gewinn','Anteil des Eigenkapitals am Gesamtkapital','Verhältnis von Fixkosten zu variablen Kosten','Höhe der Bankverbindlichkeiten'], correct:1, explain:'Eigenkapitalquote = Eigenkapital / Gesamtkapital × 100 — zeigt die finanzielle Stabilität.'},
+        {q:'Wofür steht Skonto?', options:['Mengenrabatt', 'Preisnachlass bei schneller Zahlung', 'Zuschlag für Sonderanfertigungen', 'Steuerermäßigung'], correct:1, explain:'Skonto ist ein Nachlass für Zahlung innerhalb einer kurzen Frist.'},
+        {q:'Was ist bei der Deckungsbeitragsrechnung im Fokus?', options:['Nur die Fixkosten','Der Beitrag jedes Produkts zur Deckung der Fixkosten','Die Höhe der Löhne','Der Materialeinkaufspreis'], correct:1, explain:'Sie zeigt, wie viel jedes Produkt zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
+        {q:'Welche Aussage zur Liquidität stimmt?', options:['Sie beschreibt die Rentabilität eines Betriebs','Sie beschreibt die Fähigkeit, Zahlungen fristgerecht zu leisten','Sie ist identisch mit dem Gewinn','Sie wird nur einmal jährlich berechnet'], correct:1, explain:'Liquidität betrifft die Zahlungsfähigkeit, nicht den Gewinn.'},
+      ]
+    },
+    {
+      id:'recht', name:'Rechtsformen & Unternehmensrecht', accent:'var(--c-recht)',
+      flashcards:[
+        {q:'Wer haftet bei einem Einzelunternehmen?', a:'Der Inhaber haftet unbeschränkt mit seinem gesamten Privat- und Betriebsvermögen.'},
+        {q:'Was ist der wesentliche Unterschied zwischen GmbH und Einzelunternehmen bei der Haftung?', a:'Bei der GmbH haftet grundsätzlich nur das Gesellschaftsvermögen, nicht das Privatvermögen der Gesellschafter.'},
+        {q:'Was ist ein Werkvertrag?', a:'Ein Vertrag, bei dem ein bestimmter Erfolg geschuldet wird (§ 631 BGB), z. B. die Herstellung eines Werkstücks — im Gegensatz zum Dienstvertrag, der nur Tätigkeit schuldet.'},
+        {q:'Wozu dient die Handwerksrolle?', a:'Verzeichnis der zulassungspflichtigen Handwerksbetriebe bei der Handwerkskammer; Eintragung ist Voraussetzung für die selbstständige Ausübung eines zulassungspflichtigen Handwerks.'},
+        {q:'Was regelt die Gewährleistung beim Werkvertrag?', a:'Ansprüche des Bestellers bei Mängeln: Nacherfüllung, Selbstvornahme, Minderung, Rücktritt, Schadensersatz — Frist i. d. R. 2 Jahre.'},
+        {q:'Was ist der Unterschied zwischen OHG und KG?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt; bei der KG gibt es mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur beschränkt haftenden Kommanditisten.'},
+        {q:'Wer ist nicht geschäftsfähig?', a:'Als nicht geschäftsfähig gelten Personen, die das 7. Lebensjahr noch nicht vollendet haben, oder sich in einem die Willensbestimmung ausschließenden Zustand krankhafter Störung oder Geistestätigkeit befinden.'},
+        {q:'Vervollständige den Satz: Im Rahmen des BGB werden als "Sachen" ... beschrieben.', a:'...nur körperliche Gegenstände.'},
+        {q:'Was ist nach BGB der Unterschied zwischen Eigentum und Besitz?', a:'Eigentum bezeichnet die rechtliche Verfügungsgewalt über eine Sache. Der Eigentümer kann darüber wie er möchte verfügen, soweit er keine Gesetze oder Rechte anderer Personen bricht. Besitz bezeichnet die tatsächliche Verfügungsgewalt über eine Sache.'},
+        {q:'Was ist ein "Kannkaufmann"?', a:'Dies ist ein Gewerbetreibender, der zwar ins Handelsregister eingetragen ist, aber nicht unter § 1 HGB fällt.'},
+        {q:'Was versteht man unter einem "Formkaufmann"?', a:'Hierbei handelt es sich um Handels- und Kapitalgesellschaften und Vereine, die durch eine Rechtsform ihre Kaufmannsgemeinschaft erhalten.'},
+        {q:'Eine Person bekommt von einer Bank ein Darlehen. Einen Monat später erfährt die Bank, dass der Kreditnehmer sich in finanziellen Schwierigkeiten befindet und ficht den Vertrag an. Mit welchen Folgen ist zu rechnen?', a:'Der Vertrag ist wirksam, da die Frist abgelaufen ist. Eine Anfechtung muss nach § 121 BGB unverzüglich erfolgen.'},
+      ],
+      glossary:[
+        {t:'GbR', d:'Gesellschaft bürgerlichen Rechts — einfachste Form der Personengesellschaft, unbeschränkte Haftung aller Gesellschafter.'},
+        {t:'Komplementär', d:'Vollhaftender Gesellschafter einer KG.'},
+        {t:'Kommanditist', d:'Nur mit seiner Einlage haftender Gesellschafter einer KG.'},
+        {t:'Handwerksrolle', d:'Verzeichnis zulassungspflichtiger Handwerksbetriebe bei der HWK.'},
+        {t:'Gewährleistung', d:'Gesetzliche Haftung für Mängel einer Leistung.'},
+        {t:'UWG', d:'Gesetz gegen den unlauteren Wettbewerb — regelt faires Marktverhalten.'},
+      ],
+      quiz:[
+        {q:'Wer haftet bei einer GmbH grundsätzlich für Verbindlichkeiten?', options:['Die Gesellschafter privat und unbeschränkt','Nur das Gesellschaftsvermögen','Der Geschäftsführer allein','Die Handwerkskammer'], correct:1, explain:'Die GmbH ist eine Kapitalgesellschaft — Haftung ist grundsätzlich auf das Gesellschaftsvermögen beschränkt.'},
+        {q:'Welche Rechtsform hat mindestens einen unbeschränkt und einen beschränkt haftenden Gesellschafter?', options:['GbR','OHG','KG','GmbH'], correct:2, explain:'Die KG hat Komplementäre (unbeschränkt) und Kommanditisten (beschränkt haftend).'},
+        {q:'Ein Werkvertrag unterscheidet sich vom Dienstvertrag dadurch, dass...', options:['nur Tätigkeit geschuldet wird','ein bestimmter Erfolg geschuldet wird','keine Vergütung vereinbart wird','er nur mündlich geschlossen werden kann'], correct:1, explain:'Beim Werkvertrag wird ein Erfolg (z. B. fertiges Werkstück) geschuldet, § 631 BGB.'},
+        {q:'Wofür ist die Eintragung in die Handwerksrolle Voraussetzung?', options:['Für die Mitgliedschaft im Betriebsrat','Für die selbstständige Ausübung eines zulassungspflichtigen Handwerks','Für den Abschluss von Ausbildungsverträgen','Für die Anmeldung beim Finanzamt'], correct:1, explain:'Ohne Eintragung darf ein zulassungspflichtiges Handwerk nicht selbstständig ausgeübt werden.'},
+        {q:'Wie lange beträgt die gesetzliche Gewährleistungsfrist bei einem Werkvertrag i. d. R.?', options:['6 Monate','1 Jahr','2 Jahre','5 Jahre'], correct:2, explain:'Die regelmäßige Gewährleistungsfrist beträgt 2 Jahre (bei Bauwerken 5 Jahre).'},
+        {q:'Was regelt das UWG?', options:['Arbeitszeiten','Unlauteren Wettbewerb','Steuerpflichten','Ausbildungsvergütung'], correct:1, explain:'Das Gesetz gegen den unlauteren Wettbewerb schützt faires Marktverhalten.'},
+      ]
+    },
+    {
+      id:'personal', name:'Personal & Arbeitsrecht', accent:'var(--c-personal)',
+      flashcards:[
+        {q:'Wie lautet die gesetzliche Grundkündigungsfrist nach § 622 BGB?', a:'4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
+        {q:'Ab wann gilt das Kündigungsschutzgesetz (KSchG)?', a:'Ab 6 Monaten Betriebszugehörigkeit und in Betrieben mit mehr als 10 Arbeitnehmern.'},
+        {q:'Welche 3 Kündigungsgründe kennt das KSchG?', a:'Personenbedingt, verhaltensbedingt und betriebsbedingt.'},
+        {q:'Wie lang darf die tägliche Arbeitszeit laut ArbZG maximal sein?', a:'Grundsätzlich 8 Stunden, ausnahmsweise bis zu 10 Stunden, wenn im Schnitt über 6 Monate 8 Std./Tag nicht überschritten werden.'},
+        {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.'},
+        {q:'Ab wie vielen wahlberechtigten Arbeitnehmern kann ein Betriebsrat gewählt werden?', a:'Ab 5 wahlberechtigten Arbeitnehmern, von denen mindestens 3 wählbar sein müssen.'},
+        {q:'Wie kann ein Ausbildungsverhältnis während der Probezeit beendet werden?', a:'Jederzeit fristlos, ohne Angabe von Gründen, von beiden Seiten.'},
+        {q:'Was bedeutet Friedenspflicht im Rahmen eines laufenden Tarifvertrages?', a:'Während eines laufenden Tarifvertrags dürfen keine Kampfmaßnahmen stattfinden. Wurde innerhalb der Friedenspflicht ein Tarifvertrag abgeschlossen, sind keine Arbeitskämpfe möglich.'},
+        {q:'Die Kosten des Betriebsrats trägt...', a:'...der Arbeitgeber.'},
+        {q:'Nenne Formen von Arbeitskämpfen.', a:'Aussperrung, Streik.'},
+        {q:'Nenne die 5 Säulen der Sozialversicherung.', a:'Arbeitslosenversicherung, Rentenversicherung, Pflegeversicherung, Unfallversicherung, Krankenversicherung.'},
+      ],
+      glossary:[
+        {t:'KSchG', d:'Kündigungsschutzgesetz — schützt Arbeitnehmer vor sozial ungerechtfertigter Kündigung.'},
+        {t:'ArbZG', d:'Arbeitszeitgesetz — regelt Höchstarbeitszeiten, Pausen und Ruhezeiten.'},
+        {t:'BBiG', d:'Berufsbildungsgesetz — regelt die betriebliche Berufsausbildung.'},
+        {t:'BetrVG', d:'Betriebsverfassungsgesetz — regelt Mitbestimmung von Betriebsräten.'},
+        {t:'Nachweisgesetz', d:'Verpflichtet den Arbeitgeber, wesentliche Vertragsbedingungen schriftlich niederzulegen.'},
+        {t:'Abmahnung', d:'Formelle Rüge eines Fehlverhaltens vor einer verhaltensbedingten Kündigung.'},
+      ],
+      quiz:[
+        {q:'Wie lang ist die gesetzliche Grundkündigungsfrist für den Arbeitgeber laut § 622 BGB?', options:['2 Wochen','4 Wochen zum 15. oder Monatsende','1 Monat zum Monatsende','6 Wochen zum Quartalsende'], correct:1, explain:'Die Grundfrist beträgt 4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
+        {q:'Welche Voraussetzungen müssen für die Anwendung des KSchG erfüllt sein?', options:['Nur Betriebszugehörigkeit von 6 Monaten','Nur mehr als 10 Beschäftigte','6 Monate Betriebszugehörigkeit UND mehr als 10 Beschäftigte','Mindestens 1 Jahr Betriebszugehörigkeit'], correct:2, explain:'Beide Voraussetzungen müssen gemeinsam erfüllt sein.'},
+        {q:'Welcher Kündigungsgrund liegt vor, wenn ein Arbeitnehmer wiederholt unentschuldigt fehlt?', options:['Betriebsbedingt','Personenbedingt','Verhaltensbedingt','Außerordentlich ohne Grund'], correct:2, explain:'Ein steuerbares Fehlverhalten ist verhaltensbedingt (i. d. R. nach vorheriger Abmahnung).'},
+        {q:'Wie viele Stunden Ruhezeit müssen zwischen zwei Arbeitstagen mindestens liegen?', options:['8 Stunden','9 Stunden','11 Stunden','12 Stunden'], correct:2, explain:'Das ArbZG schreibt mindestens 11 Stunden ununterbrochene Ruhezeit vor.'},
+        {q:'Wie kann ein Ausbildungsverhältnis nach der Probezeit vom Azubi gekündigt werden?', options:['Gar nicht mehr','Nur fristlos','Mit 4-wöchiger Frist bei Aufgabe der Berufsausbildung','Nur durch den Ausbilder'], correct:2, explain:'Nach der Probezeit kann der Azubi mit 4 Wochen Frist kündigen, wenn er den Beruf aufgibt oder wechselt.'},
+        {q:'Welcher Führungsstil überlässt den Mitarbeitenden weitgehend eigene Entscheidungen?', options:['Autoritär','Kooperativ','Laissez-faire','Patriarchalisch'], correct:2, explain:'Beim Laissez-faire-Stil greift die Führungskraft kaum in Entscheidungen ein.'},
+        {q:'Ab wann kann ein Betriebsrat gebildet werden?', options:['Ab 1 Arbeitnehmer','Ab 5 wahlberechtigten Arbeitnehmern','Ab 20 Arbeitnehmern','Nur in Kapitalgesellschaften'], correct:1, explain:'Das BetrVG erlaubt die Wahl eines Betriebsrats ab 5 wahlberechtigten Arbeitnehmern.'},
+      ]
+    },
+    {
+      id:'steuer', name:'Steuern & Versicherungen', accent:'var(--c-steuer)',
+      flashcards:[
+        {q:'Welche Steuer zahlt ein Einzelunternehmer auf seinen Gewinn?', a:'Einkommensteuer (der Gewinn zählt zu den Einkünften aus Gewerbebetrieb).'},
+        {q:'Was ist die Umsatzsteuer aus Sicht des Unternehmers?', a:'Ein durchlaufender Posten — der Unternehmer zieht die gezahlte Vorsteuer von der vereinnahmten Umsatzsteuer ab und führt die Differenz ans Finanzamt ab.'},
+        {q:'Wer zahlt Gewerbesteuer?', a:'Gewerbebetriebe (Personen- und Kapitalgesellschaften); Freiberufler sind i. d. R. davon befreit.'},
+        {q:'Nenne die 5 Säulen der Sozialversicherung.', a:'Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung.'},
+        {q:'Wer trägt die Beiträge zur Unfallversicherung?', a:'Allein der Arbeitgeber.'},
+        {q:'Was ist eine Betriebshaftpflichtversicherung?', a:'Versicherung, die Schäden abdeckt, die der Betrieb Dritten gegenüber verursacht (Personen-, Sach-, Vermögensschäden).'},
+      ],
+      glossary:[
+        {t:'Vorsteuer', d:'Die vom Unternehmer beim Einkauf gezahlte Umsatzsteuer, die er vom Finanzamt erstattet bekommt.'},
+        {t:'Gewerbesteuer', d:'Kommunale Steuer auf den Gewerbeertrag eines Betriebs.'},
+        {t:'Sozialversicherung', d:'Pflichtversicherungssystem aus Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung.'},
+        {t:'Betriebshaftpflicht', d:'Versicherung gegen Schadensersatzansprüche Dritter aus der betrieblichen Tätigkeit.'},
+        {t:'Lohnsteuer', d:'Vorauszahlung auf die Einkommensteuer der Arbeitnehmer, vom Arbeitgeber einbehalten und abgeführt.'},
+        {t:'Berufsgenossenschaft', d:'Träger der gesetzlichen Unfallversicherung für Betriebe.'},
+      ],
+      quiz:[
+        {q:'Welche Steuer entrichtet ein Einzelunternehmer auf seinen unternehmerischen Gewinn?', options:['Körperschaftsteuer','Einkommensteuer','Kapitalertragsteuer','Erbschaftsteuer'], correct:1, explain:'Der Gewinn eines Einzelunternehmers unterliegt der Einkommensteuer.'},
+        {q:'Was versteht man unter Vorsteuer?', options:['Steuer auf den Gewinn','Beim Einkauf gezahlte Umsatzsteuer, die erstattet wird','Steuer auf Löhne','Eine kommunale Steuer'], correct:1, explain:'Vorsteuer ist die gezahlte Umsatzsteuer auf Eingangsleistungen, die mit der Umsatzsteuerschuld verrechnet wird.'},
+        {q:'Wer trägt die Beiträge zur gesetzlichen Unfallversicherung?', options:['Arbeitnehmer allein','Arbeitgeber allein','Je zur Hälfte','Der Staat'], correct:1, explain:'Die Unfallversicherung wird ausschließlich vom Arbeitgeber finanziert.'},
+        {q:'Welche der folgenden Versicherungen gehört NICHT zu den 5 Säulen der Sozialversicherung?', options:['Krankenversicherung','Rentenversicherung','Betriebshaftpflichtversicherung','Pflegeversicherung'], correct:2, explain:'Die Betriebshaftpflicht ist eine freiwillige betriebliche Versicherung, keine Sozialversicherung.'},
+        {q:'Was ist die Bemessungsgrundlage der Gewerbesteuer?', options:['Der Umsatz','Der Gewerbeertrag','Die Lohnsumme','Das Anlagevermögen'], correct:1, explain:'Die Gewerbesteuer bemisst sich am Gewerbeertrag des Betriebs.'},
+      ]
+    },
+    {
+      id:'marketing', name:'Marketing & Unternehmensführung', accent:'var(--c-marketing)',
+      flashcards:[
+        {q:'Was umfasst der Marketing-Mix (4 P)?', a:'Product (Produktpolitik), Price (Preispolitik), Place (Distributionspolitik), Promotion (Kommunikationspolitik).'},
+        {q:'Was ist eine Zielgruppenanalyse?', a:'Die systematische Untersuchung, welche Kundengruppen für ein Angebot relevant sind, um Marketingmaßnahmen gezielt auszurichten.'},
+        {q:'Was ist der Unterschied zwischen Kundenakquise und Kundenbindung?', a:'Akquise zielt auf die Gewinnung neuer Kunden, Bindung auf den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
+        {q:'Was ist eine SWOT-Analyse?', a:'Analyse von Stärken (Strengths), Schwächen (Weaknesses), Chancen (Opportunities) und Risiken (Threats) eines Unternehmens.'},
+        {q:'Was versteht man unter Preispolitik?', a:'Alle Entscheidungen zur Festlegung von Preisen, Rabatten, Zahlungs- und Lieferbedingungen.'},
+        {q:'Was ist der Unterschied zwischen operativen und strategischen Marketingzielen?', a:'Operative Marketingziele sind kurzfristig erzielbar, während strategische langfristige Ziele sind.'},
+        {q:'Nenne Beispiele für die Marktdurchdringung.', a:'Cross-Selling erhöhen — so besteht die Möglichkeit, bereits bestehende Kunden mehr zu binden. Kunden von Konkurrenten abwerben. Neukundengewinnung.'},
+      ],
+      glossary:[
+        {t:'Marketing-Mix', d:'Kombination der 4 P: Product, Price, Place, Promotion.'},
+        {t:'Zielgruppe', d:'Die Gruppe potenzieller Kunden, an die sich ein Angebot richtet.'},
+        {t:'SWOT-Analyse', d:'Analyse-Werkzeug für Stärken, Schwächen, Chancen und Risiken.'},
+        {t:'USP', d:'Unique Selling Proposition — das Alleinstellungsmerkmal eines Angebots.'},
+        {t:'Kundenbindung', d:'Maßnahmen, um bestehende Kunden langfristig zu halten.'},
+      ],
+      quiz:[
+        {q:'Welche der folgenden gehört NICHT zu den klassischen 4 P des Marketing-Mix?', options:['Product','Price','Personal','Promotion'], correct:2, explain:'Die 4 P sind Product, Price, Place und Promotion — "Personal" ist Teil erweiterter Modelle (7P), nicht der Basis-4P.'},
+        {q:'Was analysiert eine SWOT-Analyse?', options:['Nur die Konkurrenz','Stärken, Schwächen, Chancen und Risiken','Nur den Umsatz','Nur die Kundenzufriedenheit'], correct:1, explain:'SWOT steht für Strengths, Weaknesses, Opportunities, Threats.'},
+        {q:'Was bezeichnet USP?', options:['Eine Steuerart','Das Alleinstellungsmerkmal eines Angebots','Eine Rechtsform','Einen Vertriebskanal'], correct:1, explain:'USP = Unique Selling Proposition, das, was ein Angebot einzigartig macht.'},
+        {q:'Kundenbindung zielt vor allem darauf ab...', options:['neue Kunden erstmalig zu gewinnen','bestehende Kunden langfristig zu halten','Preise zu senken','die Produktion zu steigern'], correct:1, explain:'Kundenbindung fokussiert den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
+      ]
+    },
+    {
+      id:'sehhilfen', name:'Versorgung mit Sehhilfen (Fachwissen)', accent:'var(--c-sehhilfen)',
+      flashcards:[
+        {q:'Wie sollte eine Augenoptiker/in vorgehen, wenn keine Angaben über die Form einer Anisometropie vorliegen?', a:'Sollte mit Hilfe subjektiver Prüfverfahren ermittelt werden, da der subjektive Sehkomfort des Kunden entscheidend ist.'},
+        {q:'In welchem Fall empfiehlt sich der Einsatz von Hartschichten?', a:'Bei hochbrechenden organischen Gläsern mit hoher Kratzempfindlichkeit, weshalb es erforderlich ist, die Oberfläche zu härten.'},
+        {q:'Nenne die beim Brillenglas auftretenden Reflexe.', a:'Vorderer Reflex, Rückwärtiger Reflex, Innerer Reflex, Hornhautreflex.'},
+        {q:'Erkläre das Funktionsprinzip des Clean-Coats.', a:'Der Clean-Coat hat eine sehr glatte Oberfläche, wodurch deutlich weniger Verunreinigungen am Glas anhaften können. Er kann auch antistatische Eigenschaften besitzen und antistatisch sein.'},
+        {q:'Nenne die Veredelungsschichten aufsteigend nach ihrer ungefähren Dicke.', a:'Clean-Coat: wenige Nanometer. Entspiegelungsschicht: bis zu mehrere hundert nm (je nach Anzahl der Schichten). Hartschicht: mehrere tausend nm.'},
+        {q:'Welche Veredelungen könntest du Kunden empfehlen?', a:'Verspiegelungen, Entspiegelungen, Clean-Coat/Sauber Schicht.'},
+        {q:'Über welche Informationen muss ein/e Augenoptiker/in verfügen, um dem Kunden eine passende Seh- oder Arbeitshilfe empfehlen zu können?', a:'Lesefähigkeit des Probanden, verfügbarer Visus c.c., Kontrast- und Farbwahrnehmung, Lage und Größe vorhandener Skotome, manuelle Fertigkeit, erforderliche Arbeitsentfernung.'},
+        {q:'Beschreibe den Ablauf der Brillenglaszentrierung.', a:'1. Bezugspunkt anzeichnen. 2. Horizontale und vertikale Zentriermaße ermitteln. 3. Rohkantige Gläser aufblocken. 4. Gerandete Gläser einsetzen. 5. Brille auf Abgabefähigkeit prüfen.'},
+        {q:'Ein Kunde möchte bezüglich der einzelnen Veredelungen organisch hochbrechendes Glas beraten werden. Was sollten deine Mitarbeiter ihm empfehlen?', a:'Das hochbrechende Glas erfordert eine Hartschicht. Aufgrund des hohen Reflexes sollte es ebenfalls entspiegelt sein. Da durch die Entspiegelung Verschmutzungen stärker auftreten, ist ein Clean-Coat empfehlenswert, der durch den reduzierten Reinigungsaufwand wiederum zusätzlich geringere mechanische Belastung der Gläser mit sich bringt.'},
+        {q:'Welche Punkte sind für die Zentrierung des Brillenglases wichtig?', a:'Bezugspunkt B: Dieser Punkt liegt auf der Vorderseite vom Glas. In ihm liegt die dioptrische Wirkung. Optischer Mittelpunkt O: Hier werden die Scheitelpunkte von der optischen Achse durchstoßen. Geometrischer Mittelpunkt G: Die Linse hat an diesem Punkt keine brechende Wirkung.'},
+        {q:'Nenne die Kürzel für die Zentriermaße nach DIN EN ISO 13666.', a:'u_FBL (horizontale Dezentration des Zentrierpunktes), v_FBL (vertikale Dezentration des Zentrierpunktes), x_FBL (horizontales Maß bis zur nasalen Kastenseite), y_FBL (horizontales Maß bis zur nasalen Kastenseite).'},
+        {q:'Welches Material würdest du für die Entspiegelung mineralischer Gläser verwenden?', a:'Magnesiumfluorid MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung von mineralischen Gläsern genutzt. Die Amplitudenbedingung ns = √nGlas wäre gut erfüllt bei hochbrechenden Brillenglaswerkstoffen. Für andere Gläser kann man es auch anwenden, aber die interferierenden Wellen löschen sich dann nicht komplett aus.'},
+        {q:'Welche Beschichtungen können auf Brillengläsern angebracht werden?', a:'Hartschicht, Farbschicht, Clean-Coat, Entspiegelungsschicht.'},
+        {q:'Was ist ein Sturmsches Konoid?', a:'Ein Sturmsches Konoid ist ein räumlich ausgedehntes Bild bei einer Abbildung durch eine astigmatische Linse.'},
+        {q:'Was sind charakteristische Merkmale von Edelstahlfassungen?', a:'Hohe Festigkeit, schwierige Umformbarkeit, Korrosionssicherheit, problematisch lötbar.'},
+        {q:'Was könnte man einem Kunden zusätzlich zum Gebrauch einer Lupe als Unterstützung empfehlen?', a:'In ihrer Neigung angepasste Lesepulte können die Nutzung der Lupe in angenehmer und gewohnter Körperhaltung unterstützen.'},
+        {q:'In welche Richtung wirkt ein Zylinder mit Achslage = 30°?', a:'Er wirkt in Richtung 120°/300°.'},
+        {q:'Was besagt die Bedarfsgegenständeverordnung BedGgstV bezüglich des Nickelgehalts einer Legierung?', a:'Eine Legierung darf im Verlauf einer Woche nicht mehr als 0,5 Mikrogramm Nickel freisetzen.'},
+        {q:'Nenne die Lupenausführungen (Linsen).', a:'Asymmetrisch bikonvex, Asphärisch, Aplanatisch, Aplanatisch-achromatisch, anastigmatisch.'},
+        {q:'Wozu dient der Einsatz eines Blaublockers?', a:'Der Blaublocker absorbiert den kurzwelligen Teil des sichtbaren Spektrums, da die Energie von Photonen mit sinkender Wellenlänge steigt. So wird das Auge vor energiereicher Strahlung geschützt.'},
+        {q:'Nenne Eigenschaften, die Werkstoffe zur Herstellung von Brillenfassungen aufweisen sollten.', a:'Elastizität, geringes Gewicht, UV-Beständigkeit, Stabilität, Korrosionssicherheit, Hautfreundlichkeit, Härte.'},
+        {q:'Was können die Ursachen für einen Achsfehler sein?', a:'Ungenaue Angaben des Kunden, inkorrekte Dokumentation der ermittelten Achslage (z. B. durch Runden der Werte), Fehler beim Aufblocken, Fehler beim Anzeichnen mit dem Scheitelbrechwertmessinstrument, Fehler bei der Formrandung, Fehler beim Einsetzen des Glases.'},
+        {q:'Du übergibst einem Kunden eine Brille mit medizinischem Filter. Worauf musst du ihn hinweisen?', a:'Beim Tragen der Gläser darf der Kunde kein Fahrzeug führen. Medizinische Filter bedingen eine hohe Farbverfälschung. Die Signallichttauglichkeit kann dadurch beeinträchtigt sein.'},
+        {q:'Gemäß TABO-Gradbogenschema: in welcher Richtung liegt "außen"?', a:'links: 0°; rechts: 180°.'},
+        {q:'Was besagt das Testergebnis "wahr negativ"?', a:'Das Testergebnis war negativ und eine Erkrankung lag wirklich nicht vor.'},
+        {q:'Was stellen Transmissionskurven dar?', a:'Transmissionskurven zeigen graphisch die Transmission des Glases in Abhängigkeit von der Wellenlänge.'},
+        {q:'Wie geht ein/e Augenoptiker/in vor, um die Hauptdurchblickpunkte reproduzierbar festzulegen?', a:'1. Anatomisch voranpassen. 2. Rechte und linke Pupillendistanz messen. 3. Rechte und linke Pupillendistanz rückseitig auf die Musterverglasung übertragen. 4. Kunden für Nullblickrichtung die eigenen Pupillen im Spiegel fixieren lassen. 5. Kopf nach hinten neigen lassen, bis die Fassungsebene senkrecht zum Boden steht. 6. Höhe der Pupillenmitte schätzen. 7. Höhe der Pupillenmitte vorn auf die Musterverglasung übertragen. 8. Unter identischen Rahmenbedingungen kontrollieren.'},
+        {q:'In welchen Fällen eignen sich welche Filterfarben beim medizinischen Einsatz reduzierender Gläser?', a:'Blauzapfenmonochromasie: gelb bis rötlich (oder blau). Diabetische Retinopathie: gelblich bis rötlich. Retinopathia pigmentosa: gelblich bis rötlich.'},
+        {q:'Ein Kunde möchte ein möglichst geringes Brillengewicht. Wie kannst du dies ermöglichen?', a:'Organische Materialien wählen, da diese etwa halb so viel wiegen wie mineralische Gläser bei ähnlichen Brechzahlen. Geringe Fassungsgröße empfehlen, besonders bei Plusgläsern, deren mittlere Dicke vom Durchmesser der Linse abhängt.'},
+        {q:'Welche Nachteile sollen durch den Einsatz von Lentikulargläsern kompensiert werden?', a:'Große Randdicken bei Minusglas, abgeschwächte Abbildungsfähigkeit im Randbereich, hohes Gewicht der Gläser, hohe Mittendicke und Vorwölbung bei Plusglas.'},
+        {q:'Beschreibe den Aufbau eines Lentikularglases.', a:'Bei einem Lentikularglas beansprucht das optisch wirksame Areal nur einen Teil vom Rohglas. Um diese Zone herum ist ein mit keiner Wirkung versehener Tragrand.'},
+        {q:'Die Gläser welcher Kategorie kannst du einem Kunden empfehlen, der nachts mit dem Auto fahren möchte?', a:'Nachtfahrtauglichkeit ist bei den Gläsern der Kategorie 0 und 1 gegeben.'},
+        {q:'Was versteht man unter dem sogenannten "Slab-Off"?', a:'Es handelt sich um eine Schleifart, mit der man ein durch Anisometropie ausgelöstes Vertikalprisma im Nahbereich von einem Mehrstärkenglas kompensieren kann.'},
+      ],
+      glossary:[
+        {t:'Anisometropie', d:'Unterschiedliche Fehlsichtigkeit beider Augen.'},
+        {t:'Clean-Coat', d:'Sehr glatte, wenige Nanometer dünne Beschichtung, die Verunreinigungen am Glas reduziert.'},
+        {t:'Hartschicht', d:'Beschichtung zur Erhöhung der Kratzfestigkeit, mehrere tausend nm dick.'},
+        {t:'Hornhautreflex', d:'Einer der beim Brillenglas auftretenden Reflexe.'},
+        {t:'Bezugspunkt B', d:'Punkt auf der Vorderseite des Glases, in dem die dioptrische Wirkung liegt.'},
+        {t:'Optischer Mittelpunkt O', d:'Punkt, an dem die Scheitelpunkte von der optischen Achse durchstoßen werden.'},
+        {t:'Geometrischer Mittelpunkt G', d:'Punkt am Glas ohne brechende Wirkung.'},
+        {t:'MgF2 (Magnesiumfluorid)', d:'Material zur Entspiegelung mineralischer Gläser, Brechzahl 1,38.'},
+      ],
+      quiz:[
+        {q:'Wann empfiehlt sich der Einsatz von Hartschichten?', options:['Bei niedrigbrechenden Gläsern','Bei hochbrechenden, kratzempfindlichen organischen Gläsern','Nur bei Sonnenbrillen','Nur bei Kunststoffrahmen'], correct:1, explain:'Hochbrechende organische Gläser besitzen eine besonders kratzempfindliche Oberfläche, die gehärtet werden sollte.'},
+        {q:'Welche Reflexart tritt NICHT am Brillenglas auf?', options:['Vorderer Reflex','Rückwärtiger Reflex','Innerer Reflex','Seitlicher Randreflex'], correct:3, explain:'Die vier Reflexe sind vorderer, rückwärtiger, innerer Reflex und Hornhautreflex.'},
+        {q:'Was ist das Funktionsprinzip des Clean-Coats?', options:['Erhöhte Kratzfestigkeit','Sehr glatte Oberfläche gegen Verunreinigungen, teils antistatisch','Färbung des Glases','Erhöhte Lichtdurchlässigkeit'], correct:1, explain:'Der Clean-Coat sorgt durch seine glatte Oberfläche dafür, dass weniger Schmutz und Fett anhaften.'},
+        {q:'Welche Veredelungsschicht ist am dicksten?', options:['Clean-Coat','Entspiegelungsschicht','Hartschicht','Alle sind gleich dick'], correct:2, explain:'Die Hartschicht ist mit mehreren tausend nm deutlich dicker als Clean-Coat und Entspiegelungsschicht.'},
+      ]
+    },
+    {
+      id:'physiologie', name:'Physiologie des Sehens', accent:'var(--c-physiologie)',
+      flashcards:[
+        {q:'Wie groß ist das vom Menschen wahrnehmbare elektromagnetische Spektrum?', a:'Das vom Menschen wahrnehmbare elektromagnetische Spektrum liegt zwischen 380 nm – 780 nm.'},
+        {q:'Vervollständige den Satz: Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', a:'...höhere... Pluswirkung als die Fernkorrektion.'},
+        {q:'Was ist der Unterschied zwischen additiver und subtraktiver Farbmischung?', a:'Additive Farbmischung: Licht wird mit Licht überlagert (=Addition), damit wird die Mischung heller. Subtraktive Farbmischung: Ein Teil des Lichts wird entnommen (es wird also "subtrahiert"), daher wird die Mischung dunkler.'},
+        {q:'Was versteht man unter "direktem Sehen"?', a:'Als direktes Sehen bezeichnet man es, wenn ein Auge ein Objekt direkt zentriert, die Abbildung in die Foveola, also auf die Netzhautstelle mit dem höchsten Auflösungsvermögen fällt.'},
+      ],
+      glossary:[
+        {t:'Sichtbares Spektrum', d:'Der vom Menschen wahrnehmbare Bereich des elektromagnetischen Spektrums, 380–780 nm.'},
+        {t:'Presbyopie', d:'Altersbedingte Weitsichtigkeit; Korrektionsmittel für die Nähe hat stets eine höhere Pluswirkung als für die Ferne.'},
+      ],
+      quiz:[
+        {q:'In welchem Bereich liegt das vom Menschen wahrnehmbare elektromagnetische Spektrum?', options:['200–400 nm','380–780 nm','780–1200 nm','100–380 nm'], correct:1, explain:'Das sichtbare Licht für den Menschen liegt zwischen 380 nm und 780 nm.'},
+      ]
+    },
+    {
+      id:'finanzwirtschaft', name:'Finanzwirtschaft', accent:'var(--c-finanzwirtschaft)',
+      flashcards:[
+        {q:'Worum handelt es sich beim "Interest Rate Swap"?', a:'Der Interest Rate Swap ist ein Zinsderivat, bei dem die zwei Partner zu vereinbarten Zeitpunkten Zinszahlungen auf vereinbarte Nennbeträge austauschen. Meist zahlt hierbei eine Partei einen fixierten, und die andere einen variablen Zinssatz.'},
+        {q:'Vervollständige den Satz: Bei der Rentabilitätsvergleichsrechnung wird neben der Gewinnvergleichsrechnung auch das ... berücksichtigt.', a:'...eingesetzte Kapital.'},
+        {q:'Worauf basiert die statische Amortisationsrechnung als einziges Investitionsrechenverfahren?', a:'Es basiert auf Zahlungsgrößen.'},
+        {q:'Wie ist die Gründung einer offenen Handelsgesellschaft (OHG) rechtlich festgelegt?', a:'Die Gründung einer OHG ist formfrei. Sie muss aber in das Handelsregister eingetragen werden und auf den Betrieb von einem Handelsgewerbe unter gemeinschaftlicher Firma ausgelegt sein.'},
+        {q:'Wer kann zu den Gründungsmitgliedern einer Gesellschaft bürgerlichen Rechts (GbR) zählen?', a:'Gründungsmitglieder einer GbR können natürliche Personen, juristische Personen und andere Personengesellschaften sein.'},
+        {q:'Welche Daten sollen bei der Investitionsplanung zusammengestellt werden?', a:'Investitionsbezeichnung, Investitionszeitpunkt, Kaufpreis bei Hinzuziehung von Nebenkosten (z. B. Installationen, Transportkosten etc.).'},
+        {q:'Wozu dient die Kostenvergleichsrechnung?', a:'Hier werden die Kosten von Investitionen miteinander verglichen.'},
+        {q:'Nenne Risiken, denen ein Unternehmen im internationalen Geschäft ausgesetzt ist.', a:'Zinsänderungsrisiken, Länderrisiken, Wechselkursrisiken.'},
+      ],
+      glossary:[
+        {t:'Interest Rate Swap', d:'Zinsderivat zum Austausch von Zinszahlungen (meist fix gegen variabel) auf einen vereinbarten Nennbetrag.'},
+        {t:'Amortisationsrechnung', d:'Statisches Investitionsrechenverfahren, das auf Zahlungsgrößen basiert.'},
+      ],
+      quiz:[
+        {q:'Was tauschen die Partner bei einem Interest Rate Swap in der Regel aus?', options:['Aktien gegen Anleihen','Einen fixierten gegen einen variablen Zinssatz','Fremdwährungen','Immobilienwerte'], correct:1, explain:'Meist zahlt eine Partei einen fixierten Zinssatz, die andere einen variablen Zinssatz auf denselben Nennbetrag.'},
+        {q:'Worauf basiert die statische Amortisationsrechnung?', options:['Auf Gewinngrößen','Auf Zahlungsgrößen','Auf Abschreibungen','Auf Zinssätzen'], correct:1, explain:'Als einziges der klassischen statischen Verfahren basiert die Amortisationsrechnung auf Zahlungsgrößen.'},
+      ]
+    },
+    {
+      id:'qm', name:'Qualitätsmanagement', accent:'var(--c-qm)',
+      flashcards:[
+        {q:'Welche Voraussetzungen müssen vorliegen, damit QM in einem Unternehmen erfolgreich umgesetzt werden kann?', a:'Möglichst alle Mitarbeiter/innen sollten beteiligt sein und mitarbeiten. Demotivierende Faktoren sollten ausgemacht und abgebaut werden. Innerhalb der gesamten Gruppe sollten Minimalstandards gefunden werden, die dann eingehalten werden.'},
+      ],
+      glossary:[
+        {t:'QM (Qualitätsmanagement)', d:'Systematische Steuerung von Prozessen zur Sicherung und Verbesserung der Qualität, erfolgreich nur mit breiter Mitarbeiterbeteiligung.'},
+      ],
+      quiz:[
+        {q:'Was ist eine wichtige Voraussetzung für erfolgreiches QM im Unternehmen?', options:['Nur die Führungsebene sollte beteiligt sein','Möglichst alle Mitarbeiter sollten beteiligt sein und mitarbeiten','QM sollte extern ohne Mitarbeiterbeteiligung entwickelt werden','Individuelle Standards für jeden Mitarbeiter'], correct:1, explain:'Erfolgreiches QM setzt breite Mitarbeiterbeteiligung sowie gemeinsame Minimalstandards voraus.'},
+      ]
+    },
+    {
+      id:'steuerrecht', name:'Steuer und Recht', accent:'var(--c-steuerrecht)',
+      flashcards:[
+        {q:'Welche Steuersätze im Umsatzsteuerrecht werden unterschieden?', a:'Üblicherweise beträgt der Steuersatz für die Umsatzsteuer 19 %. Unter Anderem für Bücher oder Lebensmittel gibt es einen ermäßigten Steuersatz von 7 %. Zuletzt gibt es nicht steuerbare Umsätze.'},
+        {q:'Welche Einkunftsarten gibt es im Einkommensteuerrecht?', a:'Einkünfte aus Gewerbebetrieb, Nichtselbstständiger Arbeit, Selbstständiger Arbeit, Land- und Forstwirtschaft, Vermietung/Verpachtung, Kapitalvermögen, andere Einkünfte.'},
+        {q:'Nenne ein Beispiel für ein geringwertiges Wirtschaftsgut gemäß § 6 Abs. 2 EStG.', a:'Hierzu zählen Wirtschaftsgüter, die beweglich und abnutzbar sind, selbstständig genutzt werden, zum Anlagevermögen gehören, Anschaffungskosten zwischen 150 € und 1000 € beanspruchen. Beispiel: Die Anschaffung eines Laptops für 700 €.'},
+        {q:'Wer ist unbeschränkt steuerpflichtig?', a:'Als unbeschränkt steuerpflichtig gelten alle natürlichen Personen, die einen Wohnsitz im Bundesgebiet haben und sich dort üblicherweise aufhalten.'},
+      ],
+      glossary:[
+        {t:'Umsatzsteuer', d:'19 % Regelsteuersatz, 7 % ermäßigter Satz (z. B. Bücher, Lebensmittel), sowie nicht steuerbare Umsätze.'},
+        {t:'Geringwertiges Wirtschaftsgut (GWG)', d:'Bewegliches, abnutzbares, selbstständig nutzbares Anlagevermögen mit Anschaffungskosten zwischen 150 € und 1000 € (§ 6 Abs. 2 EStG).'},
+        {t:'Unbeschränkte Steuerpflicht', d:'Gilt für natürliche Personen mit Wohnsitz und gewöhnlichem Aufenthalt im Bundesgebiet.'},
+      ],
+      quiz:[
+        {q:'Wie hoch ist der reguläre Umsatzsteuersatz in Deutschland?', options:['7 %','9 %','19 %','21 %'], correct:2, explain:'Der reguläre Umsatzsteuersatz beträgt 19 %, der ermäßigte Satz 7 %.'},
+        {q:'Welche Einkunftsart zählt NICHT zu den 7 Einkunftsarten des Einkommensteuerrechts?', options:['Gewerbebetrieb','Kapitalvermögen','Erbschaften','Vermietung/Verpachtung'], correct:2, explain:'Erbschaften unterliegen der Erbschaftsteuer, nicht den 7 Einkunftsarten der Einkommensteuer.'},
+        {q:'In welcher Preisspanne müssen die Anschaffungskosten eines geringwertigen Wirtschaftsguts liegen?', options:['Unter 150 €','150 € – 1000 €','1000 € – 5000 €','Über 5000 €'], correct:1, explain:'Geringwertige Wirtschaftsgüter nach § 6 Abs. 2 EStG liegen zwischen 150 € und 1000 € Anschaffungskosten.'},
+      ]
+    }
+  ]
+};
+
+/* ---------------- STORAGE ---------------- */
+const STORAGE_KEY = 'meister3_progress_v1';
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {flash:{}, quizHistory:[]};
+}
+function saveProgress(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+}
+let progress = loadProgress();
+
+/* ---------------- HELPERS ---------------- */
+function catFlashStats(cat){
+  const total = cat.flashcards.length;
+  let known = 0;
+  cat.flashcards.forEach((fc,i)=>{
+    const key = cat.id+'_'+i;
+    if(progress.flash[key] === 'known') known++;
+  });
+  return {known, total};
+}
+function overallProgressPct(){
+  let known=0, total=0;
+  DATA.categories.forEach(cat=>{
+    const s = catFlashStats(cat);
+    known += s.known; total += s.total;
+  });
+  return total ? Math.round(known/total*100) : 0;
+}
+function updateSeal(){
+  const pct = overallProgressPct();
+  document.getElementById('overallPct').textContent = pct+'%';
+  const circumference = 238.76;
+  const offset = circumference - (circumference*pct/100);
+  document.getElementById('ringFg').style.strokeDashoffset = offset;
+}
+
+/* ---------------- VIEW ROUTER ---------------- */
+const panel = document.getElementById('panel');
+let currentView = 'dashboard';
+
+document.getElementById('tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentView = btn.dataset.view;
+  render();
+});
+
+function render(){
+  if(currentView==='dashboard') renderDashboard();
+  else if(currentView==='flashcards') renderFlashcards();
+  else if(currentView==='quiz') renderQuiz();
+  else if(currentView==='glossar') renderGlossar();
+  updateSeal();
+}
+
+/* ---------------- DASHBOARD ---------------- */
+function renderDashboard(){
+  let cards = DATA.categories.map(cat=>{
+    const s = catFlashStats(cat);
+    const pct = s.total ? Math.round(s.known/s.total*100) : 0;
+    return `<div class="cat-card" style="--accent:${cat.accent}" data-cat="${cat.id}">
+      <div class="name">${cat.name}</div>
+      <div class="bar-bg"><div class="bar-fg" style="width:${pct}%"></div></div>
+      <div class="stat">${s.known}/${s.total} Lernkarten sicher &middot; ${pct}%</div>
+    </div>`;
+  }).join('');
+  panel.innerHTML = `
+    <h2>Übersicht</h2>
+    <p class="lede">Dein Stand pro Themenbereich. Klick auf einen Bereich, um direkt mit den Lernkarten zu starten.</p>
+    <div class="cat-grid">${cards}</div>
+  `;
+  panel.querySelectorAll('.cat-card').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      fcState.catId = el.dataset.cat;
+      fcState.index = 0;
+      fcState.showAnswer = false;
+      document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+      document.querySelector('[data-view="flashcards"]').classList.add('active');
+      currentView='flashcards';
+      render();
+    });
+  });
+}
+
+/* ---------------- FLASHCARDS ---------------- */
+let fcState = {catId: DATA.categories[0].id, index:0, showAnswer:false, lastMark:null};
+
+function renderFlashcards(){
+  const cat = DATA.categories.find(c=>c.id===fcState.catId);
+  const selectBtns = DATA.categories.map(c=>
+    `<button data-cat="${c.id}" class="${c.id===cat.id?'active':''}">${c.name}</button>`
+  ).join('');
+
+  const fc = cat.flashcards[fcState.index];
+  const key = cat.id+'_'+fcState.index;
+  const mark = progress.flash[key];
+  const s = catFlashStats(cat);
+
+  panel.innerHTML = `
+    <h2>Lernkarten</h2>
+    <p class="lede">Karte antippen zum Umdrehen. Danach ehrlich einschätzen, ob du es sicher weißt.</p>
+    <div class="fc-select">${selectBtns}</div>
+    <div class="card-stage">
+      <div class="flashcard ${fcState.showAnswer?'is-answer':''}" id="fcCard">
+        <span class="stamp-mark ${mark==='known'?'known show':''} ${mark==='unknown'?'unknown show':''}">${mark==='known'?'BEHERRSCHT':(mark==='unknown'?'ÜBEN':'')}</span>
+        <div class="face">${fcState.showAnswer ? fc.a : fc.q}</div>
+        <div class="hint">${fcState.showAnswer ? 'Antwort — Klick für Frage' : 'Frage — Klick für Antwort'}</div>
+      </div>
+      <div class="fc-actions">
+        <button class="btn-unknown">Nochmal üben</button>
+        <button class="btn-known">Kenn ich sicher</button>
+      </div>
+      <div class="fc-progress">Karte ${fcState.index+1} / ${cat.flashcards.length} &middot; ${s.known}/${s.total} sicher in diesem Bereich</div>
+    </div>
+  `;
+
+  panel.querySelectorAll('.fc-select button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      fcState.catId=b.dataset.cat; fcState.index=0; fcState.showAnswer=false; render();
+    });
+  });
+  document.getElementById('fcCard').addEventListener('click', ()=>{
+    fcState.showAnswer = !fcState.showAnswer;
+    render();
+  });
+  panel.querySelector('.btn-known').addEventListener('click', ()=>{
+    progress.flash[key]='known'; saveProgress(); nextCard(cat);
+  });
+  panel.querySelector('.btn-unknown').addEventListener('click', ()=>{
+    progress.flash[key]='unknown'; saveProgress(); nextCard(cat);
+  });
+}
+function nextCard(cat){
+  fcState.index = (fcState.index+1) % cat.flashcards.length;
+  fcState.showAnswer = false;
+  render();
+}
+
+/* ---------------- QUIZ ---------------- */
+let quizState = null;
+
+function renderQuiz(){
+  if(!quizState || quizState.stage==='setup'){
+    const opts = DATA.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    panel.innerHTML = `
+      <h2>Klausursimulation</h2>
+      <p class="lede">Wähle einen Bereich (oder alle gemischt) und ein Zeitlimit. So übst du echten Prüfungsdruck.</p>
+      <div class="quiz-setup">
+        <label>Bereich<br>
+          <select id="quizCat">
+            <option value="all">Alle Bereiche gemischt</option>
+            ${opts}
+          </select>
+        </label>
+        <label>Zeitlimit pro Frage (Sekunden)<br>
+          <input class="num-input" id="quizTime" type="number" value="45" min="10" max="180" style="width:100px">
+        </label>
+        <button id="startQuiz">Klausur starten</button>
+      </div>
+    `;
+    document.getElementById('startQuiz').addEventListener('click', ()=>{
+      const catId = document.getElementById('quizCat').value;
+      const timeLimit = parseInt(document.getElementById('quizTime').value)||45;
+      let pool = [];
+      if(catId==='all'){
+        DATA.categories.forEach(c=> c.quiz.forEach(q=> pool.push({...q, cat:c.name})));
+      } else {
+        const c = DATA.categories.find(c=>c.id===catId);
+        c.quiz.forEach(q=> pool.push({...q, cat:c.name}));
+      }
+      pool = pool.sort(()=>Math.random()-0.5);
+      quizState = {stage:'running', pool, i:0, correctCount:0, timeLimit, timeLeft:timeLimit, timer:null, answered:false, wrongList:[]};
+      startTimer();
+      renderQuiz();
+    });
+    return;
+  }
+
+  if(quizState.stage==='running'){
+    const q = quizState.pool[quizState.i];
+    const timerClass = quizState.timeLeft<=10 ? 'quiz-timer low' : 'quiz-timer';
+    panel.innerHTML = `
+      <div class="quiz-head">
+        <h2 style="margin:0">Frage ${quizState.i+1} / ${quizState.pool.length}</h2>
+        <span class="${timerClass}" id="timerDisp">${quizState.timeLeft}s</span>
+      </div>
+      <p class="lede" style="margin-bottom:6px">${q.cat}</p>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options" id="qOptions">
+        ${q.options.map((o,i)=>`<button class="q-option" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div id="qExplainWrap"></div>
+      <div class="quiz-nav"><button id="nextQ" style="display:none">Nächste Frage</button></div>
+    `;
+    panel.querySelectorAll('.q-option').forEach(btn=>{
+      btn.addEventListener('click', ()=> answerQuestion(parseInt(btn.dataset.i)));
+    });
+    document.getElementById('nextQ').addEventListener('click', nextQuestion);
+    return;
+  }
+
+  if(quizState.stage==='result'){
+    const pct = Math.round(quizState.correctCount/quizState.pool.length*100);
+    panel.innerHTML = `
+      <h2>Ergebnis</h2>
+      <div class="quiz-result">
+        <div class="big">${pct}%</div>
+        <p>${quizState.correctCount} von ${quizState.pool.length} Fragen richtig beantwortet.</p>
+        ${quizState.wrongList.length ? `<p class="lede">Nochmal ansehen: ${quizState.wrongList.map(w=>w.cat).join(', ')}</p>` : '<p class="lede">Stark — alles richtig!</p>'}
+        <button id="restartQuiz" style="margin-top:14px">Neue Klausur starten</button>
+      </div>
+    `;
+    document.getElementById('restartQuiz').addEventListener('click', ()=>{ quizState={stage:'setup'}; renderQuiz(); });
+  }
+}
+
+function startTimer(){
+  clearInterval(quizState.timer);
+  quizState.timeLeft = quizState.timeLimit;
+  quizState.answered = false;
+  quizState.timer = setInterval(()=>{
+    quizState.timeLeft--;
+    const disp = document.getElementById('timerDisp');
+    if(disp){
+      disp.textContent = quizState.timeLeft+'s';
+      if(quizState.timeLeft<=10) disp.classList.add('low');
+    }
+    if(quizState.timeLeft<=0){
+      clearInterval(quizState.timer);
+      if(!quizState.answered) answerQuestion(-1);
+    }
+  },1000);
+}
+
+function answerQuestion(chosenIdx){
+  if(quizState.answered) return;
+  quizState.answered = true;
+  clearInterval(quizState.timer);
+  const q = quizState.pool[quizState.i];
+  const options = document.querySelectorAll('.q-option');
+  options.forEach((btn,i)=>{
+    if(i===q.correct) btn.classList.add('correct');
+    else if(i===chosenIdx) btn.classList.add('wrong');
+    btn.disabled = true;
+  });
+  if(chosenIdx===q.correct){
+    quizState.correctCount++;
+  } else {
+    quizState.wrongList.push(q);
+  }
+  document.getElementById('qExplainWrap').innerHTML = `<div class="q-explain">${q.explain}</div>`;
+  document.getElementById('nextQ').style.display = 'inline-block';
+}
+
+function nextQuestion(){
+  quizState.i++;
+  if(quizState.i >= quizState.pool.length){
+    quizState.stage='result';
+    progress.quizHistory.push({date:new Date().toISOString(), pct:Math.round(quizState.correctCount/quizState.pool.length*100)});
+    saveProgress();
+    renderQuiz();
+  } else {
+    startTimer();
+    renderQuiz();
+  }
+}
+
+/* ---------------- GLOSSAR ---------------- */
+function renderGlossar(){
+  panel.innerHTML = `
+    <h2>Glossar</h2>
+    <p class="lede">Nachschlagewerk aller Fachbegriffe. Einfach tippen zum Filtern.</p>
+    <input class="glossar-search" id="gSearch" placeholder="Begriff suchen…">
+    <dl class="glossar-list" id="gList"></dl>
+  `;
+  const allTerms = [];
+  DATA.categories.forEach(c=> c.glossary.forEach(g=> allTerms.push({...g, cat:c.name})));
+  allTerms.sort((a,b)=>a.t.localeCompare(b.t,'de'));
+
+  function draw(filter){
+    const f = (filter||'').toLowerCase();
+    const list = document.getElementById('gList');
+    const filtered = allTerms.filter(t => t.t.toLowerCase().includes(f) || t.d.toLowerCase().includes(f));
+    list.innerHTML = filtered.map(t=>`<dt>${t.t}<span class="g-cat-tag">${t.cat}</span></dt><dd>${t.d}</dd>`).join('') || '<p class="lede">Keine Treffer.</p>';
+  }
+  draw('');
+  document.getElementById('gSearch').addEventListener('input', e=> draw(e.target.value));
+}
+
+/* ---------------- INIT ---------------- */
+render();
+</script>
+</body>
+</html>
