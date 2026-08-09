@@ -8,35 +8,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1C2B45;
-  --ink-2:#26375A;
-  --paper:#F2ECDD;
-  --paper-dim:#E4DCC6;
-  --brass:#B8862F;
-  --brass-light:#D6A94F;
-  --ok:#4C6B4F;
-  --warn:#8B3A2E;
-  --text-on-paper:#241E14;
-  --text-on-ink:#EDE6D2;
-  --c-bwl:#7A5B3A;
-  --c-recht:#3E5C76;
-  --c-personal:#7A3B3B;
-  --c-steuer:#4C6B4F;
-  --c-marketing:#8B6A2E;
-  --c-sehhilfen:#4A5568;
-  --c-physiologie:#2E6B7A;
-  --c-finanzwirtschaft:#5A6B3D;
-  --c-qm:#6B4A7A;
-  --c-steuerrecht:#B8734A;
-  --radius:2px;
-  --shadow: 0 8px 24px rgba(0,0,0,0.35);
+  --petrol:#173F46;
+  --petrol-light:#245863;
+  --petrol-pale:#E4EDEC;
+  --cream:#F5F0E6;
+  --bg-subtle:#F8F6F1;
+  --terracotta:#C96F52;
+  --terracotta-light:#D98A6F;
+  --text-primary:#202827;
+  --text-secondary:#667572;
+  --ok:#5C8A6B;
+  --ok-bg:#E8F1EA;
+  --warn:#C96F52;
+  --warn-bg:#FBEDE8;
+  --card-bg:#FFFFFF;
+  --border:#E5E0D3;
+  --c-bwl:#B08561;
+  --c-recht:#5C7A8A;
+  --c-personal:#B0665C;
+  --c-steuer:#6E9178;
+  --c-marketing:#BFA05C;
+  --c-sehhilfen:#7B8A94;
+  --c-physiologie:#5C8A93;
+  --c-finanzwirtschaft:#8A9668;
+  --c-qm:#8A6E94;
+  --c-steuerrecht:#C98D5C;
+  --radius-card:16px;
+  --radius-btn:10px;
+  --radius-pill:999px;
+  --shadow-soft: 0 4px 20px rgba(20,40,40,0.06);
+  --shadow-hover: 0 10px 28px rgba(20,40,40,0.10);
+  --shadow-panel: 0 8px 32px rgba(20,40,40,0.07);
 }
 *{box-sizing:border-box;}
 body{
   margin:0;
   background:
-    radial-gradient(circle at 20% 10%, #223757 0%, var(--ink) 45%, #16223A 100%);
-  color:var(--text-on-ink);
+    linear-gradient(180deg, var(--petrol-pale) 0%, var(--bg-subtle) 340px);
+  color:var(--text-primary);
   font-family:'IBM Plex Sans', sans-serif;
   min-height:100vh;
 }
@@ -45,247 +54,329 @@ body{
 /* HEADER */
 header.app-header{
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:space-between;
-  gap:24px;
-  padding-bottom:28px;
-  border-bottom:1px solid rgba(237,230,210,0.18);
-  margin-bottom:28px;
+  text-align:center;
+  gap:16px;
+  padding-bottom:30px;
+  margin-bottom:30px;
 }
 .title-block h1{
   font-family:'Fraunces', serif;
   font-weight:600;
-  font-size:clamp(24px,4vw,34px);
-  margin:0 0 4px;
-  letter-spacing:0.2px;
+  font-size:clamp(26px,4vw,36px);
+  margin:0 0 6px;
+  letter-spacing:0.1px;
+  color:var(--petrol);
 }
 .title-block .subtitle{
-  font-size:13px;
-  color:#B9AF93;
-  letter-spacing:0.4px;
+  font-size:12.5px;
+  color:var(--terracotta);
+  letter-spacing:1.2px;
   text-transform:uppercase;
+  font-weight:600;
 }
+.title-block .tagline{
+  font-size:14px;
+  color:var(--text-secondary);
+  margin-top:6px;
+  font-style:italic;
+}
+.seal-wrap{display:flex; flex-direction:column; align-items:center; gap:8px;}
+.seal-caption{font-size:11px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:600;}
 .seal{
   position:relative;
-  width:88px;height:88px;
+  width:84px;height:84px;
   border-radius:50%;
-  border:2px solid var(--brass);
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
-  background:radial-gradient(circle at 35% 30%, #2E3F63, #1A2740);
-  box-shadow: inset 0 0 0 1px rgba(214,169,79,0.25), 0 0 0 6px rgba(184,134,47,0.06);
+  background:var(--card-bg);
+  box-shadow:var(--shadow-soft);
 }
 .seal .pct{
   font-family:'IBM Plex Mono', monospace;
   font-weight:600;
-  font-size:20px;
-  color:var(--brass-light);
+  font-size:19px;
+  color:var(--petrol);
 }
 .seal svg{position:absolute; top:-2px; left:-2px;}
-.seal .ring-bg{stroke:rgba(237,230,210,0.12);}
-.seal .ring-fg{stroke:var(--brass-light); transition:stroke-dashoffset 0.6s ease;}
+.seal .ring-bg{stroke:var(--petrol-pale);}
+.seal .ring-fg{stroke:var(--terracotta); transition:stroke-dashoffset 0.6s ease; stroke-linecap:round;}
 
 /* TABS */
 nav.tabs{
   display:flex;
+  justify-content:center;
   gap:6px;
   margin-bottom:28px;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  padding:6px;
+  background:var(--card-bg);
+  border-radius:var(--radius-pill);
+  box-shadow:var(--shadow-soft);
+  max-width:fit-content;
+  margin-left:auto; margin-right:auto;
+  -webkit-overflow-scrolling:touch;
 }
+nav.tabs::-webkit-scrollbar{display:none;}
 nav.tabs button{
   font-family:'IBM Plex Sans', sans-serif;
   font-size:13.5px;
   font-weight:500;
-  letter-spacing:0.2px;
-  padding:10px 18px;
-  border:1px solid rgba(237,230,210,0.2);
-  border-bottom:none;
-  background:rgba(237,230,210,0.04);
-  color:#C9BFA3;
+  letter-spacing:0.1px;
+  padding:10px 20px;
+  border:none;
+  background:transparent;
+  color:var(--text-secondary);
   cursor:pointer;
-  border-radius:var(--radius) var(--radius) 0 0;
-  transition:background 0.15s, color 0.15s;
+  border-radius:var(--radius-pill);
+  white-space:nowrap;
+  transition:background 0.2s, color 0.2s;
 }
-nav.tabs button:hover{background:rgba(237,230,210,0.09); color:var(--paper);}
+nav.tabs button:hover{background:var(--petrol-pale); color:var(--petrol);}
 nav.tabs button.active{
-  background:var(--paper);
-  color:var(--text-on-paper);
+  background:var(--petrol);
+  color:#fff;
   font-weight:600;
 }
 
 /* PANEL */
 .panel{
-  background:var(--paper);
-  color:var(--text-on-paper);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:32px;
+  background:var(--card-bg);
+  color:var(--text-primary);
+  border-radius:20px;
+  box-shadow:var(--shadow-panel);
+  padding:36px;
   min-height:420px;
 }
 .panel h2{
   font-family:'Fraunces', serif;
-  font-size:22px;
+  font-size:23px;
   font-weight:600;
   margin:0 0 4px;
+  color:var(--petrol);
 }
-.panel .lede{color:#5C5341; font-size:14px; margin-bottom:24px;}
+.panel .lede{color:var(--text-secondary); font-size:14.5px; margin-bottom:26px; line-height:1.5;}
+
+/* DASHBOARD HERO */
+.progress-hero{
+  background:linear-gradient(135deg, var(--petrol) 0%, var(--petrol-light) 100%);
+  border-radius:var(--radius-card);
+  padding:28px 30px;
+  margin-bottom:24px;
+  color:#fff;
+}
+.hero-top{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+.hero-eyebrow{font-size:12.5px; letter-spacing:0.6px; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:600;}
+.hero-pct{font-family:'Fraunces',serif; font-size:44px; font-weight:600; line-height:1.1; margin:4px 0 6px;}
+.hero-sub{font-size:14px; color:rgba(255,255,255,0.85);}
+.hero-bar-bg{height:8px; background:rgba(255,255,255,0.18); border-radius:var(--radius-pill); overflow:hidden; margin-top:18px;}
+.hero-bar-fg{height:100%; background:var(--terracotta-light); border-radius:var(--radius-pill); transition:width 0.6s ease;}
+.hero-cta{
+  flex-shrink:0; font-family:'IBM Plex Sans'; font-weight:600; font-size:14px;
+  padding:13px 26px; border-radius:var(--radius-btn); border:none;
+  background:var(--terracotta); color:#fff; cursor:pointer; white-space:nowrap;
+  transition:background 0.2s, transform 0.1s;
+}
+.hero-cta:hover{background:var(--terracotta-light);}
+.hero-cta:active{transform:scale(0.97);}
+.progress-hero.empty{text-align:center; padding:36px 30px;}
+.progress-hero.empty .hero-eyebrow{color:rgba(255,255,255,0.85); font-size:16px; text-transform:none; letter-spacing:0; margin-bottom:16px; display:block;}
+.progress-hero.empty .hero-cta{margin:0 auto;}
+
+.recommend-card{
+  border:1px solid var(--border); border-left:4px solid var(--accent);
+  background:var(--card-bg); border-radius:var(--radius-card);
+  padding:16px 20px; margin-bottom:24px; cursor:pointer;
+  transition:transform 0.15s ease, box-shadow 0.15s ease; box-shadow:var(--shadow-soft);
+}
+.recommend-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-hover);}
+.recommend-label{font-size:11.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:600; margin-bottom:4px;}
+.recommend-name{font-weight:600; font-size:15.5px; color:var(--text-primary); margin-bottom:4px;}
+.recommend-stat{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-secondary);}
 
 /* DASHBOARD CARDS */
-.cat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;}
+.cat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px;}
 .cat-card{
-  border:1px solid var(--paper-dim);
-  border-left:5px solid var(--accent);
-  background:#fff8;
-  padding:16px 18px;
-  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:var(--card-bg);
+  padding:20px 22px;
+  border-radius:var(--radius-card);
   cursor:pointer;
-  transition:transform 0.12s, box-shadow 0.12s;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:var(--shadow-soft);
 }
-.cat-card:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,0.12);}
-.cat-card .name{font-weight:600; font-size:14.5px; margin-bottom:10px;}
-.cat-card .bar-bg{height:7px; background:var(--paper-dim); border-radius:4px; overflow:hidden;}
-.cat-card .bar-fg{height:100%; background:var(--accent); border-radius:4px; transition:width 0.4s;}
-.cat-card .stat{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:#6b6045; margin-top:8px;}
+.cat-card::before{
+  content:''; position:absolute; top:0; left:0; width:100%; height:4px;
+  background:var(--accent);
+}
+.cat-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-hover);}
+.cat-card .name{font-weight:600; font-size:15px; margin-bottom:12px; color:var(--text-primary);}
+.cat-card .bar-bg{height:6px; background:var(--petrol-pale); border-radius:var(--radius-pill); overflow:hidden;}
+.cat-card .bar-fg{height:100%; background:var(--accent); border-radius:var(--radius-pill); transition:width 0.6s ease;}
+.cat-card .stat{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--text-secondary); margin-top:10px;}
 
 /* FLASHCARDS */
-.fc-select{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.streak-bar{display:flex; justify-content:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;}
+.streak-item{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--text-secondary); background:var(--petrol-pale); padding:7px 14px; border-radius:var(--radius-pill);}
+.streak-item strong{color:var(--petrol); font-weight:600;}
+.fc-select{display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
 .fc-select button{
-  padding:7px 14px; border-radius:20px; border:1px solid var(--paper-dim);
-  background:transparent; font-size:12.5px; cursor:pointer; color:#5C5341;
+  padding:8px 16px; border-radius:var(--radius-pill); border:1px solid var(--border);
+  background:var(--card-bg); font-size:12.5px; cursor:pointer; color:var(--text-secondary);
+  transition:background 0.15s, color 0.15s, border-color 0.15s;
 }
-.fc-select button.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
-.card-stage{display:flex; flex-direction:column; align-items:center; gap:18px;}
+.fc-select button:hover{border-color:var(--terracotta); color:var(--petrol);}
+.fc-select button.active{background:var(--petrol); color:#fff; border-color:var(--petrol);}
+.card-stage{display:flex; flex-direction:column; align-items:center; gap:20px;}
+.fc-nav-row{display:flex; align-items:center; justify-content:center; gap:14px; width:100%;}
+.fc-arrow{
+  flex-shrink:0; width:46px; height:46px; border-radius:50%;
+  border:1px solid var(--border); background:var(--card-bg); color:var(--petrol);
+  font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow-soft); transition:background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.fc-arrow:hover{background:var(--petrol-pale); border-color:var(--terracotta);}
+.fc-arrow:active{transform:scale(0.92);}
 .flashcard{
-  width:100%; max-width:560px; min-height:200px;
-  background:#fff; border:1px solid var(--paper-dim);
-  border-radius:6px; display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:28px; cursor:pointer; position:relative;
-  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  width:100%; max-width:560px; min-height:220px;
+  background:var(--card-bg); border:1px solid var(--border);
+  border-radius:var(--radius-card); display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:38px 34px; cursor:pointer; position:relative;
+  box-shadow:var(--shadow-soft);
   perspective:1000px;
+  transition:box-shadow 0.2s ease, transform 0.2s ease;
 }
-.flashcard .face{font-size:17px; line-height:1.5;}
-.flashcard .hint{position:absolute; bottom:10px; right:14px; font-size:10.5px; color:#a89c78; letter-spacing:0.3px;}
-.flashcard.is-answer .face{color:var(--ink-2); font-weight:500;}
+.flashcard:hover{box-shadow:var(--shadow-hover); transform:translateY(-2px);}
+.flashcard .face{
+  font-size:20px; line-height:1.65; font-weight:450; letter-spacing:0.1px;
+  color:var(--text-primary); -webkit-font-smoothing:antialiased; max-width:440px;
+}
+.flashcard.is-answer .face{color:var(--petrol);}
+.flashcard.is-answer{background:var(--petrol-pale);}
+.flashcard .hint{position:absolute; bottom:12px; right:16px; font-size:10.5px; color:var(--text-secondary); letter-spacing:0.3px;}
 .stamp-mark{
-  position:absolute; top:10px; left:14px; font-family:'IBM Plex Mono',monospace;
-  font-size:11px; padding:3px 8px; border-radius:3px; opacity:0; transform:scale(1.4) rotate(-8deg);
+  position:absolute; top:12px; left:16px; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; padding:4px 10px; border-radius:var(--radius-pill); opacity:0; transform:scale(1.4);
   transition:opacity 0.25s, transform 0.25s;
 }
-.stamp-mark.show{opacity:1; transform:scale(1) rotate(-8deg);}
-.stamp-mark.known{border:1.5px solid var(--ok); color:var(--ok);}
-.stamp-mark.unknown{border:1.5px solid var(--warn); color:var(--warn);}
+.stamp-mark.show{opacity:1; transform:scale(1);}
+.stamp-mark.known{background:var(--ok-bg); color:var(--ok);}
+.stamp-mark.unknown{background:var(--warn-bg); color:var(--warn);}
 .fc-actions{display:flex; gap:12px;}
 .fc-actions button{
-  font-family:'IBM Plex Sans'; font-weight:600; font-size:13px;
-  padding:10px 20px; border-radius:4px; cursor:pointer; border:1.5px solid transparent;
+  font-family:'IBM Plex Sans'; font-weight:600; font-size:13.5px;
+  padding:12px 24px; border-radius:var(--radius-btn); cursor:pointer; border:1.5px solid transparent;
+  transition:background 0.2s, color 0.2s, transform 0.1s;
 }
-.btn-unknown{background:transparent; border-color:var(--warn); color:var(--warn);}
-.btn-known{background:transparent; border-color:var(--ok); color:var(--ok);}
+.fc-actions button:active{transform:scale(0.97);}
+.btn-unknown{background:var(--warn-bg); border-color:transparent; color:var(--warn);}
+.btn-known{background:var(--ok-bg); border-color:transparent; color:var(--ok);}
 .btn-unknown:hover{background:var(--warn); color:#fff;}
 .btn-known:hover{background:var(--ok); color:#fff;}
-.fc-progress{font-family:'IBM Plex Mono', monospace; font-size:12px; color:#6b6045;}
+.fc-progress{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-secondary);}
+.merksatz-toggle{
+  background:var(--card-bg); border:1px dashed var(--terracotta); color:var(--terracotta);
+  font-family:'IBM Plex Sans'; font-size:12.5px; font-weight:500; padding:9px 18px;
+  border-radius:var(--radius-pill); cursor:pointer; transition:background 0.15s;
+}
+.merksatz-toggle:hover{background:#fdf1ec;}
+.merksatz-box{
+  max-width:560px; width:100%; background:#fdf1ec; border:1px solid var(--terracotta-light);
+  border-radius:var(--radius-card); padding:18px 22px; font-size:15px; line-height:1.6; color:#7a3f28;
+}
 
 /* QUIZ */
-.quiz-setup{display:flex; flex-direction:column; gap:16px; max-width:480px;}
+.quiz-setup{display:flex; flex-direction:column; gap:16px; max-width:480px; margin:0 auto;}
 .quiz-setup select, .quiz-setup .num-input{
-  padding:10px; border:1px solid var(--paper-dim); border-radius:4px; font-family:inherit; font-size:14px;
+  padding:11px 14px; border:1px solid var(--border); border-radius:var(--radius-btn); font-family:inherit; font-size:14px; background:var(--card-bg);
 }
 .quiz-timer{
   font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600;
-  color:var(--ink); padding:6px 14px; border:1.5px solid var(--ink); border-radius:4px;
+  color:var(--petrol); padding:6px 16px; border:1.5px solid var(--petrol); border-radius:var(--radius-btn);
   display:inline-block;
 }
 .quiz-timer.low{color:var(--warn); border-color:var(--warn);}
 .quiz-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
-.q-text{font-size:16.5px; font-weight:500; margin-bottom:18px; line-height:1.5;}
+.q-text{font-size:18.5px; font-weight:500; margin-bottom:20px; line-height:1.6; color:var(--text-primary);}
 .q-options{display:flex; flex-direction:column; gap:10px;}
 .q-option{
-  text-align:left; padding:12px 16px; border:1px solid var(--paper-dim); border-radius:4px;
-  background:#fff; cursor:pointer; font-size:14px; font-family:inherit;
+  text-align:left; padding:16px 20px; border:1.5px solid var(--border); border-radius:var(--radius-card);
+  background:var(--card-bg); cursor:pointer; font-size:15.5px; line-height:1.5; font-family:inherit;
+  transition:border-color 0.15s, background 0.15s, transform 0.1s;
 }
-.q-option:hover{border-color:var(--brass);}
-.q-option.correct{border-color:var(--ok); background:#eaf1ea;}
-.q-option.wrong{border-color:var(--warn); background:#f6e9e7;}
-.q-explain{margin-top:14px; font-size:13px; color:#5c5341; background:var(--paper-dim); padding:12px 14px; border-radius:4px;}
+.q-option:hover{border-color:var(--terracotta); transform:translateX(2px);}
+.q-option.correct{border-color:var(--ok); background:var(--ok-bg);}
+.q-option.wrong{border-color:var(--warn); background:var(--warn-bg);}
+.q-explain{margin-top:16px; font-size:14.5px; line-height:1.55; color:var(--text-secondary); background:var(--petrol-pale); padding:16px 18px; border-radius:var(--radius-card);}
 .quiz-nav{margin-top:20px; display:flex; justify-content:flex-end;}
 .quiz-nav button, .quiz-setup button{
   font-family:'IBM Plex Sans'; font-weight:600; font-size:13.5px;
-  padding:10px 22px; border-radius:4px; border:none; background:var(--ink); color:var(--paper); cursor:pointer;
+  padding:12px 26px; border-radius:var(--radius-btn); border:none; background:var(--petrol); color:#fff; cursor:pointer;
+  transition:background 0.2s, transform 0.1s;
 }
+.quiz-nav button:hover, .quiz-setup button:hover{background:var(--petrol-light);}
+.quiz-nav button:active, .quiz-setup button:active{transform:scale(0.97);}
+.quiz-start-btn{padding:14px 28px !important; font-size:14.5px !important; background:var(--terracotta) !important;}
+.quiz-start-btn:hover{background:var(--terracotta-light) !important;}
 .quiz-result{text-align:center; padding:20px 0;}
-.quiz-result .big{font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:var(--ink);}
+.quiz-result .big{font-family:'Fraunces',serif; font-size:46px; font-weight:600; color:var(--petrol);}
 
 /* GLOSSAR */
 .glossar-search{
-  width:100%; padding:11px 14px; border:1px solid var(--paper-dim); border-radius:4px;
-  font-family:inherit; font-size:14px; margin-bottom:20px;
+  width:100%; padding:12px 16px; border:1px solid var(--border); border-radius:var(--radius-btn);
+  font-family:inherit; font-size:14px; margin-bottom:22px; background:var(--card-bg);
 }
-.glossar-list dt{font-weight:600; margin-top:16px; color:var(--ink-2);}
-.glossar-list dd{margin:4px 0 0; font-size:13.5px; color:#3d3626; line-height:1.5;}
-.g-cat-tag{font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:#a89c78; margin-left:8px;}
+.glossar-list dt{font-weight:600; font-size:15.5px; margin-top:18px; color:var(--petrol);}
+.glossar-list dd{margin:5px 0 0; font-size:14.5px; color:var(--text-primary); line-height:1.6;}
+.g-cat-tag{font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:var(--text-secondary); margin-left:8px;}
 
 footer.note{
-  text-align:center; font-size:11.5px; color:#8a8064; margin-top:26px; line-height:1.6;
+  text-align:center; font-size:11.5px; color:var(--text-secondary); margin-top:26px; line-height:1.6;
 }
 @media (max-width:600px){
-  .panel{padding:20px 16px;}
-  header.app-header{flex-direction:column; align-items:flex-start;}
+  .panel{padding:22px 18px; border-radius:16px;}
+  .flashcard{padding:28px 20px; min-height:180px;}
+  .flashcard .face{font-size:18px;}
+  .fc-arrow{width:40px; height:40px; font-size:18px;}
+  .fc-nav-row{gap:8px;}
+  nav.tabs{max-width:100%;}
+  .progress-hero{padding:22px 20px;}
+  .hero-top{flex-direction:column; align-items:stretch; text-align:center;}
+  .hero-pct{font-size:36px;}
+  .hero-cta{width:100%;}
 }
-
-/* PASSWORT-GATE */
-#gate{
-  position:fixed; inset:0; z-index:999;
-  background: radial-gradient(circle at 20% 10%, #223757 0%, var(--ink) 45%, #16223A 100%);
-  display:flex; align-items:center; justify-content:center; padding:20px;
-}
-#gate .box{
-  background:var(--paper); border-radius:6px; padding:36px 32px; max-width:360px; width:100%;
-  text-align:center; box-shadow:var(--shadow);
-}
-#gate h2{font-family:'Fraunces',serif; font-size:20px; margin:0 0 6px; color:var(--text-on-paper);}
-#gate p{font-size:13px; color:#6b6045; margin:0 0 20px;}
-#gate input{
-  width:100%; padding:11px 14px; border:1px solid var(--paper-dim); border-radius:4px;
-  font-family:inherit; font-size:14px; margin-bottom:12px; box-sizing:border-box;
-}
-#gate button{
-  width:100%; padding:11px; border:none; border-radius:4px; background:var(--ink); color:var(--paper);
-  font-family:'IBM Plex Sans'; font-weight:600; font-size:14px; cursor:pointer;
-}
-#gate .err{color:var(--warn); font-size:12.5px; margin-top:10px; display:none;}
-body.locked > .wrap{display:none;}
 </style>
 </head>
-<body class="locked">
-<div id="gate">
-  <div class="box">
-    <h2>Prüfungswerkstatt</h2>
-    <p>Bitte Passwort eingeben, um fortzufahren.</p>
-    <input type="password" id="gatePw" placeholder="Passwort" autofocus>
-    <button id="gateBtn">Freischalten</button>
-    <div class="err" id="gateErr">Falsches Passwort. Nochmal versuchen.</div>
-  </div>
-</div>
+<body>
 <div class="wrap">
 
   <header class="app-header">
     <div class="title-block">
       <div class="subtitle">Prüfungswerkstatt</div>
       <h1>Meisterprüfung Teil III</h1>
+      <div class="tagline">Schritt für Schritt zur Prüfungssicherheit.</div>
     </div>
-    <div class="seal">
-      <svg width="88" height="88">
-        <circle class="ring-bg" cx="44" cy="44" r="38" fill="none" stroke-width="3"></circle>
-        <circle id="ringFg" class="ring-fg" cx="44" cy="44" r="38" fill="none" stroke-width="3"
-          stroke-dasharray="238.76" stroke-dashoffset="238.76" transform="rotate(-90 44 44)"></circle>
-      </svg>
-      <div class="pct" id="overallPct">0%</div>
+    <div class="seal-wrap">
+      <div class="seal">
+        <svg width="84" height="84">
+          <circle class="ring-bg" cx="42" cy="42" r="36" fill="none" stroke-width="4"></circle>
+          <circle id="ringFg" class="ring-fg" cx="42" cy="42" r="36" fill="none" stroke-width="4"
+            stroke-dasharray="226.19" stroke-dashoffset="226.19" transform="rotate(-90 42 42)"></circle>
+        </svg>
+        <div class="pct" id="overallPct">0%</div>
+      </div>
+      <div class="seal-caption">Prüfungsfortschritt</div>
     </div>
   </header>
 
   <nav class="tabs" id="tabs">
     <button data-view="dashboard" class="active">Übersicht</button>
     <button data-view="flashcards">Lernkarten</button>
+    <button data-view="mc">Multiple Choice</button>
     <button data-view="quiz">Klausursimulation</button>
     <button data-view="glossar">Glossar</button>
   </nav>
@@ -307,7 +398,7 @@ const DATA = {
       flashcards:[
         {q:'Was unterscheidet fixe von variablen Kosten?', a:'Fixe Kosten fallen unabhängig von der produzierten Menge an (z. B. Miete), variable Kosten verändern sich mit der Ausbringungsmenge (z. B. Materialkosten).'},
         {q:'Was ist der Deckungsbeitrag?', a:'Verkaufspreis minus variable Kosten pro Stück — der Betrag, der zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
-        {q:'Wie berechnet man den Verkaufspreis bei der Zuschlagskalkulation (vereinfacht)?', a:'Selbstkosten + Gewinnzuschlag = Barverkaufspreis; darauf ggf. Skonto, Rabatt und Kundenprovision aufschlagen, um den Zielverkaufspreis zu erhalten.'},
+        {q:'Wie berechnet man den Verkaufspreis bei der Zuschlagskalkulation (vereinfacht)?', a:'Selbstkosten + Gewinnzuschlag = Barverkaufspreis; darauf ggf. Skonto, Rabatt und Kundenprovision aufschlagen, um den Zielverkaufspreis zu erhalten.', hint:'Merksatz: "Erst der Kern (Selbstkosten + Gewinn), dann die Schale (Skonto, Rabatt, Provision) drumherum."'},
         {q:'Was zeigt die Break-Even-Analyse?', a:'Den Punkt, an dem Erlöse und Gesamtkosten gleich hoch sind — ab dieser Menge wird Gewinn erzielt.'},
         {q:'Was ist der Unterschied zwischen Liquidität und Rentabilität?', a:'Liquidität = Fähigkeit, Zahlungsverpflichtungen fristgerecht zu erfüllen. Rentabilität = Verhältnis von Gewinn zu eingesetztem Kapital.'},
         {q:'Was ist Eigenkapitalrentabilität?', a:'Gewinn geteilt durch eingesetztes Eigenkapital, mal 100 — zeigt, wie sich das eigene Kapital verzinst hat.'},
@@ -338,13 +429,13 @@ const DATA = {
         {q:'Was ist ein Werkvertrag?', a:'Ein Vertrag, bei dem ein bestimmter Erfolg geschuldet wird (§ 631 BGB), z. B. die Herstellung eines Werkstücks — im Gegensatz zum Dienstvertrag, der nur Tätigkeit schuldet.'},
         {q:'Wozu dient die Handwerksrolle?', a:'Verzeichnis der zulassungspflichtigen Handwerksbetriebe bei der Handwerkskammer; Eintragung ist Voraussetzung für die selbstständige Ausübung eines zulassungspflichtigen Handwerks.'},
         {q:'Was regelt die Gewährleistung beim Werkvertrag?', a:'Ansprüche des Bestellers bei Mängeln: Nacherfüllung, Selbstvornahme, Minderung, Rücktritt, Schadensersatz — Frist i. d. R. 2 Jahre.'},
-        {q:'Was ist der Unterschied zwischen OHG und KG?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt; bei der KG gibt es mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur beschränkt haftenden Kommanditisten.'},
+        {q:'Was ist der Unterschied zwischen OHG und KG?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt; bei der KG gibt es mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur beschränkt haftenden Kommanditisten.', hint:'Merksatz: "Komplementär = KOMPLETT haftbar. Kommanditist = nur seine Einlage."'},
         {q:'Wer ist nicht geschäftsfähig?', a:'Als nicht geschäftsfähig gelten Personen, die das 7. Lebensjahr noch nicht vollendet haben, oder sich in einem die Willensbestimmung ausschließenden Zustand krankhafter Störung oder Geistestätigkeit befinden.'},
         {q:'Vervollständige den Satz: Im Rahmen des BGB werden als "Sachen" ... beschrieben.', a:'...nur körperliche Gegenstände.'},
         {q:'Was ist nach BGB der Unterschied zwischen Eigentum und Besitz?', a:'Eigentum bezeichnet die rechtliche Verfügungsgewalt über eine Sache. Der Eigentümer kann darüber wie er möchte verfügen, soweit er keine Gesetze oder Rechte anderer Personen bricht. Besitz bezeichnet die tatsächliche Verfügungsgewalt über eine Sache.'},
         {q:'Was ist ein "Kannkaufmann"?', a:'Dies ist ein Gewerbetreibender, der zwar ins Handelsregister eingetragen ist, aber nicht unter § 1 HGB fällt.'},
         {q:'Was versteht man unter einem "Formkaufmann"?', a:'Hierbei handelt es sich um Handels- und Kapitalgesellschaften und Vereine, die durch eine Rechtsform ihre Kaufmannsgemeinschaft erhalten.'},
-        {q:'Eine Person bekommt von einer Bank ein Darlehen. Einen Monat später erfährt die Bank, dass der Kreditnehmer sich in finanziellen Schwierigkeiten befindet und ficht den Vertrag an. Mit welchen Folgen ist zu rechnen?', a:'Der Vertrag ist wirksam, da die Frist abgelaufen ist. Eine Anfechtung muss nach § 121 BGB unverzüglich erfolgen.'},
+        {q:'Eine Person bekommt von einer Bank ein Darlehen. Einen Monat später erfährt die Bank, dass der Kreditnehmer sich in finanziellen Schwierigkeiten befindet und ficht den Vertrag an. Mit welchen Folgen ist zu rechnen?', a:'Der Vertrag ist wirksam, da die Frist abgelaufen ist. Eine Anfechtung muss nach § 121 BGB unverzüglich erfolgen.', hint:'Merksatz: "§ 121 = unverZÜGLICH" — ein Monat ist definitiv nicht mehr \'ohne schuldhaftes Zögern\'.'},
       ],
       glossary:[
         {t:'GbR', d:'Gesellschaft bürgerlichen Rechts — einfachste Form der Personengesellschaft, unbeschränkte Haftung aller Gesellschafter.'},
@@ -366,11 +457,11 @@ const DATA = {
     {
       id:'personal', name:'Personal & Arbeitsrecht', accent:'var(--c-personal)',
       flashcards:[
-        {q:'Wie lautet die gesetzliche Grundkündigungsfrist nach § 622 BGB?', a:'4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
-        {q:'Ab wann gilt das Kündigungsschutzgesetz (KSchG)?', a:'Ab 6 Monaten Betriebszugehörigkeit und in Betrieben mit mehr als 10 Arbeitnehmern.'},
+        {q:'Wie lautet die gesetzliche Grundkündigungsfrist nach § 622 BGB?', a:'4 Wochen zum 15. oder zum Ende eines Kalendermonats.', hint:'Merksatz: "622 wie vier plus zwei plus zwei Wochen" — einfacher: 4 Wochen, entweder zur Monatsmitte (15.) oder zum Monatsende.'},
+        {q:'Ab wann gilt das Kündigungsschutzgesetz (KSchG)?', a:'Ab 6 Monaten Betriebszugehörigkeit und in Betrieben mit mehr als 10 Arbeitnehmern.', hint:'Merksatz: "Halbes Jahr dabei, mehr als 10 im Betrieb" — beide Bedingungen UND-verknüpft.'},
         {q:'Welche 3 Kündigungsgründe kennt das KSchG?', a:'Personenbedingt, verhaltensbedingt und betriebsbedingt.'},
-        {q:'Wie lang darf die tägliche Arbeitszeit laut ArbZG maximal sein?', a:'Grundsätzlich 8 Stunden, ausnahmsweise bis zu 10 Stunden, wenn im Schnitt über 6 Monate 8 Std./Tag nicht überschritten werden.'},
-        {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.'},
+        {q:'Wie lang darf die tägliche Arbeitszeit laut ArbZG maximal sein?', a:'Grundsätzlich 8 Stunden, ausnahmsweise bis zu 10 Stunden, wenn im Schnitt über 6 Monate 8 Std./Tag nicht überschritten werden.', hint:'Merksatz: "8 ist die Regel, 10 die Ausnahme — aber im Schnitt bleibt\'s bei 8."'},
+        {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.', hint:'Merksatz: "11 wie ein Doppelstrich || — zwei Arbeitstage klar voneinander getrennt."'},
         {q:'Ab wie vielen wahlberechtigten Arbeitnehmern kann ein Betriebsrat gewählt werden?', a:'Ab 5 wahlberechtigten Arbeitnehmern, von denen mindestens 3 wählbar sein müssen.'},
         {q:'Wie kann ein Ausbildungsverhältnis während der Probezeit beendet werden?', a:'Jederzeit fristlos, ohne Angabe von Gründen, von beiden Seiten.'},
         {q:'Was bedeutet Friedenspflicht im Rahmen eines laufenden Tarifvertrages?', a:'Während eines laufenden Tarifvertrags dürfen keine Kampfmaßnahmen stattfinden. Wurde innerhalb der Friedenspflicht ein Tarifvertrag abgeschlossen, sind keine Arbeitskämpfe möglich.'},
@@ -454,26 +545,26 @@ const DATA = {
         {q:'In welchem Fall empfiehlt sich der Einsatz von Hartschichten?', a:'Bei hochbrechenden organischen Gläsern mit hoher Kratzempfindlichkeit, weshalb es erforderlich ist, die Oberfläche zu härten.'},
         {q:'Nenne die beim Brillenglas auftretenden Reflexe.', a:'Vorderer Reflex, Rückwärtiger Reflex, Innerer Reflex, Hornhautreflex.'},
         {q:'Erkläre das Funktionsprinzip des Clean-Coats.', a:'Der Clean-Coat hat eine sehr glatte Oberfläche, wodurch deutlich weniger Verunreinigungen am Glas anhaften können. Er kann auch antistatische Eigenschaften besitzen und antistatisch sein.'},
-        {q:'Nenne die Veredelungsschichten aufsteigend nach ihrer ungefähren Dicke.', a:'Clean-Coat: wenige Nanometer. Entspiegelungsschicht: bis zu mehrere hundert nm (je nach Anzahl der Schichten). Hartschicht: mehrere tausend nm.'},
+        {q:'Nenne die Veredelungsschichten aufsteigend nach ihrer ungefähren Dicke.', a:'Clean-Coat: wenige Nanometer. Entspiegelungsschicht: bis zu mehrere hundert nm (je nach Anzahl der Schichten). Hartschicht: mehrere tausend nm.', hint:'Merksatz: "Clean kommt zuerst (dünn), dann Entspiegelung (mittel), Hart zum Schluss (dick)" — alphabetisch fast wie die Dicke wächst.'},
         {q:'Welche Veredelungen könntest du Kunden empfehlen?', a:'Verspiegelungen, Entspiegelungen, Clean-Coat/Sauber Schicht.'},
         {q:'Über welche Informationen muss ein/e Augenoptiker/in verfügen, um dem Kunden eine passende Seh- oder Arbeitshilfe empfehlen zu können?', a:'Lesefähigkeit des Probanden, verfügbarer Visus c.c., Kontrast- und Farbwahrnehmung, Lage und Größe vorhandener Skotome, manuelle Fertigkeit, erforderliche Arbeitsentfernung.'},
         {q:'Beschreibe den Ablauf der Brillenglaszentrierung.', a:'1. Bezugspunkt anzeichnen. 2. Horizontale und vertikale Zentriermaße ermitteln. 3. Rohkantige Gläser aufblocken. 4. Gerandete Gläser einsetzen. 5. Brille auf Abgabefähigkeit prüfen.'},
         {q:'Ein Kunde möchte bezüglich der einzelnen Veredelungen organisch hochbrechendes Glas beraten werden. Was sollten deine Mitarbeiter ihm empfehlen?', a:'Das hochbrechende Glas erfordert eine Hartschicht. Aufgrund des hohen Reflexes sollte es ebenfalls entspiegelt sein. Da durch die Entspiegelung Verschmutzungen stärker auftreten, ist ein Clean-Coat empfehlenswert, der durch den reduzierten Reinigungsaufwand wiederum zusätzlich geringere mechanische Belastung der Gläser mit sich bringt.'},
         {q:'Welche Punkte sind für die Zentrierung des Brillenglases wichtig?', a:'Bezugspunkt B: Dieser Punkt liegt auf der Vorderseite vom Glas. In ihm liegt die dioptrische Wirkung. Optischer Mittelpunkt O: Hier werden die Scheitelpunkte von der optischen Achse durchstoßen. Geometrischer Mittelpunkt G: Die Linse hat an diesem Punkt keine brechende Wirkung.'},
         {q:'Nenne die Kürzel für die Zentriermaße nach DIN EN ISO 13666.', a:'u_FBL (horizontale Dezentration des Zentrierpunktes), v_FBL (vertikale Dezentration des Zentrierpunktes), x_FBL (horizontales Maß bis zur nasalen Kastenseite), y_FBL (horizontales Maß bis zur nasalen Kastenseite).'},
-        {q:'Welches Material würdest du für die Entspiegelung mineralischer Gläser verwenden?', a:'Magnesiumfluorid MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung von mineralischen Gläsern genutzt. Die Amplitudenbedingung ns = √nGlas wäre gut erfüllt bei hochbrechenden Brillenglaswerkstoffen. Für andere Gläser kann man es auch anwenden, aber die interferierenden Wellen löschen sich dann nicht komplett aus.'},
+        {q:'Welches Material würdest du für die Entspiegelung mineralischer Gläser verwenden?', a:'Magnesiumfluorid MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung von mineralischen Gläsern genutzt. Die Amplitudenbedingung ns = √nGlas wäre gut erfüllt bei hochbrechenden Brillenglaswerkstoffen. Für andere Gläser kann man es auch anwenden, aber die interferierenden Wellen löschen sich dann nicht komplett aus.', hint:'Merksatz: "MgF2 — Magnesium Für 2-fache Auslöschung." 1,38 als Brechzahl einfach als "eins-drei-acht" im Kopf durchgehen.'},
         {q:'Welche Beschichtungen können auf Brillengläsern angebracht werden?', a:'Hartschicht, Farbschicht, Clean-Coat, Entspiegelungsschicht.'},
         {q:'Was ist ein Sturmsches Konoid?', a:'Ein Sturmsches Konoid ist ein räumlich ausgedehntes Bild bei einer Abbildung durch eine astigmatische Linse.'},
         {q:'Was sind charakteristische Merkmale von Edelstahlfassungen?', a:'Hohe Festigkeit, schwierige Umformbarkeit, Korrosionssicherheit, problematisch lötbar.'},
         {q:'Was könnte man einem Kunden zusätzlich zum Gebrauch einer Lupe als Unterstützung empfehlen?', a:'In ihrer Neigung angepasste Lesepulte können die Nutzung der Lupe in angenehmer und gewohnter Körperhaltung unterstützen.'},
         {q:'In welche Richtung wirkt ein Zylinder mit Achslage = 30°?', a:'Er wirkt in Richtung 120°/300°.'},
-        {q:'Was besagt die Bedarfsgegenständeverordnung BedGgstV bezüglich des Nickelgehalts einer Legierung?', a:'Eine Legierung darf im Verlauf einer Woche nicht mehr als 0,5 Mikrogramm Nickel freisetzen.'},
+        {q:'Was besagt die Bedarfsgegenständeverordnung BedGgstV bezüglich des Nickelgehalts einer Legierung?', a:'Eine Legierung darf im Verlauf einer Woche nicht mehr als 0,5 Mikrogramm Nickel freisetzen.', hint:'Merksatz: "0,5 pro Woche" — eine halbe Einheit, sieben Tage.'},
         {q:'Nenne die Lupenausführungen (Linsen).', a:'Asymmetrisch bikonvex, Asphärisch, Aplanatisch, Aplanatisch-achromatisch, anastigmatisch.'},
         {q:'Wozu dient der Einsatz eines Blaublockers?', a:'Der Blaublocker absorbiert den kurzwelligen Teil des sichtbaren Spektrums, da die Energie von Photonen mit sinkender Wellenlänge steigt. So wird das Auge vor energiereicher Strahlung geschützt.'},
         {q:'Nenne Eigenschaften, die Werkstoffe zur Herstellung von Brillenfassungen aufweisen sollten.', a:'Elastizität, geringes Gewicht, UV-Beständigkeit, Stabilität, Korrosionssicherheit, Hautfreundlichkeit, Härte.'},
         {q:'Was können die Ursachen für einen Achsfehler sein?', a:'Ungenaue Angaben des Kunden, inkorrekte Dokumentation der ermittelten Achslage (z. B. durch Runden der Werte), Fehler beim Aufblocken, Fehler beim Anzeichnen mit dem Scheitelbrechwertmessinstrument, Fehler bei der Formrandung, Fehler beim Einsetzen des Glases.'},
         {q:'Du übergibst einem Kunden eine Brille mit medizinischem Filter. Worauf musst du ihn hinweisen?', a:'Beim Tragen der Gläser darf der Kunde kein Fahrzeug führen. Medizinische Filter bedingen eine hohe Farbverfälschung. Die Signallichttauglichkeit kann dadurch beeinträchtigt sein.'},
-        {q:'Gemäß TABO-Gradbogenschema: in welcher Richtung liegt "außen"?', a:'links: 0°; rechts: 180°.'},
+        {q:'Gemäß TABO-Gradbogenschema: in welcher Richtung liegt "außen"?', a:'links: 0°; rechts: 180°.', hint:'Merksatz: "0° ist immer da, wo die Null-Linie horizontal nach außen zeigt" — beim rechten Auge liegt das bei 180°, weil man von der Person aus im Gegenuhrzeigersinn zählt.'},
         {q:'Was besagt das Testergebnis "wahr negativ"?', a:'Das Testergebnis war negativ und eine Erkrankung lag wirklich nicht vor.'},
         {q:'Was stellen Transmissionskurven dar?', a:'Transmissionskurven zeigen graphisch die Transmission des Glases in Abhängigkeit von der Wellenlänge.'},
         {q:'Wie geht ein/e Augenoptiker/in vor, um die Hauptdurchblickpunkte reproduzierbar festzulegen?', a:'1. Anatomisch voranpassen. 2. Rechte und linke Pupillendistanz messen. 3. Rechte und linke Pupillendistanz rückseitig auf die Musterverglasung übertragen. 4. Kunden für Nullblickrichtung die eigenen Pupillen im Spiegel fixieren lassen. 5. Kopf nach hinten neigen lassen, bis die Fassungsebene senkrecht zum Boden steht. 6. Höhe der Pupillenmitte schätzen. 7. Höhe der Pupillenmitte vorn auf die Musterverglasung übertragen. 8. Unter identischen Rahmenbedingungen kontrollieren.'},
@@ -499,13 +590,23 @@ const DATA = {
         {q:'Welche Reflexart tritt NICHT am Brillenglas auf?', options:['Vorderer Reflex','Rückwärtiger Reflex','Innerer Reflex','Seitlicher Randreflex'], correct:3, explain:'Die vier Reflexe sind vorderer, rückwärtiger, innerer Reflex und Hornhautreflex.'},
         {q:'Was ist das Funktionsprinzip des Clean-Coats?', options:['Erhöhte Kratzfestigkeit','Sehr glatte Oberfläche gegen Verunreinigungen, teils antistatisch','Färbung des Glases','Erhöhte Lichtdurchlässigkeit'], correct:1, explain:'Der Clean-Coat sorgt durch seine glatte Oberfläche dafür, dass weniger Schmutz und Fett anhaften.'},
         {q:'Welche Veredelungsschicht ist am dicksten?', options:['Clean-Coat','Entspiegelungsschicht','Hartschicht','Alle sind gleich dick'], correct:2, explain:'Die Hartschicht ist mit mehreren tausend nm deutlich dicker als Clean-Coat und Entspiegelungsschicht.'},
+        {q:'Was ist das Sturmsche Konoid?', options:['Ein Schleifwerkzeug','Ein räumlich ausgedehntes Bild bei astigmatischer Abbildung','Eine Fassungsform','Ein Beschichtungsverfahren'], correct:1, explain:'Es beschreibt das räumlich ausgedehnte Bild, das bei der Abbildung durch eine astigmatische Linse entsteht.'},
+        {q:'Welches Material eignet sich zur Entspiegelung mineralischer Gläser?', options:['Titandioxid','Magnesiumfluorid (MgF2)','Zirkonoxid','Aluminiumoxid'], correct:1, explain:'MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung mineralischer Gläser eingesetzt.'},
+        {q:'Gemäß TABO-Gradbogenschema: In welcher Richtung liegt "außen" beim rechten Auge?', options:['0°','90°','180°','270°'], correct:2, explain:'Beim rechten Auge liegt "außen" bei 180°, beim linken bei 0°.'},
+        {q:'Was bedeutet ein "wahr negatives" Testergebnis?', options:['Der Test war fehlerhaft','Das Testergebnis war negativ und eine Erkrankung lag wirklich nicht vor','Der Patient hat den Test verweigert','Das Ergebnis muss wiederholt werden'], correct:1, explain:'Wahr negativ bedeutet: kein positiver Befund UND tatsächlich keine Erkrankung vorhanden.'},
+        {q:'Wofür stehen Transmissionskurven?', options:['Die Haltbarkeit eines Glases','Die Transmission des Glases in Abhängigkeit von der Wellenlänge','Den Preis eines Glases nach Dicke','Die Reflexionsstärke bei Nacht'], correct:1, explain:'Transmissionskurven zeigen graphisch, wie viel Licht welcher Wellenlänge durch das Glas gelassen wird.'},
+        {q:'Welche Nachteile sollen Lentikulargläser kompensieren?', options:['Zu geringe Haltbarkeit','Große Randdicken und hohes Gewicht bei starken Wirkungen','Farbverfälschung','Zu geringe Kratzfestigkeit'], correct:1, explain:'Lentikulargläser reduzieren Randdicke, Gewicht und Vorwölbung bei hohen Glasstärken.'},
+        {q:'Wie kannst du einem Kunden mit Wunsch nach geringem Brillengewicht helfen?', options:['Nur mineralische Gläser anbieten', 'Organische Materialien und geringe Fassungsgröße empfehlen', 'Größere Fassungen empfehlen', 'Dickere Gläser verwenden'], correct:1, explain:'Organische Gläser wiegen etwa halb so viel wie mineralische; kleinere Fassungen reduzieren zusätzlich das Gewicht.'},
+        {q:'Was ist beim Übergeben einer Brille mit medizinischem Filter wichtig?', options:['Nichts Besonderes', 'Hinweis, dass kein Fahrzeug geführt werden darf, wegen Farbverfälschung und Signallicht-Problemen', 'Nur ein Pflegehinweis', 'Hinweis auf Garantiezeit'], correct:1, explain:'Medizinische Filter verfälschen Farben stark und können die Signallichttauglichkeit beeinträchtigen.'},
+        {q:'Welche Werkstoffeigenschaften sind bei Brillenfassungen wichtig?', options:['Nur der Preis', 'Elastizität, geringes Gewicht, Korrosionssicherheit, Hautfreundlichkeit', 'Nur die Farbe', 'Nur die Verfügbarkeit'], correct:1, explain:'Fassungsmaterialien müssen mehreren funktionalen Anforderungen gleichzeitig genügen.'},
+        {q:'Was zeichnet Edelstahlfassungen aus?', options:['Geringe Festigkeit, leicht lötbar', 'Hohe Festigkeit, schwierige Umformbarkeit, problematisch lötbar', 'Sehr geringes Gewicht', 'Keine Korrosionssicherheit'], correct:1, explain:'Edelstahl ist fest und korrosionssicher, aber schwer umzuformen und zu löten.'},
       ]
     },
     {
       id:'physiologie', name:'Physiologie des Sehens', accent:'var(--c-physiologie)',
       flashcards:[
-        {q:'Wie groß ist das vom Menschen wahrnehmbare elektromagnetische Spektrum?', a:'Das vom Menschen wahrnehmbare elektromagnetische Spektrum liegt zwischen 380 nm – 780 nm.'},
-        {q:'Vervollständige den Satz: Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', a:'...höhere... Pluswirkung als die Fernkorrektion.'},
+        {q:'Wie groß ist das vom Menschen wahrnehmbare elektromagnetische Spektrum?', a:'Das vom Menschen wahrnehmbare elektromagnetische Spektrum liegt zwischen 380 nm – 780 nm.', hint:'Merksatz: "380 bis 780 — verdoppel die erste Zahl fast und du landest bei der zweiten." Violett (kurz) bis Rot (lang).'},
+        {q:'Vervollständige den Satz: Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', a:'...höhere... Pluswirkung als die Fernkorrektion.', hint:'Merksatz: "Nah = mehr Plus" — je näher man liest, desto mehr Brechkraft braucht das Auge zusätzlich.'},
         {q:'Was ist der Unterschied zwischen additiver und subtraktiver Farbmischung?', a:'Additive Farbmischung: Licht wird mit Licht überlagert (=Addition), damit wird die Mischung heller. Subtraktive Farbmischung: Ein Teil des Lichts wird entnommen (es wird also "subtrahiert"), daher wird die Mischung dunkler.'},
         {q:'Was versteht man unter "direktem Sehen"?', a:'Als direktes Sehen bezeichnet man es, wenn ein Auge ein Objekt direkt zentriert, die Abbildung in die Foveola, also auf die Netzhautstelle mit dem höchsten Auflösungsvermögen fällt.'},
       ],
@@ -515,13 +616,17 @@ const DATA = {
       ],
       quiz:[
         {q:'In welchem Bereich liegt das vom Menschen wahrnehmbare elektromagnetische Spektrum?', options:['200–400 nm','380–780 nm','780–1200 nm','100–380 nm'], correct:1, explain:'Das sichtbare Licht für den Menschen liegt zwischen 380 nm und 780 nm.'},
+        {q:'Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', options:['geringere','höhere','identische','keine'], correct:1, explain:'Für die Nähe braucht das Auge stets zusätzliche Brechkraft, also eine höhere Pluswirkung als für die Ferne.'},
+        {q:'Was passiert bei additiver Farbmischung?', options:['Die Mischung wird dunkler','Die Mischung wird heller, da Licht mit Licht überlagert wird','Farben werden komplett ausgelöscht','Es entsteht immer Grau'], correct:1, explain:'Additive Mischung überlagert Licht mit Licht — das Ergebnis wird heller.'},
+        {q:'Was passiert bei subtraktiver Farbmischung?', options:['Die Mischung wird heller','Ein Teil des Lichts wird entnommen, die Mischung wird dunkler','Es entsteht immer Weiß','Es findet keine Veränderung statt'], correct:1, explain:'Bei subtraktiver Mischung wird Licht "entnommen" (subtrahiert), wodurch die Mischung dunkler wird.'},
+        {q:'Was versteht man unter "direktem Sehen"?', options:['Sehen ohne Brille','Die Abbildung eines direkt zentrierten Objekts fällt in die Foveola', 'Sehen im Dunkeln','Sehen mit beiden Augen gleichzeitig'], correct:1, explain:'Direktes Sehen liegt vor, wenn die Abbildung auf die Netzhautstelle mit dem höchsten Auflösungsvermögen (Foveola) fällt.'},
       ]
     },
     {
       id:'finanzwirtschaft', name:'Finanzwirtschaft', accent:'var(--c-finanzwirtschaft)',
       flashcards:[
         {q:'Worum handelt es sich beim "Interest Rate Swap"?', a:'Der Interest Rate Swap ist ein Zinsderivat, bei dem die zwei Partner zu vereinbarten Zeitpunkten Zinszahlungen auf vereinbarte Nennbeträge austauschen. Meist zahlt hierbei eine Partei einen fixierten, und die andere einen variablen Zinssatz.'},
-        {q:'Vervollständige den Satz: Bei der Rentabilitätsvergleichsrechnung wird neben der Gewinnvergleichsrechnung auch das ... berücksichtigt.', a:'...eingesetzte Kapital.'},
+        {q:'Vervollständige den Satz: Bei der Rentabilitätsvergleichsrechnung wird neben der Gewinnvergleichsrechnung auch das ... berücksichtigt.', a:'...eingesetzte Kapital.', hint:'Merksatz: "Rentabilität = Gewinn IM VERHÄLTNIS ZUM Kapital" — Gewinn allein reicht nicht, es zählt was du reingesteckt hast.'},
         {q:'Worauf basiert die statische Amortisationsrechnung als einziges Investitionsrechenverfahren?', a:'Es basiert auf Zahlungsgrößen.'},
         {q:'Wie ist die Gründung einer offenen Handelsgesellschaft (OHG) rechtlich festgelegt?', a:'Die Gründung einer OHG ist formfrei. Sie muss aber in das Handelsregister eingetragen werden und auf den Betrieb von einem Handelsgewerbe unter gemeinschaftlicher Firma ausgelegt sein.'},
         {q:'Wer kann zu den Gründungsmitgliedern einer Gesellschaft bürgerlichen Rechts (GbR) zählen?', a:'Gründungsmitglieder einer GbR können natürliche Personen, juristische Personen und andere Personengesellschaften sein.'},
@@ -536,6 +641,10 @@ const DATA = {
       quiz:[
         {q:'Was tauschen die Partner bei einem Interest Rate Swap in der Regel aus?', options:['Aktien gegen Anleihen','Einen fixierten gegen einen variablen Zinssatz','Fremdwährungen','Immobilienwerte'], correct:1, explain:'Meist zahlt eine Partei einen fixierten Zinssatz, die andere einen variablen Zinssatz auf denselben Nennbetrag.'},
         {q:'Worauf basiert die statische Amortisationsrechnung?', options:['Auf Gewinngrößen','Auf Zahlungsgrößen','Auf Abschreibungen','Auf Zinssätzen'], correct:1, explain:'Als einziges der klassischen statischen Verfahren basiert die Amortisationsrechnung auf Zahlungsgrößen.'},
+        {q:'Wie ist die Gründung einer OHG rechtlich geregelt?', options:['Notarielle Beurkundung erforderlich','Formfrei, aber Eintragung ins Handelsregister nötig','Nur mündlich möglich','Gar nicht geregelt'], correct:1, explain:'Die Gründung ist formfrei, muss aber ins Handelsregister eingetragen werden und auf ein Handelsgewerbe ausgelegt sein.'},
+        {q:'Wer kann Gründungsmitglied einer GbR sein?', options:['Nur natürliche Personen','Natürliche Personen, juristische Personen und andere Personengesellschaften','Nur eingetragene Kaufleute','Nur Kapitalgesellschaften'], correct:1, explain:'Auch juristische Personen und andere Personengesellschaften können GbR-Gründungsmitglieder sein.'},
+        {q:'Wozu dient die Kostenvergleichsrechnung?', options:['Zum Vergleich der Kosten verschiedener Investitionen', 'Zur Berechnung der Umsatzsteuer', 'Zur Ermittlung des Personalbedarfs', 'Zur Preiskalkulation von Endprodukten'], correct:0, explain:'Sie vergleicht die Kosten verschiedener Investitionsalternativen miteinander.'},
+        {q:'Welches ist KEIN typisches Risiko im internationalen Geschäft?', options:['Zinsänderungsrisiko','Länderrisiko','Wechselkursrisiko','Inflationsfreies Risiko'], correct:3, explain:'"Inflationsfreies Risiko" ist kein reales Konzept — Zins-, Länder- und Wechselkursrisiken sind die klassischen internationalen Risiken.'},
       ]
     },
     {
@@ -553,9 +662,9 @@ const DATA = {
     {
       id:'steuerrecht', name:'Steuer und Recht', accent:'var(--c-steuerrecht)',
       flashcards:[
-        {q:'Welche Steuersätze im Umsatzsteuerrecht werden unterschieden?', a:'Üblicherweise beträgt der Steuersatz für die Umsatzsteuer 19 %. Unter Anderem für Bücher oder Lebensmittel gibt es einen ermäßigten Steuersatz von 7 %. Zuletzt gibt es nicht steuerbare Umsätze.'},
+        {q:'Welche Steuersätze im Umsatzsteuerrecht werden unterschieden?', a:'Üblicherweise beträgt der Steuersatz für die Umsatzsteuer 19 %. Unter Anderem für Bücher oder Lebensmittel gibt es einen ermäßigten Steuersatz von 7 %. Zuletzt gibt es nicht steuerbare Umsätze.', hint:'Merksatz: "19 ist normal, 7 ist für\'s Nötigste (Essen, Bücher)".'},
         {q:'Welche Einkunftsarten gibt es im Einkommensteuerrecht?', a:'Einkünfte aus Gewerbebetrieb, Nichtselbstständiger Arbeit, Selbstständiger Arbeit, Land- und Forstwirtschaft, Vermietung/Verpachtung, Kapitalvermögen, andere Einkünfte.'},
-        {q:'Nenne ein Beispiel für ein geringwertiges Wirtschaftsgut gemäß § 6 Abs. 2 EStG.', a:'Hierzu zählen Wirtschaftsgüter, die beweglich und abnutzbar sind, selbstständig genutzt werden, zum Anlagevermögen gehören, Anschaffungskosten zwischen 150 € und 1000 € beanspruchen. Beispiel: Die Anschaffung eines Laptops für 700 €.'},
+        {q:'Nenne ein Beispiel für ein geringwertiges Wirtschaftsgut gemäß § 6 Abs. 2 EStG.', a:'Hierzu zählen Wirtschaftsgüter, die beweglich und abnutzbar sind, selbstständig genutzt werden, zum Anlagevermögen gehören, Anschaffungskosten zwischen 150 € und 1000 € beanspruchen. Beispiel: Die Anschaffung eines Laptops für 700 €.', hint:'Merksatz: "150 bis 1000 — die \'GWG-Spanne\'" — leicht zu merken als Preisrahmen für kleine bewegliche Anschaffungen.'},
         {q:'Wer ist unbeschränkt steuerpflichtig?', a:'Als unbeschränkt steuerpflichtig gelten alle natürlichen Personen, die einen Wohnsitz im Bundesgebiet haben und sich dort üblicherweise aufhalten.'},
       ],
       glossary:[
@@ -579,7 +688,7 @@ function loadProgress(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw) return JSON.parse(raw);
   }catch(e){}
-  return {flash:{}, quizHistory:[]};
+  return {flash:{}, quizHistory:[], points:0, streak:0, bestStreak:0};
 }
 function saveProgress(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
@@ -596,20 +705,56 @@ function catFlashStats(cat){
   });
   return {known, total};
 }
-function overallProgressPct(){
+function overallStats(){
   let known=0, total=0;
   DATA.categories.forEach(cat=>{
     const s = catFlashStats(cat);
     known += s.known; total += s.total;
   });
-  return total ? Math.round(known/total*100) : 0;
+  return {known, total, pct: total ? Math.round(known/total*100) : 0};
+}
+function overallProgressPct(){
+  return overallStats().pct;
 }
 function updateSeal(){
   const pct = overallProgressPct();
   document.getElementById('overallPct').textContent = pct+'%';
-  const circumference = 238.76;
+  const circumference = 226.19;
   const offset = circumference - (circumference*pct/100);
   document.getElementById('ringFg').style.strokeDashoffset = offset;
+}
+function findNextCard(){
+  for(const cat of DATA.categories){
+    for(let i=0;i<cat.flashcards.length;i++){
+      const key = cat.id+'_'+i;
+      if(progress.flash[key] !== 'known'){
+        return {catId:cat.id, index:i};
+      }
+    }
+  }
+  return null;
+}
+function weakestCategory(){
+  let weakest = null;
+  DATA.categories.forEach(cat=>{
+    const s = catFlashStats(cat);
+    if(s.total===0) return;
+    const pct = Math.round(s.known/s.total*100);
+    if(pct >= 100) return;
+    if(!weakest || pct < weakest.pct){
+      weakest = {cat, pct, s};
+    }
+  });
+  return weakest;
+}
+function goToFlashcards(catId, index){
+  fcState.catId = catId;
+  fcState.index = index||0;
+  fcState.showAnswer = false;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-view="flashcards"]').classList.add('active');
+  currentView='flashcards';
+  render();
 }
 
 /* ---------------- VIEW ROUTER ---------------- */
@@ -628,6 +773,7 @@ document.getElementById('tabs').addEventListener('click', e=>{
 function render(){
   if(currentView==='dashboard') renderDashboard();
   else if(currentView==='flashcards') renderFlashcards();
+  else if(currentView==='mc') renderMC();
   else if(currentView==='quiz') renderQuiz();
   else if(currentView==='glossar') renderGlossar();
   updateSeal();
@@ -635,6 +781,39 @@ function render(){
 
 /* ---------------- DASHBOARD ---------------- */
 function renderDashboard(){
+  const overall = overallStats();
+  const weakest = weakestCategory();
+
+  let heroHtml;
+  if(overall.known === 0){
+    heroHtml = `
+      <div class="progress-hero empty">
+        <div class="hero-eyebrow">Bereit für den ersten Schritt?</div>
+        <button class="hero-cta" id="heroStart">Lernen starten →</button>
+      </div>`;
+  } else {
+    heroHtml = `
+      <div class="progress-hero">
+        <div class="hero-top">
+          <div>
+            <div class="hero-eyebrow">Dein Prüfungsfortschritt</div>
+            <div class="hero-pct">${overall.pct}%</div>
+            <div class="hero-sub">Du hast bereits ${overall.known} von ${overall.total} Lerninhalten sicher.</div>
+          </div>
+          <button class="hero-cta" id="heroStart">Weiterlernen →</button>
+        </div>
+        <div class="hero-bar-bg"><div class="hero-bar-fg" style="width:${overall.pct}%"></div></div>
+      </div>`;
+  }
+
+  const recommendHtml = (weakest && overall.known > 0) ? `
+    <div class="recommend-card" data-cat="${weakest.cat.id}" style="--accent:${weakest.cat.accent}">
+      <div class="recommend-label">Als Nächstes empfohlen</div>
+      <div class="recommend-name">${weakest.cat.name}</div>
+      <div class="recommend-stat">${weakest.pct}% sicher &middot; ${weakest.s.total - weakest.s.known} Karten offen</div>
+    </div>
+  ` : '';
+
   let cards = DATA.categories.map(cat=>{
     const s = catFlashStats(cat);
     const pct = s.total ? Math.round(s.known/s.total*100) : 0;
@@ -644,21 +823,37 @@ function renderDashboard(){
       <div class="stat">${s.known}/${s.total} Lernkarten sicher &middot; ${pct}%</div>
     </div>`;
   }).join('');
+
   panel.innerHTML = `
     <h2>Übersicht</h2>
     <p class="lede">Dein Stand pro Themenbereich. Klick auf einen Bereich, um direkt mit den Lernkarten zu starten.</p>
+    ${heroHtml}
+    ${recommendHtml}
     <div class="cat-grid">${cards}</div>
   `;
-  panel.querySelectorAll('.cat-card').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      fcState.catId = el.dataset.cat;
-      fcState.index = 0;
-      fcState.showAnswer = false;
-      document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
-      document.querySelector('[data-view="flashcards"]').classList.add('active');
-      currentView='flashcards';
-      render();
+
+  const heroBtn = document.getElementById('heroStart');
+  if(heroBtn){
+    heroBtn.addEventListener('click', ()=>{
+      const next = findNextCard();
+      if(next) goToFlashcards(next.catId, next.index);
+      else goToFlashcards(DATA.categories[0].id, 0);
     });
+  }
+  const recCard = panel.querySelector('.recommend-card');
+  if(recCard){
+    recCard.addEventListener('click', ()=>{
+      const catId = recCard.dataset.cat;
+      const cat = DATA.categories.find(c=>c.id===catId);
+      let firstOpen = 0;
+      for(let i=0;i<cat.flashcards.length;i++){
+        if(progress.flash[cat.id+'_'+i] !== 'known'){ firstOpen = i; break; }
+      }
+      goToFlashcards(catId, firstOpen);
+    });
+  }
+  panel.querySelectorAll('.cat-card').forEach(el=>{
+    el.addEventListener('click', ()=> goToFlashcards(el.dataset.cat, 0));
   });
 }
 
@@ -675,17 +870,30 @@ function renderFlashcards(){
   const key = cat.id+'_'+fcState.index;
   const mark = progress.flash[key];
   const s = catFlashStats(cat);
+  const hasHint = !!fc.hint;
 
   panel.innerHTML = `
     <h2>Lernkarten</h2>
     <p class="lede">Karte antippen zum Umdrehen. Danach ehrlich einschätzen, ob du es sicher weißt.</p>
+    <div class="streak-bar">
+      <span class="streak-item">🔥 ${progress.streak||0} in Folge</span>
+      <span class="streak-item">⭐ ${progress.points||0} Punkte</span>
+    </div>
     <div class="fc-select">${selectBtns}</div>
     <div class="card-stage">
-      <div class="flashcard ${fcState.showAnswer?'is-answer':''}" id="fcCard">
-        <span class="stamp-mark ${mark==='known'?'known show':''} ${mark==='unknown'?'unknown show':''}">${mark==='known'?'BEHERRSCHT':(mark==='unknown'?'ÜBEN':'')}</span>
-        <div class="face">${fcState.showAnswer ? fc.a : fc.q}</div>
-        <div class="hint">${fcState.showAnswer ? 'Antwort — Klick für Frage' : 'Frage — Klick für Antwort'}</div>
+      <div class="fc-nav-row">
+        <button class="fc-arrow" id="fcPrevArrow" aria-label="Vorherige Karte">‹</button>
+        <div class="flashcard ${fcState.showAnswer?'is-answer':''}" id="fcCard">
+          <span class="stamp-mark ${mark==='known'?'known show':''} ${mark==='unknown'?'unknown show':''}">${mark==='known'?'BEHERRSCHT':(mark==='unknown'?'ÜBEN':'')}</span>
+          <div class="face">${fcState.showAnswer ? fc.a : fc.q}</div>
+          <div class="hint">${fcState.showAnswer ? 'Antwort — Tippen für Frage' : 'Tippen zum Aufdecken'}</div>
+        </div>
+        <button class="fc-arrow" id="fcNextArrow" aria-label="Nächste Karte">›</button>
       </div>
+      ${hasHint ? `
+      <button class="merksatz-toggle" id="merksatzBtn">💡 Merksatz anzeigen</button>
+      <div class="merksatz-box" id="merksatzBox" style="display:none">${fc.hint}</div>
+      ` : ''}
       <div class="fc-actions">
         <button class="btn-unknown">Nochmal üben</button>
         <button class="btn-known">Kenn ich sicher</button>
@@ -693,6 +901,18 @@ function renderFlashcards(){
       <div class="fc-progress">Karte ${fcState.index+1} / ${cat.flashcards.length} &middot; ${s.known}/${s.total} sicher in diesem Bereich</div>
     </div>
   `;
+
+  if(hasHint){
+    document.getElementById('merksatzBtn').addEventListener('click', ()=>{
+      const box = document.getElementById('merksatzBox');
+      const isHidden = box.style.display === 'none';
+      box.style.display = isHidden ? 'block' : 'none';
+      document.getElementById('merksatzBtn').textContent = isHidden ? '💡 Merksatz ausblenden' : '💡 Merksatz anzeigen';
+    });
+  }
+
+  document.getElementById('fcPrevArrow').addEventListener('click', ()=> skipCard(cat, -1));
+  document.getElementById('fcNextArrow').addEventListener('click', ()=> skipCard(cat, 1));
 
   panel.querySelectorAll('.fc-select button').forEach(b=>{
     b.addEventListener('click', ()=>{
@@ -704,16 +924,129 @@ function renderFlashcards(){
     render();
   });
   panel.querySelector('.btn-known').addEventListener('click', ()=>{
-    progress.flash[key]='known'; saveProgress(); nextCard(cat);
+    const wasKnown = progress.flash[key] === 'known';
+    progress.flash[key]='known';
+    if(!wasKnown){
+      progress.points = (progress.points||0) + 10;
+      progress.streak = (progress.streak||0) + 1;
+      progress.bestStreak = Math.max(progress.bestStreak||0, progress.streak);
+    }
+    saveProgress(); nextCard(cat);
   });
   panel.querySelector('.btn-unknown').addEventListener('click', ()=>{
-    progress.flash[key]='unknown'; saveProgress(); nextCard(cat);
+    progress.flash[key]='unknown';
+    progress.streak = 0;
+    saveProgress(); nextCard(cat);
   });
 }
 function nextCard(cat){
   fcState.index = (fcState.index+1) % cat.flashcards.length;
   fcState.showAnswer = false;
   render();
+}
+function skipCard(cat, dir){
+  fcState.index = (fcState.index + dir + cat.flashcards.length) % cat.flashcards.length;
+  fcState.showAnswer = false;
+  render();
+}
+
+/* ---------------- MULTIPLE CHOICE (untimed) ---------------- */
+let mcState = null;
+
+function renderMC(){
+  if(!mcState || mcState.stage==='setup'){
+    const opts = DATA.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    panel.innerHTML = `
+      <h2>Multiple Choice</h2>
+      <p class="lede">Entspanntes Training ohne Zeitdruck — direktes Feedback nach jeder Antwort. Ideal zum Reinkommen in ein Thema.</p>
+      <div class="quiz-setup">
+        <label>Bereich<br>
+          <select id="mcCat">
+            <option value="all">Alle Bereiche gemischt</option>
+            ${opts}
+          </select>
+        </label>
+        <button id="startMC">Training starten</button>
+      </div>
+    `;
+    document.getElementById('startMC').addEventListener('click', ()=>{
+      const catId = document.getElementById('mcCat').value;
+      let pool = [];
+      if(catId==='all'){
+        DATA.categories.forEach(c=> c.quiz.forEach(q=> pool.push({...q, cat:c.name})));
+      } else {
+        const c = DATA.categories.find(c=>c.id===catId);
+        c.quiz.forEach(q=> pool.push({...q, cat:c.name}));
+      }
+      pool = pool.sort(()=>Math.random()-0.5);
+      mcState = {stage:'running', pool, i:0, correctCount:0, answered:false};
+      renderMC();
+    });
+    return;
+  }
+
+  if(mcState.stage==='running'){
+    const q = mcState.pool[mcState.i];
+    panel.innerHTML = `
+      <div class="quiz-head">
+        <h2 style="margin:0">Frage ${mcState.i+1} / ${mcState.pool.length}</h2>
+      </div>
+      <p class="lede" style="margin-bottom:6px">${q.cat}</p>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options" id="mcOptions">
+        ${q.options.map((o,i)=>`<button class="q-option" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div id="mcExplainWrap"></div>
+      <div class="quiz-nav"><button id="nextMC" style="display:none">Nächste Frage</button></div>
+    `;
+    panel.querySelectorAll('.q-option').forEach(btn=>{
+      btn.addEventListener('click', ()=> answerMC(parseInt(btn.dataset.i)));
+    });
+    document.getElementById('nextMC').addEventListener('click', nextMCQuestion);
+    return;
+  }
+
+  if(mcState.stage==='result'){
+    const pct = Math.round(mcState.correctCount/mcState.pool.length*100);
+    panel.innerHTML = `
+      <h2>Training abgeschlossen</h2>
+      <div class="quiz-result">
+        <div class="big">${pct}%</div>
+        <p>${mcState.correctCount} von ${mcState.pool.length} Fragen richtig beantwortet.</p>
+        <button id="restartMC" style="margin-top:14px">Neues Training starten</button>
+      </div>
+    `;
+    document.getElementById('restartMC').addEventListener('click', ()=>{ mcState={stage:'setup'}; renderMC(); });
+  }
+}
+
+function answerMC(chosenIdx){
+  if(mcState.answered) return;
+  mcState.answered = true;
+  const q = mcState.pool[mcState.i];
+  const options = document.querySelectorAll('#mcOptions .q-option');
+  options.forEach((btn,i)=>{
+    if(i===q.correct) btn.classList.add('correct');
+    else if(i===chosenIdx) btn.classList.add('wrong');
+    btn.disabled = true;
+  });
+  if(chosenIdx===q.correct){
+    mcState.correctCount++;
+    progress.points = (progress.points||0) + 5;
+    saveProgress();
+  }
+  document.getElementById('mcExplainWrap').innerHTML = `<div class="q-explain">${q.explain}</div>`;
+  document.getElementById('nextMC').style.display = 'inline-block';
+  updateSeal();
+}
+
+function nextMCQuestion(){
+  mcState.i++;
+  mcState.answered = false;
+  if(mcState.i >= mcState.pool.length){
+    mcState.stage='result';
+  }
+  renderMC();
 }
 
 /* ---------------- QUIZ ---------------- */
@@ -724,7 +1057,7 @@ function renderQuiz(){
     const opts = DATA.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
     panel.innerHTML = `
       <h2>Klausursimulation</h2>
-      <p class="lede">Wähle einen Bereich (oder alle gemischt) und ein Zeitlimit. So übst du echten Prüfungsdruck.</p>
+      <p class="lede">Wie würdest du unter echten Prüfungsbedingungen abschneiden? Bereich und Zeitlimit wählen, dann konzentriert durcharbeiten.</p>
       <div class="quiz-setup">
         <label>Bereich<br>
           <select id="quizCat">
@@ -735,7 +1068,7 @@ function renderQuiz(){
         <label>Zeitlimit pro Frage (Sekunden)<br>
           <input class="num-input" id="quizTime" type="number" value="45" min="10" max="180" style="width:100px">
         </label>
-        <button id="startQuiz">Klausur starten</button>
+        <button id="startQuiz" class="quiz-start-btn">Simulation starten</button>
       </div>
     `;
     document.getElementById('startQuiz').addEventListener('click', ()=>{
@@ -869,45 +1202,6 @@ function renderGlossar(){
 
 /* ---------------- INIT ---------------- */
 render();
-
-/* ---------------- PASSWORT-GATE ---------------- */
-(function(){
-  const PW_HASH = '1d97ca430c7126b0a890d402d8c81dc6ff0afdf7d4262c5b4b9791ae4ff7c178';
-  const SESSION_KEY = 'meister3_unlocked';
-
-  async function sha256(text){
-    const enc = new TextEncoder().encode(text);
-    const buf = await crypto.subtle.digest('SHA-256', enc);
-    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  }
-
-  function unlock(){
-    document.body.classList.remove('locked');
-    document.getElementById('gate').style.display = 'none';
-  }
-
-  if(sessionStorage.getItem(SESSION_KEY) === 'true'){
-    unlock();
-  }
-
-  const btn = document.getElementById('gateBtn');
-  const input = document.getElementById('gatePw');
-  const err = document.getElementById('gateErr');
-
-  async function tryUnlock(){
-    const hash = await sha256(input.value);
-    if(hash === PW_HASH){
-      sessionStorage.setItem(SESSION_KEY, 'true');
-      unlock();
-    } else {
-      err.style.display = 'block';
-      input.value = '';
-      input.focus();
-    }
-  }
-  btn.addEventListener('click', tryUnlock);
-  input.addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
-})();
 </script>
 </body>
 </html>
