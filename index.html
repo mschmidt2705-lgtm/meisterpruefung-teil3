@@ -9,54 +9,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Premium dark base */
-  --petrol:#0B1120;              /* main background */
-  --petrol-light:#1E2A3F;        /* raised / hover surfaces */
-  --petrol-pale:#1B2436;         /* subtle fills, track backgrounds */
-  --cream:#172033;               /* card surface */
-  --bg-subtle:#111827;           /* secondary surface */
-  --terracotta:#22D3EE;          /* primary accent (cyan) */
-  --terracotta-light:#67E4F5;
-  --accent-2:#3B82F6;            /* secondary accent (blue) */
-  --text-primary:#F8FAFC;
-  --text-secondary:#94A3B8;
-  --ok:#22C55E;
-  --ok-bg:rgba(34,197,94,0.12);
-  --warn:#F59E0B;
-  --warn-bg:rgba(245,158,11,0.12);
-  --card-bg:#172033;
-  --border:#263248;
-  --c-bwl:#22D3EE;
-  --c-recht:#3B82F6;
-  --c-personal:#F59E0B;
-  --c-steuer:#22C55E;
-  --c-marketing:#A78BFA;
-  --c-sehhilfen:#38BDF8;
-  --c-physiologie:#2DD4BF;
-  --c-finanzwirtschaft:#60A5FA;
-  --c-qm:#F472B6;
-  --c-steuerrecht:#FBBF24;
-  --radius-card:18px;
+  /* Light, precise optician-studio palette */
+  --navy:#073B5C;                /* headings, nav, key text */
+  --orange:#FF6B35;              /* primary actions, progress, highlights */
+  --orange-light:#FF8C5F;
+  --sky:#EAF6FF;                 /* subtle fills */
+  --white:#FFFFFF;               /* cards, main surfaces */
+  --page-bg:#F7FAFC;             /* page background */
+  --text-secondary:#5D6B78;
+  --border:#DCE6EE;
+  --ok:#159A6A;
+  --ok-bg:#E7F6EF;
+  --warn:#E94F37;
+  --warn-bg:#FDEAE7;
+
+  /* Legacy variable names kept for compatibility across the file — remapped to the light palette */
+  --petrol:var(--page-bg);
+  --petrol-light:var(--sky);
+  --petrol-pale:#F0F5F9;
+  --cream:var(--white);
+  --bg-subtle:#FBFDFE;
+  --terracotta:var(--orange);
+  --terracotta-light:var(--orange-light);
+  --accent-2:var(--navy);
+  --text-primary:var(--navy);
+  --card-bg:var(--white);
+  --on-accent:#FFFFFF;
+
+  --c-bwl:#B8791F;
+  --c-recht:#0E7C86;
+  --c-personal:#B4581F;
+  --c-steuer:#1E8E5A;
+  --c-marketing:#7A4FA0;
+  --c-sehhilfen:#1B6FA8;
+  --c-physiologie:#0E8074;
+  --c-finanzwirtschaft:#4C5FA8;
+  --c-qm:#B33D6B;
+  --c-steuerrecht:#B8862A;
+  --c-arbeitsschutz:#C43E2A;
+  --c-umweltschutz:#2E8B57;
+  --c-rechnungswesen:#8A4A66;
+
+  --font-display:'Inter', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+  --radius-card:14px;
   --radius-btn:10px;
   --radius-pill:999px;
-  --shadow-soft: 0 4px 20px rgba(0,0,0,0.28);
-  --shadow-hover: 0 14px 34px rgba(0,0,0,0.38);
-  --shadow-panel: 0 8px 32px rgba(0,0,0,0.30);
+  --shadow-soft: 0 1px 3px rgba(7,59,92,0.06), 0 1px 2px rgba(7,59,92,0.04);
+  --shadow-hover: 0 8px 20px rgba(7,59,92,0.10);
+  --shadow-panel: 0 1px 3px rgba(7,59,92,0.05);
+
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
 }
-*{box-sizing:border-box;}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{-webkit-text-size-adjust:100%;}
 body{
   margin:0;
-  background:
-    radial-gradient(900px 500px at 12% -8%, rgba(34,211,238,0.10), transparent 60%),
-    radial-gradient(700px 480px at 100% 0%, rgba(59,130,246,0.10), transparent 55%),
-    var(--petrol);
-  background-attachment:fixed;
+  background:var(--page-bg);
   color:var(--text-primary);
-  font-family:'Inter', sans-serif;
+  font-family:var(--font-body);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
+  font-size:16px;
+  overflow-x:hidden;
 }
-.wrap{max-width:1140px;margin:0 auto;padding:0 20px 80px;}
+:focus-visible{outline:2.5px solid var(--orange); outline-offset:2px; border-radius:4px;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px; padding-left:calc(24px + var(--safe-l)); padding-right:calc(24px + var(--safe-r));}
+@media (max-width:600px){
+  .wrap{padding-left:calc(16px + var(--safe-l)); padding-right:calc(16px + var(--safe-r)); padding-bottom:56px;}
+}
 
 /* HEADER / STICKY NAV */
 header.app-header{
@@ -66,27 +92,27 @@ header.app-header{
   justify-content:space-between;
   gap:16px;
   padding:16px 4px;
-  margin-bottom:0;
-  background:rgba(11,17,32,0.78);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border);
 }
 .title-block{display:flex; align-items:baseline; gap:10px;}
 .title-block h1{
-  font-family:'Inter', sans-serif;
+  font-family:var(--font-display);
   font-weight:800;
-  font-size:17px;
-  letter-spacing:0.4px;
+  font-size:19px;
+  letter-spacing:0.2px;
   margin:0;
-  color:var(--text-primary);
+  color:var(--navy);
 }
 .title-block .subtitle{
-  font-size:10.5px;
-  color:var(--terracotta);
-  letter-spacing:1.6px;
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--orange);
+  letter-spacing:2px;
   text-transform:uppercase;
-  font-weight:700;
+  font-weight:600;
 }
 .title-block .tagline{display:none;}
 .seal-wrap{display:flex; align-items:center; gap:10px;}
@@ -97,18 +123,18 @@ header.app-header{
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
-  background:var(--card-bg);
+  background:var(--sky);
   border:1px solid var(--border);
 }
 .seal .pct{
-  font-family:'IBM Plex Mono', monospace;
-  font-weight:600;
+  font-family:var(--font-mono);
+  font-weight:700;
   font-size:11px;
-  color:var(--terracotta);
+  color:var(--navy);
 }
 .seal svg{position:absolute; top:-1px; left:-1px; width:44px; height:44px;}
-.seal .ring-bg{stroke:var(--petrol-pale);}
-.seal .ring-fg{stroke:var(--terracotta); transition:stroke-dashoffset 0.6s ease; stroke-linecap:round;}
+.seal .ring-bg{stroke:var(--border);}
+.seal .ring-fg{stroke:var(--orange); transition:stroke-dashoffset 0.6s ease; stroke-linecap:round;}
 
 /* TABS */
 nav.tabs{
@@ -118,20 +144,23 @@ nav.tabs{
   margin:0 0 40px;
   flex-wrap:nowrap;
   overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
   padding:5px;
-  background:var(--card-bg);
+  background:var(--white);
   border:1px solid var(--border);
   border-radius:var(--radius-pill);
-  max-width:fit-content;
+  max-width:100%;
   -webkit-overflow-scrolling:touch;
 }
 nav.tabs::-webkit-scrollbar{display:none;}
 nav.tabs button{
   font-family:'Inter', sans-serif;
   font-size:13px;
-  font-weight:500;
+  font-weight:600;
   letter-spacing:0.1px;
-  padding:9px 18px;
+  padding:10px 18px;
+  min-height:38px;
   border:none;
   background:transparent;
   color:var(--text-secondary);
@@ -140,245 +169,251 @@ nav.tabs button{
   white-space:nowrap;
   transition:background 0.2s, color 0.2s;
 }
-nav.tabs button:hover{background:var(--petrol-light); color:var(--text-primary);}
+nav.tabs button:hover{background:var(--sky); color:var(--navy);}
 nav.tabs button.active{
-  background:linear-gradient(135deg, var(--terracotta), var(--accent-2));
-  color:#0B1120;
+  background:var(--orange);
+  color:#fff;
   font-weight:700;
 }
-.nav-row{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-top:22px;}
+.nav-row{display:flex; align-items:center; justify-content:center; gap:16px; padding-top:22px;}
+@media (max-width:600px){
+  nav.tabs{max-width:100%; width:100%;}
+}
 
 /* HERO */
 .hero{
-  display:grid; grid-template-columns:1.1fr 0.9fr; gap:36px; align-items:center;
-  padding:56px 4px 44px;
+  display:grid; grid-template-columns:1.15fr 0.85fr; gap:32px; align-items:center;
+  padding:36px 4px 32px;
 }
+.hero-text{display:flex; flex-direction:column; align-items:flex-start; max-width:560px;}
 .hero-badge{
-  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
-  letter-spacing:0.8px; text-transform:uppercase; color:var(--terracotta);
-  background:rgba(34,211,238,0.10); border:1px solid rgba(34,211,238,0.30);
-  padding:7px 14px; border-radius:var(--radius-pill); margin-bottom:18px;
+  display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:700;
+  letter-spacing:1.2px; text-transform:uppercase; color:var(--orange);
+  background:#FFF1EB; border:1px solid #FFD9C7;
+  padding:7px 14px; border-radius:var(--radius-pill); margin-bottom:16px;
 }
 .hero h2.headline{
-  font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-0.5px;
-  font-size:clamp(30px,4.2vw,44px); line-height:1.15; margin:0 0 14px; color:var(--text-primary);
+  font-family:var(--font-display); font-weight:800; letter-spacing:-0.4px;
+  font-size:clamp(26px,3.6vw,38px); line-height:1.2; margin:0 0 12px; color:var(--navy);
 }
-.hero .sub{font-size:16px; line-height:1.6; color:var(--text-secondary); max-width:480px; margin:0 0 26px;}
+.hero .sub{font-size:16px; line-height:1.6; color:var(--text-secondary); max-width:480px; margin:0 0 22px;}
 .hero-ctas{display:flex; gap:12px; flex-wrap:wrap;}
 .btn-primary{
-  font-family:'Inter'; font-weight:700; font-size:14px; padding:14px 26px; border-radius:var(--radius-btn);
-  border:none; background:linear-gradient(135deg, var(--terracotta), var(--accent-2)); color:#0B1120; cursor:pointer;
-  transition:transform 0.2s ease, box-shadow 0.2s ease; box-shadow:0 8px 22px rgba(34,211,238,0.18);
+  font-family:'Inter'; font-weight:700; font-size:14px; padding:13px 26px; border-radius:var(--radius-btn);
+  border:none; background:var(--orange); color:#fff; cursor:pointer; min-height:44px;
+  transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-shadow:0 2px 8px rgba(255,107,53,0.25);
 }
-.btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(34,211,238,0.26);}
+.btn-primary:hover{background:#F0592A; box-shadow:0 4px 14px rgba(255,107,53,0.32);}
+.btn-primary:active{transform:scale(0.98);}
 .btn-secondary{
-  font-family:'Inter'; font-weight:600; font-size:14px; padding:14px 24px; border-radius:var(--radius-btn);
-  border:1px solid var(--border); background:transparent; color:var(--text-primary); cursor:pointer;
-  transition:background 0.2s ease, border-color 0.2s ease;
+  font-family:'Inter'; font-weight:600; font-size:14px; padding:13px 24px; border-radius:var(--radius-btn);
+  border:1.5px solid var(--navy); background:#fff; color:var(--navy); cursor:pointer; min-height:44px;
+  transition:background 0.15s ease, border-color 0.15s ease;
 }
-.btn-secondary:hover{background:var(--petrol-light); border-color:var(--terracotta);}
+.btn-secondary:hover{background:var(--sky);}
+.btn-secondary:active{transform:scale(0.98);}
 .hero-visual{
-  background:var(--card-bg); border:1px solid var(--border); border-radius:20px;
-  padding:26px; box-shadow:0 20px 60px rgba(0,0,0,0.35), 0 0 60px rgba(34,211,238,0.06);
-  position:relative;
+  background:var(--white); border:1px solid var(--border); border-radius:16px;
+  padding:24px; box-shadow:var(--shadow-soft);
+  width:100%; max-width:380px; text-align:left;
 }
-.hero-visual::before{
-  content:''; position:absolute; inset:-1px; border-radius:20px; padding:1px;
-  background:linear-gradient(135deg, rgba(34,211,238,0.25), transparent 40%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
-}
-.hero-visual .hv-label{font-size:11.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:600; margin-bottom:6px;}
-.hero-visual .hv-pct{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:38px; color:var(--text-primary); margin-bottom:16px;}
+.hero-visual .hv-label{font-family:var(--font-mono); font-size:11px; letter-spacing:0.8px; text-transform:uppercase; color:var(--text-secondary); font-weight:600; margin-bottom:6px;}
+.hero-visual .hv-pct{font-family:var(--font-mono); font-weight:700; font-size:34px; color:var(--navy); margin-bottom:16px;}
 .hv-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
 .hv-row .hv-name{width:96px; flex-shrink:0; font-size:11.5px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.hv-row .hv-track{flex:1; height:6px; border-radius:var(--radius-pill); background:var(--petrol-pale); overflow:hidden;}
-.hv-row .hv-fill{height:100%; border-radius:var(--radius-pill);}
+.hv-row .hv-track{flex:1; height:6px; border-radius:var(--radius-pill); background:var(--sky); overflow:hidden;}
+.hv-row .hv-fill{height:100%; border-radius:var(--radius-pill); background:var(--orange);}
 @media (max-width:820px){
-  .hero{grid-template-columns:1fr; padding-top:36px;}
-  .hero-visual{order:-1;}
+  .hero{grid-template-columns:1fr; padding-top:24px; text-align:left;}
+  .hero-visual{order:-1; max-width:100%;}
+}
+@media (max-width:600px){
+  .hero-ctas{flex-direction:column; width:100%;}
+  .hero-ctas .btn-primary, .hero-ctas .btn-secondary{width:100%; text-align:center;}
 }
 
 /* PANEL */
 .panel{
-  background:var(--card-bg);
+  background:transparent;
   color:var(--text-primary);
-  border-radius:20px;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-panel);
-  padding:36px;
+  border-radius:0;
+  border:none;
+  box-shadow:none;
+  padding:8px 0 20px;
   min-height:420px;
   position:relative;
 }
 .panel h2{
-  font-family:'Inter', sans-serif;
-  font-size:21px;
-  font-weight:700;
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:800;
   letter-spacing:-0.2px;
   margin:0 0 4px;
-  color:var(--text-primary);
+  color:var(--navy);
 }
 .panel .lede{color:var(--text-secondary); font-size:14.5px; margin-bottom:26px; line-height:1.5;}
 
-.section-heading{font-family:'Inter',sans-serif; font-size:20px; font-weight:700; letter-spacing:-0.2px; color:var(--text-primary); margin:44px 0 18px;}
+.section-heading{font-family:var(--font-display); font-size:19px; font-weight:800; letter-spacing:-0.1px; color:var(--navy); margin:40px 0 16px;}
 .section-heading:first-of-type{margin-top:0;}
 
 /* STAT / KPI CARDS */
 .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:8px;}
 .stat-card{
-  background:var(--bg-subtle); border:1px solid var(--border); border-radius:16px; padding:18px 20px;
-  transition:transform 0.2s ease, border-color 0.2s ease;
+  background:var(--white); border:1px solid var(--border); border-radius:var(--radius-card); padding:18px 20px;
+  transition:transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow:var(--shadow-soft);
 }
-.stat-card:hover{transform:translateY(-3px); border-color:rgba(34,211,238,0.35);}
-.stat-card .stat-icon{width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; background:rgba(34,211,238,0.12); color:var(--terracotta);}
-.stat-card .stat-value{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:24px; color:var(--text-primary); line-height:1;}
+.stat-card:hover{transform:translateY(-2px); border-color:#FFD9C7; box-shadow:var(--shadow-hover);}
+.stat-card .stat-icon{width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; background:#FFF1EB; color:var(--orange);}
+.stat-card .stat-value{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:24px; color:var(--navy); line-height:1;}
 .stat-card .stat-label{font-size:12px; color:var(--text-secondary); margin-top:8px;}
 @media (max-width:820px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:480px){.stat-grid{grid-template-columns:1fr;}}
+@media (max-width:480px){.stat-grid{grid-template-columns:1fr 1fr; gap:12px;}}
 
 /* DASHBOARD HERO (in-panel progress banner) */
 .progress-hero{
-  background:linear-gradient(135deg, rgba(34,211,238,0.10), rgba(59,130,246,0.06));
+  background:var(--sky);
   border:1px solid var(--border);
   border-radius:var(--radius-card);
-  padding:28px 30px;
+  padding:26px 28px;
   margin-bottom:24px;
   color:var(--text-primary);
 }
 .hero-top{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;}
-.hero-eyebrow{font-size:12.5px; letter-spacing:0.6px; text-transform:uppercase; color:var(--text-secondary); font-weight:600;}
-.hero-pct{font-family:'IBM Plex Mono',monospace; font-size:40px; font-weight:700; line-height:1.1; margin:4px 0 6px; color:var(--text-primary);}
+.hero-eyebrow{font-size:12.5px; letter-spacing:0.6px; text-transform:uppercase; color:var(--text-secondary); font-weight:700;}
+.hero-pct{font-family:'IBM Plex Mono',monospace; font-size:38px; font-weight:700; line-height:1.1; margin:4px 0 6px; color:var(--navy);}
 .hero-sub{font-size:14px; color:var(--text-secondary);}
-.hero-bar-bg{height:8px; background:var(--petrol-pale); border-radius:var(--radius-pill); overflow:hidden; margin-top:18px;}
-.hero-bar-fg{height:100%; background:linear-gradient(90deg, var(--terracotta), var(--accent-2)); border-radius:var(--radius-pill); transition:width 0.6s ease;}
+.hero-bar-bg{height:8px; background:#DCEEFB; border-radius:var(--radius-pill); overflow:hidden; margin-top:18px;}
+.hero-bar-fg{height:100%; background:var(--orange); border-radius:var(--radius-pill); transition:width 0.6s ease;}
 .hero-cta{
   flex-shrink:0; font-family:'Inter'; font-weight:700; font-size:14px;
-  padding:13px 26px; border-radius:var(--radius-btn); border:none;
-  background:linear-gradient(135deg, var(--terracotta), var(--accent-2)); color:#0B1120; cursor:pointer; white-space:nowrap;
-  transition:transform 0.2s, box-shadow 0.2s;
+  padding:13px 26px; border-radius:var(--radius-btn); border:none; min-height:44px;
+  background:var(--orange); color:#fff; cursor:pointer; white-space:nowrap;
+  transition:transform 0.15s, box-shadow 0.15s, background 0.15s;
 }
-.hero-cta:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(34,211,238,0.22);}
+.hero-cta:hover{background:#F0592A; box-shadow:0 4px 14px rgba(255,107,53,0.28);}
 .hero-cta:active{transform:scale(0.97);}
 .progress-hero.empty{text-align:center; padding:36px 30px;}
-.progress-hero.empty .hero-eyebrow{color:var(--text-primary); font-size:16px; text-transform:none; letter-spacing:0; margin-bottom:16px; display:block;}
+.progress-hero.empty .hero-eyebrow{color:var(--navy); font-size:16px; text-transform:none; letter-spacing:0; margin-bottom:16px; display:block;}
 .progress-hero.empty .hero-cta{margin:0 auto;}
 
 .recommend-card{
   border:1px solid var(--border); border-left:3px solid var(--accent);
-  background:var(--bg-subtle); border-radius:var(--radius-card);
+  background:var(--white); border-radius:var(--radius-card);
   padding:16px 20px; margin-bottom:24px; cursor:pointer;
   transition:transform 0.15s ease, border-color 0.15s ease; box-shadow:var(--shadow-soft);
 }
 .recommend-card:hover{transform:translateY(-2px); border-color:var(--accent);}
-.recommend-label{font-size:11.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:600; margin-bottom:4px;}
-.recommend-name{font-weight:600; font-size:15.5px; color:var(--text-primary); margin-bottom:4px;}
+.recommend-label{font-size:11.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin-bottom:4px;}
+.recommend-name{font-weight:700; font-size:15.5px; color:var(--navy); margin-bottom:4px;}
 .recommend-stat{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-secondary);}
 
 /* DASHBOARD CARDS */
 .cat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px;}
 .cat-card{
   border:1px solid var(--border);
-  background:var(--bg-subtle);
+  background:var(--white);
   padding:20px 22px;
   border-radius:var(--radius-card);
   cursor:pointer;
   position:relative;
   overflow:hidden;
-  transition:transform 0.2s ease, border-color 0.2s ease;
+  transition:transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   box-shadow:var(--shadow-soft);
 }
 .cat-card::before{
   content:''; position:absolute; top:0; left:0; width:100%; height:3px;
   background:var(--accent);
 }
-.cat-card:hover{transform:translateY(-4px); border-color:var(--accent); box-shadow:var(--shadow-hover);}
-.cat-card .cat-icon{width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; background:color-mix(in srgb, var(--accent) 16%, transparent); color:var(--accent);}
-.cat-card .name{font-weight:600; font-size:15px; margin-bottom:12px; color:var(--text-primary);}
-.cat-card .bar-bg{height:6px; background:var(--petrol-pale); border-radius:var(--radius-pill); overflow:hidden;}
+.cat-card:hover{transform:translateY(-3px); border-color:var(--accent); box-shadow:var(--shadow-hover);}
+.cat-card .cat-icon{width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; background:color-mix(in srgb, var(--accent) 14%, white); color:var(--accent);}
+.cat-card .name{font-family:var(--font-display); font-weight:700; font-size:16px; margin-bottom:12px; color:var(--navy);}
+.cat-card .bar-bg{height:6px; background:var(--sky); border-radius:var(--radius-pill); overflow:hidden;}
 .cat-card .bar-fg{height:100%; background:var(--accent); border-radius:var(--radius-pill); transition:width 0.6s ease;}
 .cat-card .stat{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--text-secondary); margin-top:10px;}
-.cat-card .cat-link{display:inline-flex; align-items:center; gap:4px; margin-top:14px; font-size:12.5px; font-weight:600; color:var(--accent);}
+.cat-card .cat-link{display:inline-flex; align-items:center; gap:4px; margin-top:14px; font-size:12.5px; font-weight:700; color:var(--accent);}
 
 /* TRAINER PREVIEW SECTION */
 .trainer-card{
   display:grid; grid-template-columns:1fr 1fr; gap:0;
-  border:1px solid var(--border); border-radius:var(--radius-card); overflow:hidden; background:var(--bg-subtle);
+  border:1px solid var(--border); border-radius:var(--radius-card); overflow:hidden; background:var(--white);
+  box-shadow:var(--shadow-soft);
 }
 .trainer-left{padding:30px; display:flex; flex-direction:column; justify-content:center; gap:12px;}
-.trainer-left .tl-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.6px; text-transform:uppercase; color:var(--terracotta);}
-.trainer-left h3{margin:0; font-size:19px; font-weight:700; color:var(--text-primary);}
+.trainer-left .tl-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.6px; text-transform:uppercase; color:var(--orange); font-weight:700;}
+.trainer-left h3{margin:0; font-size:19px; font-weight:800; color:var(--navy);}
 .trainer-left p{margin:0; font-size:13.5px; color:var(--text-secondary); line-height:1.55;}
-.trainer-right{padding:26px; background:var(--card-bg); border-left:1px solid var(--border); display:flex; flex-direction:column; justify-content:center;}
-.trainer-right .tq{font-size:14.5px; color:var(--text-primary); font-weight:500; margin-bottom:14px; line-height:1.5;}
-.trainer-right .to{padding:10px 14px; border:1px solid var(--border); border-radius:10px; font-size:12.5px; color:var(--text-secondary); margin-bottom:8px;}
-.trainer-right .to span{color:var(--terracotta); font-family:'IBM Plex Mono',monospace; margin-right:8px;}
+.trainer-right{padding:26px; background:var(--sky); border-left:1px solid var(--border); display:flex; flex-direction:column; justify-content:center;}
+.trainer-right .tq{font-size:14.5px; color:var(--navy); font-weight:600; margin-bottom:14px; line-height:1.5;}
+.trainer-right .to{padding:10px 14px; border:1px solid var(--border); background:#fff; border-radius:10px; font-size:12.5px; color:var(--text-secondary); margin-bottom:8px;}
+.trainer-right .to span{color:var(--orange); font-family:'IBM Plex Mono',monospace; margin-right:8px; font-weight:600;}
 @media (max-width:700px){.trainer-card{grid-template-columns:1fr;} .trainer-right{border-left:none; border-top:1px solid var(--border);}}
 
 /* FLASHCARD TEASER */
 .teaser-flip{max-width:520px; margin:0 auto;}
 
 /* PROGRESS SECTION */
-.progress-block{display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:center; background:var(--bg-subtle); border:1px solid var(--border); border-radius:var(--radius-card); padding:30px;}
+.progress-block{display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:center; background:var(--white); border:1px solid var(--border); border-radius:var(--radius-card); padding:28px; box-shadow:var(--shadow-soft);}
 .progress-ring-wrap{display:flex; flex-direction:column; align-items:center; gap:10px;}
 .progress-ring{position:relative; width:132px; height:132px;}
-.progress-ring .pr-pct{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:var(--text-primary);}
-.progress-ring svg .ring-bg{stroke:var(--petrol-pale);}
-.progress-ring svg .ring-fg{stroke:var(--terracotta); stroke-linecap:round; transition:stroke-dashoffset 0.8s ease;}
+.progress-ring .pr-pct{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:var(--navy);}
+.progress-ring svg .ring-bg{stroke:var(--sky);}
+.progress-ring svg .ring-fg{stroke:var(--orange); stroke-linecap:round; transition:stroke-dashoffset 0.8s ease;}
 .progress-ring-caption{font-size:13px; color:var(--text-secondary); text-align:center;}
 .week-chart{display:flex; align-items:flex-end; gap:10px; height:120px;}
 .week-chart .wc-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:8px;}
 .week-chart .wc-bar-track{flex:1; width:100%; display:flex; align-items:flex-end; max-width:26px; margin:0 auto;}
-.week-chart .wc-bar{width:100%; border-radius:6px 6px 2px 2px; background:linear-gradient(180deg, var(--terracotta), var(--accent-2)); transition:height 0.6s ease; min-height:3px;}
+.week-chart .wc-bar{width:100%; border-radius:6px 6px 2px 2px; background:var(--orange); transition:height 0.6s ease; min-height:3px;}
 .week-chart .wc-day{font-size:11px; color:var(--text-secondary);}
 @media (max-width:700px){.progress-block{grid-template-columns:1fr; justify-items:center;}}
 
 /* MOTIVATION BANNER */
 .motivation{
-  border-radius:var(--radius-card); padding:32px 34px; margin-top:44px; text-align:center;
-  background:linear-gradient(135deg, rgba(34,211,238,0.14), rgba(59,130,246,0.10));
-  border:1px solid rgba(34,211,238,0.28);
+  border-radius:var(--radius-card); padding:30px 32px; margin-top:44px; text-align:center;
+  background:var(--sky);
+  border:1px solid var(--border);
 }
-.motivation h3{margin:0 0 8px; font-family:'Inter',sans-serif; font-weight:800; font-size:22px; color:var(--text-primary);}
+.motivation h3{margin:0 0 8px; font-family:var(--font-display); font-weight:800; font-size:21px; color:var(--navy);}
 .motivation p{margin:0 0 20px; color:var(--text-secondary); font-size:14.5px;}
 
 /* FLASHCARDS */
 .streak-bar{display:flex; justify-content:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;}
-.streak-item{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--text-secondary); background:var(--petrol-pale); padding:7px 14px; border-radius:var(--radius-pill);}
-.streak-item strong{color:var(--terracotta); font-weight:600;}
+.streak-item{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--text-secondary); background:var(--sky); padding:7px 14px; border-radius:var(--radius-pill);}
+.streak-item strong{color:var(--navy); font-weight:700;}
 .fc-select{display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
 .fc-select button{
-  padding:8px 16px; border-radius:var(--radius-pill); border:1px solid var(--border);
-  background:var(--card-bg); font-size:12.5px; cursor:pointer; color:var(--text-secondary);
+  padding:9px 16px; border-radius:var(--radius-pill); border:1px solid var(--border); min-height:38px;
+  background:var(--white); font-size:12.5px; cursor:pointer; color:var(--text-secondary);
   transition:background 0.15s, color 0.15s, border-color 0.15s;
 }
-.fc-select button:hover{border-color:var(--terracotta); color:var(--text-primary);}
-.fc-select button.active{background:linear-gradient(135deg, var(--terracotta), var(--accent-2)); color:#0B1120; border-color:transparent; font-weight:600;}
+.fc-select button:hover{border-color:var(--orange); color:var(--navy);}
+.fc-select button.active{background:var(--orange); color:#fff; border-color:transparent; font-weight:700;}
 .card-stage{display:flex; flex-direction:column; align-items:center; gap:20px;}
 .fc-nav-row{display:flex; align-items:center; justify-content:center; gap:14px; width:100%;}
 .fc-arrow{
   flex-shrink:0; width:46px; height:46px; border-radius:50%;
-  border:1px solid var(--border); background:var(--card-bg); color:var(--text-primary);
+  border:1px solid var(--border); background:var(--white); color:var(--navy);
   font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  box-shadow:var(--shadow-soft); transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  box-shadow:var(--shadow-soft); transition:background 0.15s, border-color 0.15s, transform 0.1s;
 }
-.fc-arrow:hover{background:var(--petrol-light); border-color:var(--terracotta);}
+.fc-arrow:hover{background:var(--sky); border-color:var(--orange);}
 .fc-arrow:active{transform:scale(0.92);}
 .flashcard{
   width:100%; max-width:560px; min-height:220px;
-  background:var(--card-bg); border:1px solid var(--border);
+  background:var(--white); border:1px solid var(--border);
   border-radius:var(--radius-card); display:flex; align-items:center; justify-content:center;
   text-align:center; padding:38px 34px; cursor:pointer; position:relative;
   box-shadow:var(--shadow-soft);
-  perspective:1000px;
-  transition:box-shadow 0.2s ease, transform 0.2s ease;
+  transition:box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
 }
-.flashcard:hover{box-shadow:var(--shadow-hover); transform:translateY(-2px);}
+.flashcard:hover{box-shadow:var(--shadow-hover); transform:translateY(-2px); border-color:#FFD9C7;}
 .flashcard .face{
-  font-size:20px; line-height:1.65; font-weight:450; letter-spacing:0.1px;
-  color:var(--text-primary); -webkit-font-smoothing:antialiased; max-width:440px;
+  font-size:20px; line-height:1.65; font-weight:500; letter-spacing:0.1px;
+  color:var(--navy); -webkit-font-smoothing:antialiased; max-width:440px;
 }
-.flashcard.is-answer .face{color:var(--terracotta);}
-.flashcard.is-answer{background:var(--petrol-pale);}
+.flashcard.is-answer .face{color:var(--orange);}
+.flashcard.is-answer{background:#FFF8F5;}
 .flashcard .hint{position:absolute; bottom:12px; right:16px; font-size:10.5px; color:var(--text-secondary); letter-spacing:0.3px;}
 .stamp-mark{
   position:absolute; top:12px; left:16px; font-family:'IBM Plex Mono',monospace;
@@ -390,9 +425,9 @@ nav.tabs button.active{
 .stamp-mark.unknown{background:var(--warn-bg); color:var(--warn);}
 .fc-actions{display:flex; gap:12px;}
 .fc-actions button{
-  font-family:'Inter'; font-weight:600; font-size:13.5px;
+  font-family:'Inter'; font-weight:700; font-size:13.5px; min-height:44px;
   padding:12px 24px; border-radius:var(--radius-btn); cursor:pointer; border:1.5px solid transparent;
-  transition:background 0.2s, color 0.2s, transform 0.1s;
+  transition:background 0.15s, color 0.15s, transform 0.1s;
 }
 .fc-actions button:active{transform:scale(0.97);}
 .btn-unknown{background:var(--warn-bg); border-color:transparent; color:var(--warn);}
@@ -401,58 +436,67 @@ nav.tabs button.active{
 .btn-known:hover{background:var(--ok); color:#fff;}
 .fc-progress{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-secondary);}
 .merksatz-toggle{
-  background:var(--card-bg); border:1px dashed var(--terracotta); color:var(--terracotta);
-  font-family:'Inter'; font-size:12.5px; font-weight:500; padding:9px 18px;
+  background:var(--white); border:1.5px dashed var(--orange); color:var(--orange); min-height:38px;
+  font-family:'Inter'; font-size:12.5px; font-weight:600; padding:9px 18px;
   border-radius:var(--radius-pill); cursor:pointer; transition:background 0.15s;
 }
-.merksatz-toggle:hover{background:rgba(34,211,238,0.10);}
+.merksatz-toggle:hover{background:#FFF1EB;}
 .merksatz-box{
-  max-width:560px; width:100%; background:rgba(34,211,238,0.08); border:1px solid rgba(34,211,238,0.30);
-  border-radius:var(--radius-card); padding:18px 22px; font-size:15px; line-height:1.6; color:var(--text-primary);
+  max-width:560px; width:100%; background:#FFF8F5; border:1px solid #FFD9C7;
+  border-radius:var(--radius-card); padding:18px 22px; font-size:15px; line-height:1.6; color:var(--navy);
+}
+@media (max-width:600px){
+  .flashcard{padding:28px 20px; min-height:180px;}
+  .flashcard .face{font-size:18px;}
+  .fc-arrow{width:44px; height:44px; font-size:18px;}
+  .fc-nav-row{gap:8px;}
+  .fc-actions{width:100%;}
+  .fc-actions button{flex:1;}
 }
 
 /* QUIZ */
 .quiz-setup{display:flex; flex-direction:column; gap:16px; max-width:480px; margin:0 auto;}
 .quiz-setup select, .quiz-setup .num-input{
-  padding:11px 14px; border:1px solid var(--border); border-radius:var(--radius-btn); font-family:inherit; font-size:14px; background:var(--card-bg);
+  padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-btn); font-family:inherit; font-size:16px; background:var(--white); color:var(--navy); min-height:44px;
 }
 .quiz-timer{
-  font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600;
-  color:var(--terracotta); padding:6px 16px; border:1.5px solid var(--terracotta); border-radius:var(--radius-btn);
-  display:inline-block;
+  font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:700;
+  color:var(--navy); padding:6px 16px; border:1.5px solid var(--orange); border-radius:var(--radius-btn);
+  display:inline-block; background:#FFF1EB;
 }
-.quiz-timer.low{color:var(--warn); border-color:var(--warn);}
-.quiz-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
-.q-text{font-size:18.5px; font-weight:500; margin-bottom:20px; line-height:1.6; color:var(--text-primary);}
+.quiz-timer.low{color:var(--warn); border-color:var(--warn); background:var(--warn-bg);}
+.quiz-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;}
+.q-text{font-size:18px; font-weight:600; margin-bottom:20px; line-height:1.6; color:var(--navy);}
 .q-options{display:flex; flex-direction:column; gap:10px;}
 .q-option{
   text-align:left; padding:16px 20px; border:1.5px solid var(--border); border-radius:var(--radius-card);
-  background:var(--card-bg); cursor:pointer; font-size:15.5px; line-height:1.5; font-family:inherit;
+  background:var(--white); cursor:pointer; font-size:16px; line-height:1.5; font-family:inherit; min-height:44px;
+  color:var(--text-primary);
   transition:border-color 0.15s, background 0.15s, transform 0.1s;
 }
-.q-option:hover{border-color:var(--terracotta); transform:translateX(2px);}
-.q-option.correct{border-color:var(--ok); background:var(--ok-bg);}
-.q-option.wrong{border-color:var(--warn); background:var(--warn-bg);}
-.q-explain{margin-top:16px; font-size:14.5px; line-height:1.55; color:var(--text-secondary); background:var(--petrol-pale); padding:16px 18px; border-radius:var(--radius-card);}
+.q-option:hover{border-color:var(--orange); background:#FFF8F5;}
+.q-option.correct{border-color:var(--ok); background:var(--ok-bg); color:var(--navy);}
+.q-option.wrong{border-color:var(--warn); background:var(--warn-bg); color:var(--navy);}
+.q-explain{margin-top:16px; font-size:14.5px; line-height:1.55; color:var(--text-secondary); background:var(--sky); padding:16px 18px; border-radius:var(--radius-card);}
 .quiz-nav{margin-top:20px; display:flex; justify-content:flex-end;}
 .quiz-nav button, .quiz-setup button{
-  font-family:'Inter'; font-weight:700; font-size:13.5px;
+  font-family:'Inter'; font-weight:700; font-size:13.5px; min-height:44px;
   padding:12px 26px; border-radius:var(--radius-btn); border:none;
-  background:linear-gradient(135deg, var(--terracotta), var(--accent-2)); color:#0B1120; cursor:pointer;
-  transition:transform 0.2s, box-shadow 0.2s;
+  background:var(--orange); color:#fff; cursor:pointer;
+  transition:transform 0.15s, box-shadow 0.15s, background 0.15s;
 }
-.quiz-nav button:hover, .quiz-setup button:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(34,211,238,0.20);}
+.quiz-nav button:hover, .quiz-setup button:hover{background:#F0592A; box-shadow:0 4px 14px rgba(255,107,53,0.25);}
 .quiz-nav button:active, .quiz-setup button:active{transform:scale(0.97);}
 .quiz-start-btn{padding:14px 28px !important; font-size:14.5px !important;}
 .quiz-result{text-align:center; padding:20px 0;}
-.quiz-result .big{font-family:'Inter',sans-serif; font-size:46px; font-weight:800; color:var(--terracotta);}
+.quiz-result .big{font-family:var(--font-mono); font-size:46px; font-weight:700; color:var(--orange);}
 
 /* GLOSSAR */
 .glossar-search{
   width:100%; padding:12px 16px; border:1px solid var(--border); border-radius:var(--radius-btn);
-  font-family:inherit; font-size:14px; margin-bottom:22px; background:var(--card-bg); color:var(--text-primary);
+  font-family:inherit; font-size:16px; margin-bottom:22px; background:var(--white); color:var(--navy); min-height:44px;
 }
-.glossar-list dt{font-weight:600; font-size:15.5px; margin-top:18px; color:var(--terracotta);}
+.glossar-list dt{font-weight:700; font-size:15.5px; margin-top:18px; color:var(--navy);}
 .glossar-list dd{margin:5px 0 0; font-size:14.5px; color:var(--text-primary); line-height:1.6;}
 .g-cat-tag{font-size:10px; text-transform:uppercase; letter-spacing:0.4px; color:var(--text-secondary); margin-left:8px;}
 
@@ -460,23 +504,19 @@ footer.note{
   text-align:center; font-size:11.5px; color:var(--text-secondary); margin-top:26px; line-height:1.6;
 }
 @media (max-width:600px){
-  .panel{padding:22px 18px; border-radius:16px;}
-  .flashcard{padding:28px 20px; min-height:180px;}
-  .flashcard .face{font-size:18px;}
-  .fc-arrow{width:40px; height:40px; font-size:18px;}
-  .fc-nav-row{gap:8px;}
-  nav.tabs{max-width:100%;}
-  .progress-hero{padding:22px 20px;}
-  .hero-top{flex-direction:column; align-items:stretch; text-align:center;}
-  .hero-pct{font-size:36px;}
+  .progress-hero{padding:20px 18px;}
+  .hero-top{flex-direction:column; align-items:stretch; text-align:left;}
+  .hero-pct{font-size:34px;}
   .hero-cta{width:100%;}
-  .hero{padding-top:26px; padding-bottom:30px;}
-  .hero-ctas{flex-direction:column;}
-  .hero-ctas .btn-primary, .hero-ctas .btn-secondary{width:100%; text-align:center;}
-  .stat-grid{grid-template-columns:1fr 1fr; gap:12px;}
-  .motivation{padding:26px 20px;}
-  header.app-header{padding:12px 4px;}
-  .title-block h1{font-size:14px;}
+  .motivation{padding:24px 18px;}
+  header.app-header{padding:12px 2px;}
+  .title-block h1{font-size:15px;}
+  .stat-card{padding:14px 16px;}
+  .stat-card .stat-value{font-size:20px;}
+  .trainer-left, .trainer-right{padding:20px;}
+}
+@media (max-width:340px){
+  .stat-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -543,13 +583,13 @@ const DATA = {
     {
       id:'bwl', name:'Betriebswirtschaft & Kalkulation', accent:'var(--c-bwl)',
       flashcards:[
-        {q:'Was unterscheidet fixe von variablen Kosten?', a:'Fixe Kosten fallen unabhängig von der produzierten Menge an (z. B. Miete), variable Kosten verändern sich mit der Ausbringungsmenge (z. B. Materialkosten).'},
-        {q:'Was ist der Deckungsbeitrag?', a:'Verkaufspreis minus variable Kosten pro Stück — der Betrag, der zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
-        {q:'Wie berechnet man den Verkaufspreis bei der Zuschlagskalkulation (vereinfacht)?', a:'Selbstkosten + Gewinnzuschlag = Barverkaufspreis; darauf ggf. Skonto, Rabatt und Kundenprovision aufschlagen, um den Zielverkaufspreis zu erhalten.', hint:'Merksatz: "Erst der Kern (Selbstkosten + Gewinn), dann die Schale (Skonto, Rabatt, Provision) drumherum."'},
-        {q:'Was zeigt die Break-Even-Analyse?', a:'Den Punkt, an dem Erlöse und Gesamtkosten gleich hoch sind — ab dieser Menge wird Gewinn erzielt.'},
-        {q:'Was ist der Unterschied zwischen Liquidität und Rentabilität?', a:'Liquidität = Fähigkeit, Zahlungsverpflichtungen fristgerecht zu erfüllen. Rentabilität = Verhältnis von Gewinn zu eingesetztem Kapital.'},
-        {q:'Was ist Eigenkapitalrentabilität?', a:'Gewinn geteilt durch eingesetztes Eigenkapital, mal 100 — zeigt, wie sich das eigene Kapital verzinst hat.'},
-        {q:'In welche Teile lässt sich die Kosten- und Leistungsrechnung gliedern?', a:'Kostenartenrechnung, Kostenstellenrechnung, Kostenträgerrechnung.'},
+        {q:'Worin liegt der Unterschied zwischen fixen und variablen Kosten?', a:'Fixkosten fallen unabhängig von der produzierten Menge an, z. B. Miete. Variable Kosten steigen und sinken mit der Ausbringungsmenge, z. B. Materialkosten.'},
+        {q:'Wie berechnest du den Deckungsbeitrag?', a:'Verkaufspreis minus variable Kosten pro Stück. Er zeigt, wie viel jedes verkaufte Stück zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
+        {q:'Wie kommst du bei der Zuschlagskalkulation vereinfacht zum Verkaufspreis?', a:'Selbstkosten plus Gewinnzuschlag ergeben den Barverkaufspreis. Darauf rechnest du bei Bedarf Skonto, Rabatt und Kundenprovision hinzu, um den Zielverkaufspreis zu erhalten.', hint:'Merksatz: Erst der Kern (Selbstkosten + Gewinn), dann die Schale (Skonto, Rabatt, Provision) drumherum.'},
+        {q:'Was zeigt dir die Break-Even-Analyse?', a:'Den Punkt, an dem Erlöse und Gesamtkosten gleich hoch sind. Ab dieser Absatzmenge erwirtschaftest du Gewinn.'},
+        {q:'Worin unterscheiden sich Liquidität und Rentabilität?', a:'Liquidität ist die Fähigkeit, Zahlungsverpflichtungen fristgerecht zu erfüllen. Rentabilität setzt den Gewinn ins Verhältnis zum eingesetzten Kapital.'},
+        {q:'Wie berechnest du die Eigenkapitalrentabilität?', a:'Gewinn geteilt durch eingesetztes Eigenkapital, mal 100. Sie zeigt, wie sich das eigene Kapital verzinst hat.'},
+        {q:'In welche drei Teilbereiche gliedert sich die Kosten- und Leistungsrechnung?', a:'Kostenartenrechnung, Kostenstellenrechnung und Kostenträgerrechnung.'},
       ],
       glossary:[
         {t:'Deckungsbeitrag', d:'Differenz zwischen Erlös und variablen Kosten je Einheit.'},
@@ -560,29 +600,36 @@ const DATA = {
         {t:'Kalkulationszuschlag', d:'Prozentualer Aufschlag auf die Selbstkosten zur Deckung von Gewinn und Risiko.'},
       ],
       quiz:[
-        {q:'Ein Betrieb hat Fixkosten von 20.000 € und einen Deckungsbeitrag von 40 € je Stück. Wie viele Stück müssen mindestens verkauft werden, um die Fixkosten zu decken?', options:['400 Stück','500 Stück','800 Stück','200 Stück'], correct:1, explain:'20.000 € / 40 € = 500 Stück (Break-Even-Menge).'},
-        {q:'Welche Kostenart bleibt bei steigender Produktionsmenge konstant?', options:['Variable Kosten','Fixkosten','Gesamtkosten','Stückkosten'], correct:1, explain:'Fixkosten sind unabhängig von der Produktionsmenge, z. B. Miete oder Versicherungen.'},
-        {q:'Was drückt die Eigenkapitalquote aus?', options:['Verhältnis von Umsatz zu Gewinn','Anteil des Eigenkapitals am Gesamtkapital','Verhältnis von Fixkosten zu variablen Kosten','Höhe der Bankverbindlichkeiten'], correct:1, explain:'Eigenkapitalquote = Eigenkapital / Gesamtkapital × 100 — zeigt die finanzielle Stabilität.'},
-        {q:'Wofür steht Skonto?', options:['Mengenrabatt', 'Preisnachlass bei schneller Zahlung', 'Zuschlag für Sonderanfertigungen', 'Steuerermäßigung'], correct:1, explain:'Skonto ist ein Nachlass für Zahlung innerhalb einer kurzen Frist.'},
-        {q:'Was ist bei der Deckungsbeitragsrechnung im Fokus?', options:['Nur die Fixkosten','Der Beitrag jedes Produkts zur Deckung der Fixkosten','Die Höhe der Löhne','Der Materialeinkaufspreis'], correct:1, explain:'Sie zeigt, wie viel jedes Produkt zur Deckung der Fixkosten und zum Gewinn beiträgt.'},
-        {q:'Welche Aussage zur Liquidität stimmt?', options:['Sie beschreibt die Rentabilität eines Betriebs','Sie beschreibt die Fähigkeit, Zahlungen fristgerecht zu leisten','Sie ist identisch mit dem Gewinn','Sie wird nur einmal jährlich berechnet'], correct:1, explain:'Liquidität betrifft die Zahlungsfähigkeit, nicht den Gewinn.'},
+        {q:'Ein Betrieb hat Fixkosten von 20.000 € und einen Deckungsbeitrag von 40 € je Stück. Wie viele Stück muss er mindestens verkaufen, um die Fixkosten zu decken?', options:['400 Stück','500 Stück','800 Stück','200 Stück'], correct:1, explain:'Richtig ist: 500 Stück. 20.000 € geteilt durch 40 € Deckungsbeitrag je Stück ergibt die Break-Even-Menge von 500 Stück.'},
+        {q:'Welche Kostenart bleibt bei steigender Produktionsmenge auf gleichem Niveau?', options:['Variable Kosten','Fixkosten','Gesamtkosten','Stückkosten'], correct:1, explain:'Richtig ist: Fixkosten. Sie fallen unabhängig von der produzierten Menge an, z. B. Miete oder Versicherungsbeiträge.'},
+        {q:'Was drückt die Eigenkapitalquote aus?', options:['Das Verhältnis von Umsatz zu Gewinn','Den Anteil des Eigenkapitals am Gesamtkapital','Das Verhältnis von Fixkosten zu variablen Kosten','Die Höhe der Bankverbindlichkeiten'], correct:1, explain:'Richtig ist: der Anteil des Eigenkapitals am Gesamtkapital. Die Kennzahl zeigt, wie finanziell stabil ein Betrieb aufgestellt ist.'},
+        {q:'Welchen Vorteil erhält ein Kunde durch die Zahlung innerhalb der vereinbarten Skontofrist?', options:['Einen Mengenrabatt','Einen Preisnachlass für schnelle Zahlung','Einen Aufschlag für Sonderanfertigungen','Eine Steuerermäßigung'], correct:1, explain:'Richtig ist: ein Preisnachlass für schnelle Zahlung. Skonto belohnt die Begleichung der Rechnung innerhalb einer kurzen Frist.'},
+        {q:'Worauf konzentriert sich die Deckungsbeitragsrechnung?', options:['Ausschließlich auf die Fixkosten','Auf den Beitrag jedes Produkts zur Deckung der Fixkosten','Auf die Höhe der Löhne','Auf den Materialeinkaufspreis'], correct:1, explain:'Richtig ist: der Beitrag jedes Produkts zur Deckung der Fixkosten. So wird sichtbar, welches Produkt wie viel zum Gewinn beiträgt.'},
+        {q:'Welche Aussage zur Liquidität trifft zu?', options:['Sie beschreibt die Rentabilität eines Betriebs','Sie beschreibt die Fähigkeit, Zahlungen fristgerecht zu leisten','Sie entspricht dem erzielten Gewinn','Sie wird nur einmal jährlich ermittelt'], correct:1, explain:'Richtig ist: Liquidität beschreibt die Fähigkeit, Zahlungen fristgerecht zu leisten — sie ist von der Rentabilität zu unterscheiden.'},
       ]
     },
     {
       id:'recht', name:'Rechtsformen & Unternehmensrecht', accent:'var(--c-recht)',
       flashcards:[
-        {q:'Wer haftet bei einem Einzelunternehmen?', a:'Der Inhaber haftet unbeschränkt mit seinem gesamten Privat- und Betriebsvermögen.'},
-        {q:'Was ist der wesentliche Unterschied zwischen GmbH und Einzelunternehmen bei der Haftung?', a:'Bei der GmbH haftet grundsätzlich nur das Gesellschaftsvermögen, nicht das Privatvermögen der Gesellschafter.'},
-        {q:'Was ist ein Werkvertrag?', a:'Ein Vertrag, bei dem ein bestimmter Erfolg geschuldet wird (§ 631 BGB), z. B. die Herstellung eines Werkstücks — im Gegensatz zum Dienstvertrag, der nur Tätigkeit schuldet.'},
-        {q:'Wozu dient die Handwerksrolle?', a:'Verzeichnis der zulassungspflichtigen Handwerksbetriebe bei der Handwerkskammer; Eintragung ist Voraussetzung für die selbstständige Ausübung eines zulassungspflichtigen Handwerks.'},
-        {q:'Was regelt die Gewährleistung beim Werkvertrag?', a:'Ansprüche des Bestellers bei Mängeln: Nacherfüllung, Selbstvornahme, Minderung, Rücktritt, Schadensersatz — Frist i. d. R. 2 Jahre.'},
-        {q:'Was ist der Unterschied zwischen OHG und KG?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt; bei der KG gibt es mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur beschränkt haftenden Kommanditisten.', hint:'Merksatz: "Komplementär = KOMPLETT haftbar. Kommanditist = nur seine Einlage."'},
-        {q:'Wer ist nicht geschäftsfähig?', a:'Als nicht geschäftsfähig gelten Personen, die das 7. Lebensjahr noch nicht vollendet haben, oder sich in einem die Willensbestimmung ausschließenden Zustand krankhafter Störung oder Geistestätigkeit befinden.'},
-        {q:'Vervollständige den Satz: Im Rahmen des BGB werden als "Sachen" ... beschrieben.', a:'...nur körperliche Gegenstände.'},
-        {q:'Was ist nach BGB der Unterschied zwischen Eigentum und Besitz?', a:'Eigentum bezeichnet die rechtliche Verfügungsgewalt über eine Sache. Der Eigentümer kann darüber wie er möchte verfügen, soweit er keine Gesetze oder Rechte anderer Personen bricht. Besitz bezeichnet die tatsächliche Verfügungsgewalt über eine Sache.'},
-        {q:'Was ist ein "Kannkaufmann"?', a:'Dies ist ein Gewerbetreibender, der zwar ins Handelsregister eingetragen ist, aber nicht unter § 1 HGB fällt.'},
-        {q:'Was versteht man unter einem "Formkaufmann"?', a:'Hierbei handelt es sich um Handels- und Kapitalgesellschaften und Vereine, die durch eine Rechtsform ihre Kaufmannsgemeinschaft erhalten.'},
-        {q:'Eine Person bekommt von einer Bank ein Darlehen. Einen Monat später erfährt die Bank, dass der Kreditnehmer sich in finanziellen Schwierigkeiten befindet und ficht den Vertrag an. Mit welchen Folgen ist zu rechnen?', a:'Der Vertrag ist wirksam, da die Frist abgelaufen ist. Eine Anfechtung muss nach § 121 BGB unverzüglich erfolgen.', hint:'Merksatz: "§ 121 = unverZÜGLICH" — ein Monat ist definitiv nicht mehr \'ohne schuldhaftes Zögern\'.'},
+        {q:'Wer haftet bei einem Einzelunternehmen für Verbindlichkeiten?', a:'Der Inhaber — unbeschränkt mit seinem gesamten Privat- und Betriebsvermögen.'},
+        {q:'Worin liegt der zentrale Haftungsunterschied zwischen GmbH und Einzelunternehmen?', a:'Bei der GmbH haftet grundsätzlich nur das Gesellschaftsvermögen. Das Privatvermögen der Gesellschafter bleibt geschützt.'},
+        {q:'Was zeichnet einen Werkvertrag aus?', a:'Geschuldet wird ein bestimmter Erfolg, z. B. ein fertiges Werkstück (§ 631 BGB). Der Dienstvertrag verlangt dagegen nur die Tätigkeit selbst.'},
+        {q:'Wozu dient die Handwerksrolle?', a:'Sie ist das Verzeichnis zulassungspflichtiger Handwerksbetriebe bei der Handwerkskammer. Die Eintragung ist Voraussetzung, um ein zulassungspflichtiges Handwerk selbstständig auszuüben.'},
+        {q:'Welche Ansprüche stehen einem Kunden bei Mängeln im Werkvertragsrecht zu?', a:'Nacherfüllung, Selbstvornahme, Minderung, Rücktritt und Schadensersatz. Die Frist beträgt in der Regel 2 Jahre.'},
+        {q:'Wie unterscheiden sich OHG und KG in der Haftung?', a:'Bei der OHG haften alle Gesellschafter unbeschränkt. Die KG hat mindestens einen unbeschränkt haftenden Komplementär und mindestens einen nur mit seiner Einlage haftenden Kommanditisten.', hint:'Merksatz: Komplementär haftet komplett, Kommanditist nur mit seiner Einlage.'},
+        {q:'Wer gilt als nicht geschäftsfähig?', a:'Personen unter 7 Jahren sowie Personen, die sich in einem die Willensbildung dauerhaft ausschließenden Zustand krankhafter Störung befinden.'},
+        {q:'Was zählt das BGB zu den „Sachen"?', a:'Ausschließlich körperliche Gegenstände.'},
+        {q:'Worin unterscheiden sich Eigentum und Besitz nach BGB?', a:'Eigentum ist die rechtliche Verfügungsgewalt über eine Sache — der Eigentümer darf frei über sie bestimmen, solange er dabei keine fremden Rechte verletzt. Besitz ist die tatsächliche Sachherrschaft.'},
+        {q:'Was ist ein Kannkaufmann?', a:'Ein Gewerbetreibender, der freiwillig ins Handelsregister eingetragen ist, ohne unter § 1 HGB zu fallen.'},
+        {q:'Was versteht man unter einem Formkaufmann?', a:'Handels- und Kapitalgesellschaften sowie Vereine, deren Kaufmannseigenschaft sich allein aus ihrer Rechtsform ergibt.'},
+        {q:'Eine Bank erklärt die Anfechtung eines Darlehensvertrags erst einen Monat nach Kenntnis der finanziellen Schwierigkeiten des Kreditnehmers. Welche Folge hat das?', a:'Der Vertrag bleibt wirksam. Eine Anfechtung muss nach § 121 BGB unverzüglich erfolgen — ein Monat ist dafür zu spät.', hint:'Merksatz: § 121 verlangt unverZÜGLICHes Handeln, ohne schuldhaftes Zögern.'},
+        {q:'Welche Geschäftsfähigkeit besitzt eine minderjährige Person zwischen 7 und 18 Jahren?', a:'Sie ist beschränkt geschäftsfähig. Für Willenserklärungen, die nicht nur einen rechtlichen Vorteil bringen, braucht sie die Einwilligung ihres gesetzlichen Vertreters (§ 107 BGB).'},
+        {q:'Nach welchen Hauptkategorien lassen sich Unternehmen nach ihrer Rechtsform einteilen?', a:'Einzelunternehmen, Personengesellschaften, Kapitalgesellschaften, Mischformen (z. B. GmbH & Co. KG) sowie sonstige Rechtsformen wie Genossenschaft, Stiftung oder Verein.'},
+        {q:'Ein Angebot ist bis zum 15. Juli befristet. Die Annahme geht erst am 16. Juli beim Anbieter ein, trägt aber das Datum 14. Juli. Kommt der Vertrag zustande?', a:'Nein. Entscheidend ist der tatsächliche Zugang, nicht das aufgedruckte Datum. Da dieser nach Fristablauf lag, muss das Angebot erneut angenommen werden.'},
+        {q:'Was passiert mit einem Vertrag, wenn einzelne AGB-Klauseln unwirksam sind oder nicht Vertragsbestandteil wurden?', a:'Der Vertrag bleibt im Übrigen wirksam.'},
+        {q:'Wann beginnt die Rechtsfähigkeit einer natürlichen Person?', a:'Mit der Geburt (§ 1 BGB).'},
+        {q:'Was ist das Besondere an Bruchteilsgemeinschaften und Miteigentümerschaften?', a:'Jedes Mitglied kann über seinen Bruchteil unabhängig von den anderen Mitgliedern verfügen.'},
+        {q:'Was passiert bei der Sicherungsübereignung mit Eigentum und Besitz?', a:'Der Schuldner verliert das Eigentum an der Sache, behält aber den Besitz.'},
       ],
       glossary:[
         {t:'GbR', d:'Gesellschaft bürgerlichen Rechts — einfachste Form der Personengesellschaft, unbeschränkte Haftung aller Gesellschafter.'},
@@ -591,58 +638,83 @@ const DATA = {
         {t:'Handwerksrolle', d:'Verzeichnis zulassungspflichtiger Handwerksbetriebe bei der HWK.'},
         {t:'Gewährleistung', d:'Gesetzliche Haftung für Mängel einer Leistung.'},
         {t:'UWG', d:'Gesetz gegen den unlauteren Wettbewerb — regelt faires Marktverhalten.'},
+        {t:'Beschränkte Geschäftsfähigkeit', d:'Gilt vom 7. bis zum 18. Lebensjahr; für Willenserklärungen ohne rein rechtlichen Vorteil ist die Einwilligung eines gesetzlichen Vertreters nötig (§ 107 BGB).'},
+        {t:'Rechtsfähigkeit', d:'Fähigkeit, Träger von Rechten und Pflichten zu sein; entsteht bei natürlichen Personen mit der Geburt (§ 1 BGB).'},
+        {t:'Sicherungsübereignung', d:'Kreditsicherungsmittel, bei dem der Schuldner das Eigentum an einer Sache überträgt, aber den Besitz behält.'},
+        {t:'Bruchteilsgemeinschaft', d:'Gemeinschaftsform, bei der jedes Mitglied unabhängig von den anderen über seinen Bruchteil verfügen kann.'},
       ],
       quiz:[
-        {q:'Wer haftet bei einer GmbH grundsätzlich für Verbindlichkeiten?', options:['Die Gesellschafter privat und unbeschränkt','Nur das Gesellschaftsvermögen','Der Geschäftsführer allein','Die Handwerkskammer'], correct:1, explain:'Die GmbH ist eine Kapitalgesellschaft — Haftung ist grundsätzlich auf das Gesellschaftsvermögen beschränkt.'},
-        {q:'Welche Rechtsform hat mindestens einen unbeschränkt und einen beschränkt haftenden Gesellschafter?', options:['GbR','OHG','KG','GmbH'], correct:2, explain:'Die KG hat Komplementäre (unbeschränkt) und Kommanditisten (beschränkt haftend).'},
-        {q:'Ein Werkvertrag unterscheidet sich vom Dienstvertrag dadurch, dass...', options:['nur Tätigkeit geschuldet wird','ein bestimmter Erfolg geschuldet wird','keine Vergütung vereinbart wird','er nur mündlich geschlossen werden kann'], correct:1, explain:'Beim Werkvertrag wird ein Erfolg (z. B. fertiges Werkstück) geschuldet, § 631 BGB.'},
-        {q:'Wofür ist die Eintragung in die Handwerksrolle Voraussetzung?', options:['Für die Mitgliedschaft im Betriebsrat','Für die selbstständige Ausübung eines zulassungspflichtigen Handwerks','Für den Abschluss von Ausbildungsverträgen','Für die Anmeldung beim Finanzamt'], correct:1, explain:'Ohne Eintragung darf ein zulassungspflichtiges Handwerk nicht selbstständig ausgeübt werden.'},
-        {q:'Wie lange beträgt die gesetzliche Gewährleistungsfrist bei einem Werkvertrag i. d. R.?', options:['6 Monate','1 Jahr','2 Jahre','5 Jahre'], correct:2, explain:'Die regelmäßige Gewährleistungsfrist beträgt 2 Jahre (bei Bauwerken 5 Jahre).'},
-        {q:'Was regelt das UWG?', options:['Arbeitszeiten','Unlauteren Wettbewerb','Steuerpflichten','Ausbildungsvergütung'], correct:1, explain:'Das Gesetz gegen den unlauteren Wettbewerb schützt faires Marktverhalten.'},
+        {q:'Wer haftet bei einer GmbH grundsätzlich für die Verbindlichkeiten des Unternehmens?', options:['Die Gesellschafter privat und unbeschränkt','Nur das Gesellschaftsvermögen','Der Geschäftsführer allein','Die Handwerkskammer'], correct:1, explain:'Richtig ist: nur das Gesellschaftsvermögen. Die GmbH ist eine Kapitalgesellschaft, die Haftung ist auf ihr Vermögen beschränkt.'},
+        {q:'Welche Rechtsform hat mindestens einen unbeschränkt und einen beschränkt haftenden Gesellschafter?', options:['GbR','OHG','KG','GmbH'], correct:2, explain:'Richtig ist: KG. Sie besteht aus mindestens einem Komplementär (unbeschränkt haftend) und einem Kommanditisten (beschränkt haftend).'},
+        {q:'Worin unterscheidet sich der Werkvertrag vom Dienstvertrag?', options:['Beim Werkvertrag wird nur Tätigkeit geschuldet','Beim Werkvertrag wird ein bestimmter Erfolg geschuldet','Beim Werkvertrag ist keine Vergütung vereinbart','Der Werkvertrag kann nur mündlich geschlossen werden'], correct:1, explain:'Richtig ist: Beim Werkvertrag wird ein Erfolg geschuldet, etwa ein fertiges Werkstück (§ 631 BGB).'},
+        {q:'Wofür ist die Eintragung in die Handwerksrolle Voraussetzung?', options:['Für die Mitgliedschaft im Betriebsrat','Für die selbstständige Ausübung eines zulassungspflichtigen Handwerks','Für den Abschluss von Ausbildungsverträgen','Für die Anmeldung beim Finanzamt'], correct:1, explain:'Richtig ist: für die selbstständige Ausübung eines zulassungspflichtigen Handwerks. Ohne Eintragung ist dies nicht zulässig.'},
+        {q:'Wie lange gilt die gesetzliche Gewährleistungsfrist bei einem Werkvertrag in der Regel?', options:['6 Monate','1 Jahr','2 Jahre','5 Jahre'], correct:2, explain:'Richtig ist: 2 Jahre. Bei Bauwerken beträgt die Frist abweichend 5 Jahre.'},
+        {q:'Welchen Bereich regelt das UWG?', options:['Arbeitszeiten','Unlauteren Wettbewerb','Steuerpflichten','Ausbildungsvergütung'], correct:1, explain:'Richtig ist: unlauteren Wettbewerb. Das Gesetz schützt faires Marktverhalten zwischen Unternehmen.'},
+        {q:'Eine Bank erklärt die Anfechtung eines Darlehensvertrags erst einen Monat nach Kenntnis des Anfechtungsgrundes. Welche Voraussetzung des § 121 BGB ist dadurch problematisch?', options:['Die Schriftform', 'Das Erfordernis der unverzüglichen Erklärung', 'Die Zustimmung des Vertragspartners', 'Die notarielle Beurkundung'], correct:1, explain:'Richtig ist: das Erfordernis der unverzüglichen Erklärung. Ein Monat gilt nicht mehr als "ohne schuldhaftes Zögern".'},
+        {q:'Welche Geschäftsfähigkeit besitzt eine Person zwischen 7 und 18 Jahren?', options:['Volle Geschäftsfähigkeit','Beschränkte Geschäftsfähigkeit mit Einwilligungspflicht des gesetzlichen Vertreters','Keine Geschäftsfähigkeit','Geschäftsfähigkeit nur mit Personalausweis'], correct:1, explain:'Richtig ist: beschränkte Geschäftsfähigkeit. Für Erklärungen ohne rein rechtlichen Vorteil ist die Einwilligung des gesetzlichen Vertreters nötig (§ 107 BGB).'},
+        {q:'Welche Hauptkategorien der Rechtsformen gibt es für Unternehmen?', options:['Nur Einzelunternehmen und Kapitalgesellschaften','Einzelunternehmen, Personengesellschaften, Kapitalgesellschaften, Mischformen und sonstige Rechtsformen','Nur GmbH und AG','Eine Einteilung nach Branchen'], correct:1, explain:'Richtig ist: die fünf genannten Kategorien. Dazu zählen etwa auch Genossenschaften oder Vereine als sonstige Rechtsformen.'},
+        {q:'Ein Angebot ist bis zum 15. Juli befristet, die Annahme geht erst am 16. Juli ein, ist aber auf den 14. Juli datiert. Kommt der Vertrag zustande?', options:['Ja, das aufgedruckte Datum zählt','Nein, entscheidend ist der tatsächliche Zugang am 16. Juli — das Angebot muss erneut angenommen werden','Ja, da die Uhrzeit irrelevant ist','Nein, verspätete Annahmen sind grundsätzlich ausgeschlossen'], correct:1, explain:'Richtig ist: Maßgeblich ist der tatsächliche Zugang. Da dieser nach Fristablauf lag, braucht es eine erneute Annahme durch den Anbieter.'},
+        {q:'Was passiert, wenn einzelne AGB-Klauseln unwirksam sind oder nicht Vertragsbestandteil wurden?', options:['Der gesamte Vertrag wird unwirksam','Der Vertrag bleibt im Übrigen wirksam','Der Vertrag muss neu verhandelt werden','Automatisch gilt das Gesetz gegen unlauteren Wettbewerb'], correct:1, explain:'Richtig ist: Der Vertrag bleibt im Übrigen wirksam — nur die betroffenen Klauseln fallen weg.'},
+        {q:'Wann beginnt die Rechtsfähigkeit einer natürlichen Person?', options:['Mit Vollendung des 18. Lebensjahres','Mit der Geburt, nach § 1 BGB','Mit dem Beginn einer Erwerbstätigkeit','Mit der Eintragung ins Vereinsregister'], correct:1, explain:'Richtig ist: mit der Geburt. § 1 BGB knüpft die Rechtsfähigkeit an keinen weiteren Schritt.'},
+        {q:'Was ist das Besondere an einer Bruchteilsgemeinschaft?', options:['Alle Mitglieder müssen gemeinsam über das Ganze entscheiden','Jedes Mitglied kann über seinen Bruchteil unabhängig von den anderen verfügen','Es gibt jeweils nur einen Eigentümer','Bruchteile lassen sich nicht veräußern'], correct:1, explain:'Richtig ist: Jedes Mitglied verfügt unabhängig über seinen eigenen Bruchteil.'},
+        {q:'Was passiert bei einer Sicherungsübereignung mit Eigentum und Besitz?', options:['Der Schuldner behält beides','Der Schuldner verliert das Eigentum, behält aber den Besitz','Der Gläubiger erhält Eigentum und Besitz','Der Schuldner verliert den Besitz, behält aber das Eigentum'], correct:1, explain:'Richtig ist: Der Schuldner verliert das Eigentum an den Sicherungsnehmer, behält aber den Besitz der Sache.'},
       ]
     },
     {
       id:'personal', name:'Personal & Arbeitsrecht', accent:'var(--c-personal)',
       flashcards:[
-        {q:'Wie lautet die gesetzliche Grundkündigungsfrist nach § 622 BGB?', a:'4 Wochen zum 15. oder zum Ende eines Kalendermonats.', hint:'Merksatz: "622 wie vier plus zwei plus zwei Wochen" — einfacher: 4 Wochen, entweder zur Monatsmitte (15.) oder zum Monatsende.'},
-        {q:'Ab wann gilt das Kündigungsschutzgesetz (KSchG)?', a:'Ab 6 Monaten Betriebszugehörigkeit und in Betrieben mit mehr als 10 Arbeitnehmern.', hint:'Merksatz: "Halbes Jahr dabei, mehr als 10 im Betrieb" — beide Bedingungen UND-verknüpft.'},
-        {q:'Welche 3 Kündigungsgründe kennt das KSchG?', a:'Personenbedingt, verhaltensbedingt und betriebsbedingt.'},
-        {q:'Wie lang darf die tägliche Arbeitszeit laut ArbZG maximal sein?', a:'Grundsätzlich 8 Stunden, ausnahmsweise bis zu 10 Stunden, wenn im Schnitt über 6 Monate 8 Std./Tag nicht überschritten werden.', hint:'Merksatz: "8 ist die Regel, 10 die Ausnahme — aber im Schnitt bleibt\'s bei 8."'},
-        {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.', hint:'Merksatz: "11 wie ein Doppelstrich || — zwei Arbeitstage klar voneinander getrennt."'},
-        {q:'Ab wie vielen wahlberechtigten Arbeitnehmern kann ein Betriebsrat gewählt werden?', a:'Ab 5 wahlberechtigten Arbeitnehmern, von denen mindestens 3 wählbar sein müssen.'},
-        {q:'Wie kann ein Ausbildungsverhältnis während der Probezeit beendet werden?', a:'Jederzeit fristlos, ohne Angabe von Gründen, von beiden Seiten.'},
-        {q:'Was bedeutet Friedenspflicht im Rahmen eines laufenden Tarifvertrages?', a:'Während eines laufenden Tarifvertrags dürfen keine Kampfmaßnahmen stattfinden. Wurde innerhalb der Friedenspflicht ein Tarifvertrag abgeschlossen, sind keine Arbeitskämpfe möglich.'},
-        {q:'Die Kosten des Betriebsrats trägt...', a:'...der Arbeitgeber.'},
-        {q:'Nenne Formen von Arbeitskämpfen.', a:'Aussperrung, Streik.'},
-        {q:'Nenne die 5 Säulen der Sozialversicherung.', a:'Arbeitslosenversicherung, Rentenversicherung, Pflegeversicherung, Unfallversicherung, Krankenversicherung.'},
+        {q:'Wie lang ist die gesetzliche Grundkündigungsfrist nach § 622 BGB?', a:'4 Wochen — zum 15. oder zum Ende eines Kalendermonats.', hint:'Merksatz: 622 wie vier plus zwei plus zwei Wochen — einfacher: 4 Wochen, entweder zur Monatsmitte oder zum Monatsende.'},
+        {q:'Ab wann greift das Kündigungsschutzgesetz (KSchG)?', a:'Ab 6 Monaten Betriebszugehörigkeit und in Betrieben mit mehr als 10 Arbeitnehmern — beide Bedingungen müssen zusammen erfüllt sein.', hint:'Merksatz: Halbes Jahr dabei, mehr als 10 im Betrieb.'},
+        {q:'Welche drei Kündigungsgründe kennt das KSchG?', a:'Personenbedingt, verhaltensbedingt und betriebsbedingt.'},
+        {q:'Wie lang darf die tägliche Arbeitszeit laut ArbZG maximal sein?', a:'Grundsätzlich 8 Stunden. Ausnahmsweise bis zu 10 Stunden, wenn der Schnitt über 6 Monate bei 8 Stunden pro Tag bleibt.', hint:'Merksatz: 8 ist die Regel, 10 die Ausnahme — im Schnitt bleibt es bei 8.'},
+        {q:'Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen mindestens sein?', a:'Mindestens 11 Stunden.', hint:'Merksatz: 11 wie ein Doppelstrich — zwei Arbeitstage klar voneinander getrennt.'},
+        {q:'Ab wie vielen wahlberechtigten Arbeitnehmern lässt sich ein Betriebsrat wählen?', a:'Ab 5 wahlberechtigten Arbeitnehmern, von denen mindestens 3 wählbar sein müssen.'},
+        {q:'Wie lässt sich ein Ausbildungsverhältnis während der Probezeit beenden?', a:'Jederzeit fristlos und ohne Angabe von Gründen — von beiden Seiten.'},
+        {q:'Was bewirkt die Friedenspflicht während eines laufenden Tarifvertrags?', a:'Kampfmaßnahmen sind währenddessen ausgeschlossen. Wurde der Tarifvertrag innerhalb der Friedenspflicht abgeschlossen, sind keine Arbeitskämpfe zu diesem Thema möglich.'},
+        {q:'Wer trägt die Kosten des Betriebsrats?', a:'Der Arbeitgeber.'},
+        {q:'Welche Formen von Arbeitskämpfen gibt es?', a:'Aussperrung und Streik.'},
+        {q:'Welche Versicherungszweige gehören zur gesetzlichen Sozialversicherung?', a:'Arbeitslosen-, Renten-, Pflege-, Unfall- und Krankenversicherung.'},
+        {q:'Welches Verhalten kann eine außerordentliche Kündigung rechtfertigen?', a:'Zum Beispiel beleidigendes Verhalten oder Alkoholmissbrauch am Arbeitsplatz.'},
+        {q:'Welche Angaben gehören in ein vollständiges Arbeitszeugnis?', a:'Tätigkeitsdauer und -beginn, persönliche Daten, Leistungsbewertung, erwartete Fähigkeiten und Führungsbewertung.'},
+        {q:'Welche Personengruppen genießen besonderen Kündigungsschutz?', a:'Vertrauenspersonen schwerbehinderter Menschen, Schwerbehinderte selbst, Betriebsräte, Auszubildende sowie werdende und junge Mütter.'},
+        {q:'Ein Arbeitgeber kündigt fristlos wegen eines Betrugsvergehens, ohne den Betriebsrat anzuhören. Welche Folge hat das?', a:'Die Kündigung ist unwirksam. Nach § 102 BetrVG muss der Betriebsrat vor jeder Kündigung angehört werden.'},
+        {q:'Wodurch wird der Betriebsrat legitimiert?', a:'Durch das Betriebsverfassungsgesetz.'},
+        {q:'Was zeichnet eine Mediation aus?', a:'Sie ist ein Schlichtungsprozess zwischen zwei Parteien mit gegensätzlicher Position. Er führt schrittweise zu einer gemeinsamen Einigung.'},
       ],
       glossary:[
         {t:'KSchG', d:'Kündigungsschutzgesetz — schützt Arbeitnehmer vor sozial ungerechtfertigter Kündigung.'},
         {t:'ArbZG', d:'Arbeitszeitgesetz — regelt Höchstarbeitszeiten, Pausen und Ruhezeiten.'},
         {t:'BBiG', d:'Berufsbildungsgesetz — regelt die betriebliche Berufsausbildung.'},
-        {t:'BetrVG', d:'Betriebsverfassungsgesetz — regelt Mitbestimmung von Betriebsräten.'},
+        {t:'BetrVG', d:'Betriebsverfassungsgesetz — regelt Mitbestimmung von Betriebsräten und deren Anhörungsrecht vor Kündigungen (§ 102).'},
         {t:'Nachweisgesetz', d:'Verpflichtet den Arbeitgeber, wesentliche Vertragsbedingungen schriftlich niederzulegen.'},
         {t:'Abmahnung', d:'Formelle Rüge eines Fehlverhaltens vor einer verhaltensbedingten Kündigung.'},
+        {t:'Mediation', d:'Schlichtungsprozess zwischen zwei Personen mit gegensätzlicher Position, der zu einer schrittweise herbeigeführten Einigung führt.'},
       ],
       quiz:[
-        {q:'Wie lang ist die gesetzliche Grundkündigungsfrist für den Arbeitgeber laut § 622 BGB?', options:['2 Wochen','4 Wochen zum 15. oder Monatsende','1 Monat zum Monatsende','6 Wochen zum Quartalsende'], correct:1, explain:'Die Grundfrist beträgt 4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
-        {q:'Welche Voraussetzungen müssen für die Anwendung des KSchG erfüllt sein?', options:['Nur Betriebszugehörigkeit von 6 Monaten','Nur mehr als 10 Beschäftigte','6 Monate Betriebszugehörigkeit UND mehr als 10 Beschäftigte','Mindestens 1 Jahr Betriebszugehörigkeit'], correct:2, explain:'Beide Voraussetzungen müssen gemeinsam erfüllt sein.'},
-        {q:'Welcher Kündigungsgrund liegt vor, wenn ein Arbeitnehmer wiederholt unentschuldigt fehlt?', options:['Betriebsbedingt','Personenbedingt','Verhaltensbedingt','Außerordentlich ohne Grund'], correct:2, explain:'Ein steuerbares Fehlverhalten ist verhaltensbedingt (i. d. R. nach vorheriger Abmahnung).'},
-        {q:'Wie viele Stunden Ruhezeit müssen zwischen zwei Arbeitstagen mindestens liegen?', options:['8 Stunden','9 Stunden','11 Stunden','12 Stunden'], correct:2, explain:'Das ArbZG schreibt mindestens 11 Stunden ununterbrochene Ruhezeit vor.'},
-        {q:'Wie kann ein Ausbildungsverhältnis nach der Probezeit vom Azubi gekündigt werden?', options:['Gar nicht mehr','Nur fristlos','Mit 4-wöchiger Frist bei Aufgabe der Berufsausbildung','Nur durch den Ausbilder'], correct:2, explain:'Nach der Probezeit kann der Azubi mit 4 Wochen Frist kündigen, wenn er den Beruf aufgibt oder wechselt.'},
-        {q:'Welcher Führungsstil überlässt den Mitarbeitenden weitgehend eigene Entscheidungen?', options:['Autoritär','Kooperativ','Laissez-faire','Patriarchalisch'], correct:2, explain:'Beim Laissez-faire-Stil greift die Führungskraft kaum in Entscheidungen ein.'},
-        {q:'Ab wann kann ein Betriebsrat gebildet werden?', options:['Ab 1 Arbeitnehmer','Ab 5 wahlberechtigten Arbeitnehmern','Ab 20 Arbeitnehmern','Nur in Kapitalgesellschaften'], correct:1, explain:'Das BetrVG erlaubt die Wahl eines Betriebsrats ab 5 wahlberechtigten Arbeitnehmern.'},
+        {q:'Wie lang ist die gesetzliche Grundkündigungsfrist für den Arbeitgeber laut § 622 BGB?', options:['2 Wochen','4 Wochen zum 15. oder Monatsende','1 Monat zum Monatsende','6 Wochen zum Quartalsende'], correct:1, explain:'Richtig ist: 4 Wochen zum 15. oder zum Ende eines Kalendermonats.'},
+        {q:'Welche Voraussetzungen müssen für die Anwendung des KSchG gemeinsam erfüllt sein?', options:['Nur 6 Monate Betriebszugehörigkeit','Nur mehr als 10 Beschäftigte','6 Monate Betriebszugehörigkeit und mehr als 10 Beschäftigte','Mindestens 1 Jahr Betriebszugehörigkeit'], correct:2, explain:'Richtig ist: Beide Voraussetzungen müssen zusammen vorliegen, damit das KSchG greift.'},
+        {q:'Ein Arbeitnehmer fehlt wiederholt unentschuldigt. Welcher Kündigungsgrund liegt vor?', options:['Betriebsbedingt','Personenbedingt','Verhaltensbedingt','Außerordentlich ohne Grund'], correct:2, explain:'Richtig ist: verhaltensbedingt. Ein steuerbares Fehlverhalten wird in der Regel erst nach einer Abmahnung kündigungsrelevant.'},
+        {q:'Wie viele Stunden Ruhezeit müssen zwischen zwei Arbeitstagen mindestens liegen?', options:['8 Stunden','9 Stunden','11 Stunden','12 Stunden'], correct:2, explain:'Richtig ist: 11 Stunden. Das ArbZG schreibt diese ununterbrochene Mindestruhezeit vor.'},
+        {q:'Wie kann ein Azubi das Ausbildungsverhältnis nach der Probezeit kündigen?', options:['Gar nicht mehr','Nur fristlos','Mit 4-wöchiger Frist bei Aufgabe der Berufsausbildung','Nur mit Zustimmung des Ausbilders'], correct:2, explain:'Richtig ist: mit 4-wöchiger Frist, wenn der Azubi den Beruf aufgibt oder wechselt.'},
+        {q:'Welcher Führungsstil überlässt Mitarbeitenden weitgehend eigene Entscheidungen?', options:['Autoritär','Kooperativ','Laissez-faire','Patriarchalisch'], correct:2, explain:'Richtig ist: Laissez-faire. Die Führungskraft greift hier kaum in Entscheidungen der Mitarbeitenden ein.'},
+        {q:'Ab wie vielen wahlberechtigten Arbeitnehmern lässt sich ein Betriebsrat bilden?', options:['Ab 1 Arbeitnehmer','Ab 5 wahlberechtigten Arbeitnehmern','Ab 20 Arbeitnehmern','Nur in Kapitalgesellschaften'], correct:1, explain:'Richtig ist: ab 5 wahlberechtigten Arbeitnehmern, so schreibt es das BetrVG vor.'},
+        {q:'Welches Verhalten kann eine außerordentliche Kündigung rechtfertigen?', options:['Eine Verspätung um wenige Minuten','Beleidigendes Verhalten oder Alkoholmissbrauch','Eine Krankmeldung','Ein eingereichter Urlaubsantrag'], correct:1, explain:'Richtig ist: beleidigendes Verhalten oder Alkoholmissbrauch am Arbeitsplatz können eine fristlose Kündigung rechtfertigen.'},
+        {q:'Was gehört typischerweise in ein vollständiges Arbeitszeugnis?', options:['Nur die Unterschrift des Arbeitgebers','Tätigkeitsdauer, -beginn, persönliche Daten sowie Leistungs- und Führungsbewertung','Ausschließlich das Gehalt','Nur die Fehlzeiten'], correct:1, explain:'Richtig ist: die genannten Angaben zu Tätigkeit, Person, Leistung und Führung.'},
+        {q:'Welche Personengruppe genießt besonderen Kündigungsschutz?', options:['Neu eingestellte Mitarbeiter in der Probezeit','Werdende und junge Mütter','Mitarbeiter mit befristetem Vertrag','Praktikanten ohne Vertrag'], correct:1, explain:'Richtig ist: werdende und junge Mütter — neben Schwerbehinderten, Betriebsräten und Auszubildenden.'},
+        {q:'Ein Arbeitgeber kündigt fristlos, ohne den Betriebsrat anzuhören. Was folgt daraus?', options:['Die Kündigung bleibt trotzdem wirksam','Die Kündigung ist unwirksam, da § 102 BetrVG eine Anhörung verlangt','Der Betriebsrat muss nachträglich zustimmen','Fristlose Kündigungen sind von dieser Pflicht ausgenommen'], correct:1, explain:'Richtig ist: Die Kündigung ist unwirksam. § 102 BetrVG verlangt die Anhörung des Betriebsrats vor jeder Kündigung.'},
+        {q:'Wodurch wird der Betriebsrat legitimiert?', options:['Durch den Arbeitsvertrag', 'Durch das Betriebsverfassungsgesetz', 'Durch die Gewerbeordnung', 'Durch die Satzung des Arbeitgebers'], correct:1, explain:'Richtig ist: durch das Betriebsverfassungsgesetz (BetrVG).'},
+        {q:'Was kennzeichnet eine Mediation?', options:['Ein gerichtliches Verfahren mit Urteil','Einen Schlichtungsprozess zwischen zwei Parteien, der zu einer Einigung führt','Eine einseitige Anweisung der Führungskraft','Eine Abstimmung unter allen Mitarbeitern'], correct:1, explain:'Richtig ist: ein Schlichtungsprozess zwischen zwei Parteien mit gegensätzlicher Position, der schrittweise zu einer Einigung führt.'},
       ]
     },
     {
       id:'steuer', name:'Steuern & Versicherungen', accent:'var(--c-steuer)',
       flashcards:[
-        {q:'Welche Steuer zahlt ein Einzelunternehmer auf seinen Gewinn?', a:'Einkommensteuer (der Gewinn zählt zu den Einkünften aus Gewerbebetrieb).'},
-        {q:'Was ist die Umsatzsteuer aus Sicht des Unternehmers?', a:'Ein durchlaufender Posten — der Unternehmer zieht die gezahlte Vorsteuer von der vereinnahmten Umsatzsteuer ab und führt die Differenz ans Finanzamt ab.'},
-        {q:'Wer zahlt Gewerbesteuer?', a:'Gewerbebetriebe (Personen- und Kapitalgesellschaften); Freiberufler sind i. d. R. davon befreit.'},
-        {q:'Nenne die 5 Säulen der Sozialversicherung.', a:'Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung.'},
-        {q:'Wer trägt die Beiträge zur Unfallversicherung?', a:'Allein der Arbeitgeber.'},
-        {q:'Was ist eine Betriebshaftpflichtversicherung?', a:'Versicherung, die Schäden abdeckt, die der Betrieb Dritten gegenüber verursacht (Personen-, Sach-, Vermögensschäden).'},
+        {q:'Welche Steuer zahlt ein Einzelunternehmer auf seinen Gewinn?', a:'Einkommensteuer — der Gewinn zählt zu den Einkünften aus Gewerbebetrieb.'},
+        {q:'Welche Rolle spielt die Umsatzsteuer für den Unternehmer selbst?', a:'Sie ist ein durchlaufender Posten. Der Unternehmer zieht die gezahlte Vorsteuer von der vereinnahmten Umsatzsteuer ab und führt nur die Differenz ans Finanzamt ab.'},
+        {q:'Wer zahlt Gewerbesteuer?', a:'Gewerbebetriebe, also Personen- und Kapitalgesellschaften. Freiberufler sind in der Regel davon befreit.'},
+        {q:'Welche Versicherungszweige gehören zur gesetzlichen Sozialversicherung?', a:'Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung.'},
+        {q:'Wer trägt die Beiträge zur gesetzlichen Unfallversicherung?', a:'Allein der Arbeitgeber.'},
+        {q:'Was deckt eine Betriebshaftpflichtversicherung ab?', a:'Schäden, die der Betrieb Dritten gegenüber verursacht — Personen-, Sach- und Vermögensschäden.'},
       ],
       glossary:[
         {t:'Vorsteuer', d:'Die vom Unternehmer beim Einkauf gezahlte Umsatzsteuer, die er vom Finanzamt erstattet bekommt.'},
@@ -653,23 +725,23 @@ const DATA = {
         {t:'Berufsgenossenschaft', d:'Träger der gesetzlichen Unfallversicherung für Betriebe.'},
       ],
       quiz:[
-        {q:'Welche Steuer entrichtet ein Einzelunternehmer auf seinen unternehmerischen Gewinn?', options:['Körperschaftsteuer','Einkommensteuer','Kapitalertragsteuer','Erbschaftsteuer'], correct:1, explain:'Der Gewinn eines Einzelunternehmers unterliegt der Einkommensteuer.'},
-        {q:'Was versteht man unter Vorsteuer?', options:['Steuer auf den Gewinn','Beim Einkauf gezahlte Umsatzsteuer, die erstattet wird','Steuer auf Löhne','Eine kommunale Steuer'], correct:1, explain:'Vorsteuer ist die gezahlte Umsatzsteuer auf Eingangsleistungen, die mit der Umsatzsteuerschuld verrechnet wird.'},
-        {q:'Wer trägt die Beiträge zur gesetzlichen Unfallversicherung?', options:['Arbeitnehmer allein','Arbeitgeber allein','Je zur Hälfte','Der Staat'], correct:1, explain:'Die Unfallversicherung wird ausschließlich vom Arbeitgeber finanziert.'},
-        {q:'Welche der folgenden Versicherungen gehört NICHT zu den 5 Säulen der Sozialversicherung?', options:['Krankenversicherung','Rentenversicherung','Betriebshaftpflichtversicherung','Pflegeversicherung'], correct:2, explain:'Die Betriebshaftpflicht ist eine freiwillige betriebliche Versicherung, keine Sozialversicherung.'},
-        {q:'Was ist die Bemessungsgrundlage der Gewerbesteuer?', options:['Der Umsatz','Der Gewerbeertrag','Die Lohnsumme','Das Anlagevermögen'], correct:1, explain:'Die Gewerbesteuer bemisst sich am Gewerbeertrag des Betriebs.'},
+        {q:'Welche Steuer entrichtet ein Einzelunternehmer auf seinen unternehmerischen Gewinn?', options:['Körperschaftsteuer','Einkommensteuer','Kapitalertragsteuer','Erbschaftsteuer'], correct:1, explain:'Richtig ist: Einkommensteuer. Der Gewinn eines Einzelunternehmers zählt zu den Einkünften aus Gewerbebetrieb.'},
+        {q:'Was versteht man unter Vorsteuer?', options:['Die Steuer auf den Gewinn','Die beim Einkauf gezahlte Umsatzsteuer, die erstattet wird','Eine Steuer auf Löhne','Eine kommunale Steuer'], correct:1, explain:'Richtig ist: die beim Einkauf gezahlte Umsatzsteuer. Sie wird mit der eingenommenen Umsatzsteuer verrechnet.'},
+        {q:'Wer trägt die Beiträge zur gesetzlichen Unfallversicherung?', options:['Der Arbeitnehmer allein','Der Arbeitgeber allein','Beide je zur Hälfte','Der Staat'], correct:1, explain:'Richtig ist: der Arbeitgeber allein. Die Unfallversicherung wird vollständig vom Betrieb finanziert.'},
+        {q:'Welche Versicherung gehört NICHT zu den fünf Säulen der Sozialversicherung?', options:['Krankenversicherung','Rentenversicherung','Betriebshaftpflichtversicherung','Pflegeversicherung'], correct:2, explain:'Richtig ist: die Betriebshaftpflichtversicherung. Sie ist eine freiwillige betriebliche Versicherung, keine Sozialversicherung.'},
+        {q:'Woran bemisst sich die Gewerbesteuer?', options:['Am Umsatz','Am Gewerbeertrag','An der Lohnsumme','Am Anlagevermögen'], correct:1, explain:'Richtig ist: am Gewerbeertrag des Betriebs — das ist die Bemessungsgrundlage der Gewerbesteuer.'},
       ]
     },
     {
       id:'marketing', name:'Marketing & Unternehmensführung', accent:'var(--c-marketing)',
       flashcards:[
-        {q:'Was umfasst der Marketing-Mix (4 P)?', a:'Product (Produktpolitik), Price (Preispolitik), Place (Distributionspolitik), Promotion (Kommunikationspolitik).'},
-        {q:'Was ist eine Zielgruppenanalyse?', a:'Die systematische Untersuchung, welche Kundengruppen für ein Angebot relevant sind, um Marketingmaßnahmen gezielt auszurichten.'},
-        {q:'Was ist der Unterschied zwischen Kundenakquise und Kundenbindung?', a:'Akquise zielt auf die Gewinnung neuer Kunden, Bindung auf den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
-        {q:'Was ist eine SWOT-Analyse?', a:'Analyse von Stärken (Strengths), Schwächen (Weaknesses), Chancen (Opportunities) und Risiken (Threats) eines Unternehmens.'},
-        {q:'Was versteht man unter Preispolitik?', a:'Alle Entscheidungen zur Festlegung von Preisen, Rabatten, Zahlungs- und Lieferbedingungen.'},
-        {q:'Was ist der Unterschied zwischen operativen und strategischen Marketingzielen?', a:'Operative Marketingziele sind kurzfristig erzielbar, während strategische langfristige Ziele sind.'},
-        {q:'Nenne Beispiele für die Marktdurchdringung.', a:'Cross-Selling erhöhen — so besteht die Möglichkeit, bereits bestehende Kunden mehr zu binden. Kunden von Konkurrenten abwerben. Neukundengewinnung.'},
+        {q:'Welche vier Bereiche umfasst der Marketing-Mix?', a:'Product (Produktpolitik), Price (Preispolitik), Place (Distributionspolitik) und Promotion (Kommunikationspolitik).'},
+        {q:'Wozu dient eine Zielgruppenanalyse?', a:'Sie untersucht systematisch, welche Kundengruppen für ein Angebot relevant sind, damit Marketingmaßnahmen gezielt ausgerichtet werden können.'},
+        {q:'Worin unterscheiden sich Kundenakquise und Kundenbindung?', a:'Akquise zielt auf die Gewinnung neuer Kunden. Bindung erhält und stärkt bestehende Kundenbeziehungen.'},
+        {q:'Was analysiert eine SWOT-Analyse?', a:'Stärken (Strengths), Schwächen (Weaknesses), Chancen (Opportunities) und Risiken (Threats) eines Unternehmens.'},
+        {q:'Was umfasst die Preispolitik?', a:'Alle Entscheidungen zu Preisen, Rabatten sowie Zahlungs- und Lieferbedingungen.'},
+        {q:'Worin unterscheiden sich operative und strategische Marketingziele?', a:'Operative Ziele lassen sich kurzfristig erreichen. Strategische Ziele sind langfristig angelegt.'},
+        {q:'Wie lässt sich die Marktdurchdringung eines Unternehmens steigern?', a:'Cross-Selling ausbauen, um bestehende Kunden stärker zu binden. Kunden von Konkurrenten abwerben. Neukunden gewinnen.'},
       ],
       glossary:[
         {t:'Marketing-Mix', d:'Kombination der 4 P: Product, Price, Place, Promotion.'},
@@ -679,48 +751,48 @@ const DATA = {
         {t:'Kundenbindung', d:'Maßnahmen, um bestehende Kunden langfristig zu halten.'},
       ],
       quiz:[
-        {q:'Welche der folgenden gehört NICHT zu den klassischen 4 P des Marketing-Mix?', options:['Product','Price','Personal','Promotion'], correct:2, explain:'Die 4 P sind Product, Price, Place und Promotion — "Personal" ist Teil erweiterter Modelle (7P), nicht der Basis-4P.'},
-        {q:'Was analysiert eine SWOT-Analyse?', options:['Nur die Konkurrenz','Stärken, Schwächen, Chancen und Risiken','Nur den Umsatz','Nur die Kundenzufriedenheit'], correct:1, explain:'SWOT steht für Strengths, Weaknesses, Opportunities, Threats.'},
-        {q:'Was bezeichnet USP?', options:['Eine Steuerart','Das Alleinstellungsmerkmal eines Angebots','Eine Rechtsform','Einen Vertriebskanal'], correct:1, explain:'USP = Unique Selling Proposition, das, was ein Angebot einzigartig macht.'},
-        {q:'Kundenbindung zielt vor allem darauf ab...', options:['neue Kunden erstmalig zu gewinnen','bestehende Kunden langfristig zu halten','Preise zu senken','die Produktion zu steigern'], correct:1, explain:'Kundenbindung fokussiert den Erhalt und Ausbau bestehender Kundenbeziehungen.'},
+        {q:'Welcher Begriff gehört NICHT zu den klassischen 4 P des Marketing-Mix?', options:['Product','Price','Personal','Promotion'], correct:2, explain:'Richtig ist: Personal. Die klassischen 4 P sind Product, Price, Place und Promotion — Personal gehört erst zum erweiterten 7P-Modell.'},
+        {q:'Was untersucht eine SWOT-Analyse?', options:['Ausschließlich die Konkurrenz','Stärken, Schwächen, Chancen und Risiken','Ausschließlich den Umsatz','Ausschließlich die Kundenzufriedenheit'], correct:1, explain:'Richtig ist: Stärken, Schwächen, Chancen und Risiken — dafür steht SWOT (Strengths, Weaknesses, Opportunities, Threats).'},
+        {q:'Wofür steht die Abkürzung USP?', options:['Eine Steuerart','Das Alleinstellungsmerkmal eines Angebots','Eine Rechtsform','Einen Vertriebskanal'], correct:1, explain:'Richtig ist: das Alleinstellungsmerkmal. USP steht für Unique Selling Proposition.'},
+        {q:'Worauf zielt Kundenbindung vor allem ab?', options:['Neue Kunden erstmalig zu gewinnen','Bestehende Kunden langfristig zu halten','Preise zu senken','Die Produktion zu steigern'], correct:1, explain:'Richtig ist: bestehende Kunden langfristig zu halten und die Beziehung auszubauen.'},
       ]
     },
     {
       id:'sehhilfen', name:'Versorgung mit Sehhilfen (Fachwissen)', accent:'var(--c-sehhilfen)',
       flashcards:[
-        {q:'Wie sollte eine Augenoptiker/in vorgehen, wenn keine Angaben über die Form einer Anisometropie vorliegen?', a:'Sollte mit Hilfe subjektiver Prüfverfahren ermittelt werden, da der subjektive Sehkomfort des Kunden entscheidend ist.'},
-        {q:'In welchem Fall empfiehlt sich der Einsatz von Hartschichten?', a:'Bei hochbrechenden organischen Gläsern mit hoher Kratzempfindlichkeit, weshalb es erforderlich ist, die Oberfläche zu härten.'},
-        {q:'Nenne die beim Brillenglas auftretenden Reflexe.', a:'Vorderer Reflex, Rückwärtiger Reflex, Innerer Reflex, Hornhautreflex.'},
-        {q:'Erkläre das Funktionsprinzip des Clean-Coats.', a:'Der Clean-Coat hat eine sehr glatte Oberfläche, wodurch deutlich weniger Verunreinigungen am Glas anhaften können. Er kann auch antistatische Eigenschaften besitzen und antistatisch sein.'},
-        {q:'Nenne die Veredelungsschichten aufsteigend nach ihrer ungefähren Dicke.', a:'Clean-Coat: wenige Nanometer. Entspiegelungsschicht: bis zu mehrere hundert nm (je nach Anzahl der Schichten). Hartschicht: mehrere tausend nm.', hint:'Merksatz: "Clean kommt zuerst (dünn), dann Entspiegelung (mittel), Hart zum Schluss (dick)" — alphabetisch fast wie die Dicke wächst.'},
-        {q:'Welche Veredelungen könntest du Kunden empfehlen?', a:'Verspiegelungen, Entspiegelungen, Clean-Coat/Sauber Schicht.'},
-        {q:'Über welche Informationen muss ein/e Augenoptiker/in verfügen, um dem Kunden eine passende Seh- oder Arbeitshilfe empfehlen zu können?', a:'Lesefähigkeit des Probanden, verfügbarer Visus c.c., Kontrast- und Farbwahrnehmung, Lage und Größe vorhandener Skotome, manuelle Fertigkeit, erforderliche Arbeitsentfernung.'},
-        {q:'Beschreibe den Ablauf der Brillenglaszentrierung.', a:'1. Bezugspunkt anzeichnen. 2. Horizontale und vertikale Zentriermaße ermitteln. 3. Rohkantige Gläser aufblocken. 4. Gerandete Gläser einsetzen. 5. Brille auf Abgabefähigkeit prüfen.'},
-        {q:'Ein Kunde möchte bezüglich der einzelnen Veredelungen organisch hochbrechendes Glas beraten werden. Was sollten deine Mitarbeiter ihm empfehlen?', a:'Das hochbrechende Glas erfordert eine Hartschicht. Aufgrund des hohen Reflexes sollte es ebenfalls entspiegelt sein. Da durch die Entspiegelung Verschmutzungen stärker auftreten, ist ein Clean-Coat empfehlenswert, der durch den reduzierten Reinigungsaufwand wiederum zusätzlich geringere mechanische Belastung der Gläser mit sich bringt.'},
-        {q:'Welche Punkte sind für die Zentrierung des Brillenglases wichtig?', a:'Bezugspunkt B: Dieser Punkt liegt auf der Vorderseite vom Glas. In ihm liegt die dioptrische Wirkung. Optischer Mittelpunkt O: Hier werden die Scheitelpunkte von der optischen Achse durchstoßen. Geometrischer Mittelpunkt G: Die Linse hat an diesem Punkt keine brechende Wirkung.'},
-        {q:'Nenne die Kürzel für die Zentriermaße nach DIN EN ISO 13666.', a:'u_FBL (horizontale Dezentration des Zentrierpunktes), v_FBL (vertikale Dezentration des Zentrierpunktes), x_FBL (horizontales Maß bis zur nasalen Kastenseite), y_FBL (horizontales Maß bis zur nasalen Kastenseite).'},
-        {q:'Welches Material würdest du für die Entspiegelung mineralischer Gläser verwenden?', a:'Magnesiumfluorid MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung von mineralischen Gläsern genutzt. Die Amplitudenbedingung ns = √nGlas wäre gut erfüllt bei hochbrechenden Brillenglaswerkstoffen. Für andere Gläser kann man es auch anwenden, aber die interferierenden Wellen löschen sich dann nicht komplett aus.', hint:'Merksatz: "MgF2 — Magnesium Für 2-fache Auslöschung." 1,38 als Brechzahl einfach als "eins-drei-acht" im Kopf durchgehen.'},
-        {q:'Welche Beschichtungen können auf Brillengläsern angebracht werden?', a:'Hartschicht, Farbschicht, Clean-Coat, Entspiegelungsschicht.'},
-        {q:'Was ist ein Sturmsches Konoid?', a:'Ein Sturmsches Konoid ist ein räumlich ausgedehntes Bild bei einer Abbildung durch eine astigmatische Linse.'},
-        {q:'Was sind charakteristische Merkmale von Edelstahlfassungen?', a:'Hohe Festigkeit, schwierige Umformbarkeit, Korrosionssicherheit, problematisch lötbar.'},
-        {q:'Was könnte man einem Kunden zusätzlich zum Gebrauch einer Lupe als Unterstützung empfehlen?', a:'In ihrer Neigung angepasste Lesepulte können die Nutzung der Lupe in angenehmer und gewohnter Körperhaltung unterstützen.'},
-        {q:'In welche Richtung wirkt ein Zylinder mit Achslage = 30°?', a:'Er wirkt in Richtung 120°/300°.'},
-        {q:'Was besagt die Bedarfsgegenständeverordnung BedGgstV bezüglich des Nickelgehalts einer Legierung?', a:'Eine Legierung darf im Verlauf einer Woche nicht mehr als 0,5 Mikrogramm Nickel freisetzen.', hint:'Merksatz: "0,5 pro Woche" — eine halbe Einheit, sieben Tage.'},
-        {q:'Nenne die Lupenausführungen (Linsen).', a:'Asymmetrisch bikonvex, Asphärisch, Aplanatisch, Aplanatisch-achromatisch, anastigmatisch.'},
-        {q:'Wozu dient der Einsatz eines Blaublockers?', a:'Der Blaublocker absorbiert den kurzwelligen Teil des sichtbaren Spektrums, da die Energie von Photonen mit sinkender Wellenlänge steigt. So wird das Auge vor energiereicher Strahlung geschützt.'},
-        {q:'Nenne Eigenschaften, die Werkstoffe zur Herstellung von Brillenfassungen aufweisen sollten.', a:'Elastizität, geringes Gewicht, UV-Beständigkeit, Stabilität, Korrosionssicherheit, Hautfreundlichkeit, Härte.'},
-        {q:'Was können die Ursachen für einen Achsfehler sein?', a:'Ungenaue Angaben des Kunden, inkorrekte Dokumentation der ermittelten Achslage (z. B. durch Runden der Werte), Fehler beim Aufblocken, Fehler beim Anzeichnen mit dem Scheitelbrechwertmessinstrument, Fehler bei der Formrandung, Fehler beim Einsetzen des Glases.'},
-        {q:'Du übergibst einem Kunden eine Brille mit medizinischem Filter. Worauf musst du ihn hinweisen?', a:'Beim Tragen der Gläser darf der Kunde kein Fahrzeug führen. Medizinische Filter bedingen eine hohe Farbverfälschung. Die Signallichttauglichkeit kann dadurch beeinträchtigt sein.'},
-        {q:'Gemäß TABO-Gradbogenschema: in welcher Richtung liegt "außen"?', a:'links: 0°; rechts: 180°.', hint:'Merksatz: "0° ist immer da, wo die Null-Linie horizontal nach außen zeigt" — beim rechten Auge liegt das bei 180°, weil man von der Person aus im Gegenuhrzeigersinn zählt.'},
-        {q:'Was besagt das Testergebnis "wahr negativ"?', a:'Das Testergebnis war negativ und eine Erkrankung lag wirklich nicht vor.'},
-        {q:'Was stellen Transmissionskurven dar?', a:'Transmissionskurven zeigen graphisch die Transmission des Glases in Abhängigkeit von der Wellenlänge.'},
-        {q:'Wie geht ein/e Augenoptiker/in vor, um die Hauptdurchblickpunkte reproduzierbar festzulegen?', a:'1. Anatomisch voranpassen. 2. Rechte und linke Pupillendistanz messen. 3. Rechte und linke Pupillendistanz rückseitig auf die Musterverglasung übertragen. 4. Kunden für Nullblickrichtung die eigenen Pupillen im Spiegel fixieren lassen. 5. Kopf nach hinten neigen lassen, bis die Fassungsebene senkrecht zum Boden steht. 6. Höhe der Pupillenmitte schätzen. 7. Höhe der Pupillenmitte vorn auf die Musterverglasung übertragen. 8. Unter identischen Rahmenbedingungen kontrollieren.'},
-        {q:'In welchen Fällen eignen sich welche Filterfarben beim medizinischen Einsatz reduzierender Gläser?', a:'Blauzapfenmonochromasie: gelb bis rötlich (oder blau). Diabetische Retinopathie: gelblich bis rötlich. Retinopathia pigmentosa: gelblich bis rötlich.'},
-        {q:'Ein Kunde möchte ein möglichst geringes Brillengewicht. Wie kannst du dies ermöglichen?', a:'Organische Materialien wählen, da diese etwa halb so viel wiegen wie mineralische Gläser bei ähnlichen Brechzahlen. Geringe Fassungsgröße empfehlen, besonders bei Plusgläsern, deren mittlere Dicke vom Durchmesser der Linse abhängt.'},
-        {q:'Welche Nachteile sollen durch den Einsatz von Lentikulargläsern kompensiert werden?', a:'Große Randdicken bei Minusglas, abgeschwächte Abbildungsfähigkeit im Randbereich, hohes Gewicht der Gläser, hohe Mittendicke und Vorwölbung bei Plusglas.'},
-        {q:'Beschreibe den Aufbau eines Lentikularglases.', a:'Bei einem Lentikularglas beansprucht das optisch wirksame Areal nur einen Teil vom Rohglas. Um diese Zone herum ist ein mit keiner Wirkung versehener Tragrand.'},
-        {q:'Die Gläser welcher Kategorie kannst du einem Kunden empfehlen, der nachts mit dem Auto fahren möchte?', a:'Nachtfahrtauglichkeit ist bei den Gläsern der Kategorie 0 und 1 gegeben.'},
-        {q:'Was versteht man unter dem sogenannten "Slab-Off"?', a:'Es handelt sich um eine Schleifart, mit der man ein durch Anisometropie ausgelöstes Vertikalprisma im Nahbereich von einem Mehrstärkenglas kompensieren kann.'},
+        {q:'Wie gehst du vor, wenn keine Angaben zur Form einer Anisometropie vorliegen?', a:'Du ermittelst sie über subjektive Prüfverfahren, da der subjektive Sehkomfort des Kunden entscheidend ist.'},
+        {q:'Wann empfiehlt sich der Einsatz von Hartschichten?', a:'Bei hochbrechenden organischen Gläsern mit hoher Kratzempfindlichkeit — ihre Oberfläche muss gehärtet werden.'},
+        {q:'Welche Reflexe treten am Brillenglas auf?', a:'Vorderer Reflex, rückwärtiger Reflex, innerer Reflex und Hornhautreflex.'},
+        {q:'Wie funktioniert der Clean-Coat?', a:'Er hat eine sehr glatte Oberfläche, an der deutlich weniger Verunreinigungen haften. Zusätzlich kann er antistatisch wirken.'},
+        {q:'Wie ordnest du die Veredelungsschichten nach ihrer Dicke, vom dünnsten zum dicksten?', a:'Clean-Coat: wenige Nanometer. Entspiegelungsschicht: bis zu mehrere Hundert nm. Hartschicht: mehrere Tausend nm.', hint:'Merksatz: Clean kommt zuerst (dünn), dann Entspiegelung (mittel), Hart zum Schluss (dick).'},
+        {q:'Welche Veredelungen kannst du Kunden empfehlen?', a:'Verspiegelung, Entspiegelung und Clean-Coat.'},
+        {q:'Welche Informationen brauchst du, um eine passende Seh- oder Arbeitshilfe zu empfehlen?', a:'Lesefähigkeit des Kunden, verfügbarer Visus c.c., Kontrast- und Farbwahrnehmung, Lage und Größe vorhandener Skotome, manuelle Fertigkeit sowie die erforderliche Arbeitsentfernung.'},
+        {q:'Wie läuft die Zentrierung eines Brillenglases ab?', a:'Bezugspunkt anzeichnen, horizontale und vertikale Zentriermaße ermitteln, rohkantige Gläser aufblocken, gerandete Gläser einsetzen und abschließend die Brille auf Abgabefähigkeit prüfen.'},
+        {q:'Ein Kunde möchte ein organisches, hochbrechendes Glas — welche Veredelungen empfiehlst du ihm?', a:'Eine Hartschicht, da das Glas hochbrechend ist. Eine Entspiegelung wegen des starken Reflexes. Dazu einen Clean-Coat, da entspiegelte Gläser stärker verschmutzen — er senkt zugleich den Reinigungsaufwand und schont das Glas mechanisch.'},
+        {q:'Welche drei Punkte sind für die Zentrierung eines Brillenglases entscheidend?', a:'Bezugspunkt B auf der Glasvorderseite, in dem die dioptrische Wirkung liegt. Optischer Mittelpunkt O, an dem die optische Achse die Scheitelpunkte durchstößt. Geometrischer Mittelpunkt G, an dem das Glas keine brechende Wirkung hat.'},
+        {q:'Wie lauten die Kürzel für die Zentriermaße nach DIN EN ISO 13666?', a:'u_FBL (horizontale Dezentration des Zentrierpunktes), v_FBL (vertikale Dezentration des Zentrierpunktes), x_FBL und y_FBL (horizontales bzw. vertikales Maß bis zur nasalen Kastenseite).'},
+        {q:'Welches Material nutzt du zur Entspiegelung mineralischer Gläser?', a:'Magnesiumfluorid (MgF2), Brechzahl 1,38. Es entspiegelt vor allem hochbrechende Brillenglaswerkstoffe optimal — bei anderen Gläsern löschen sich die interferierenden Wellen nicht vollständig aus.', hint:'Merksatz: MgF2 — Magnesium für die 2-fache Auslöschung.'},
+        {q:'Welche Beschichtungen lassen sich auf Brillengläser aufbringen?', a:'Hartschicht, Farbschicht, Clean-Coat und Entspiegelungsschicht.'},
+        {q:'Was versteht man unter einem Sturmschen Konoid?', a:'Ein räumlich ausgedehntes Bild, das bei der Abbildung durch eine astigmatische Linse entsteht.'},
+        {q:'Welche Eigenschaften kennzeichnen Edelstahlfassungen?', a:'Hohe Festigkeit, schwierige Umformbarkeit, gute Korrosionssicherheit und problematisches Löten.'},
+        {q:'Was kannst du einem Kunden zusätzlich zur Lupe empfehlen?', a:'Ein in der Neigung angepasstes Lesepult — es ermöglicht die Nutzung der Lupe in gewohnter, angenehmer Körperhaltung.'},
+        {q:'In welche Richtung wirkt ein Zylinder mit Achslage 30°?', a:'In Richtung 120°/300°.'},
+        {q:'Wie viel Nickel darf eine Legierung laut Bedarfsgegenständeverordnung (BedGgstV) pro Woche höchstens freisetzen?', a:'0,5 Mikrogramm.', hint:'Merksatz: 0,5 pro Woche — eine halbe Einheit, sieben Tage.'},
+        {q:'Welche Lupenausführungen kennst du?', a:'Asymmetrisch bikonvex, asphärisch, aplanatisch, aplanatisch-achromatisch und anastigmatisch.'},
+        {q:'Wozu dient ein Blaublocker?', a:'Er absorbiert den kurzwelligen Teil des sichtbaren Spektrums, da die Energie von Photonen mit sinkender Wellenlänge steigt. So schützt er das Auge vor energiereicher Strahlung.'},
+        {q:'Welche Eigenschaften sollten Werkstoffe für Brillenfassungen mitbringen?', a:'Elastizität, geringes Gewicht, UV-Beständigkeit, Stabilität, Korrosionssicherheit, Hautfreundlichkeit und Härte.'},
+        {q:'Welche Ursachen kann ein Achsfehler haben?', a:'Ungenaue Angaben des Kunden, ungenaue Dokumentation der Achslage etwa durch Runden der Werte, Fehler beim Aufblocken, beim Anzeichnen mit dem Scheitelbrechwertmessgerät, bei der Formrandung oder beim Einsetzen des Glases.'},
+        {q:'Worauf musst du einen Kunden bei der Übergabe einer Brille mit medizinischem Filter hinweisen?', a:'Mit dieser Brille darf kein Fahrzeug geführt werden. Medizinische Filter verfälschen Farben stark und können die Signallichttauglichkeit beeinträchtigen.'},
+        {q:'Gemäß TABO-Gradbogenschema: In welcher Richtung liegt „außen"?', a:'Links bei 0°, rechts bei 180°.', hint:'Merksatz: Die 0°-Linie zeigt horizontal nach außen — beim rechten Auge ist das bei 180°, da man von der Person aus im Gegenuhrzeigersinn zählt.'},
+        {q:'Was bedeutet ein „wahr negatives" Testergebnis?', a:'Das Testergebnis war negativ, und eine Erkrankung lag tatsächlich nicht vor.'},
+        {q:'Was zeigen Transmissionskurven?', a:'Grafisch die Transmission eines Glases in Abhängigkeit von der Wellenlänge.'},
+        {q:'Wie legst du die Hauptdurchblickpunkte reproduzierbar fest?', a:'Anatomisch voranpassen. Rechte und linke Pupillendistanz messen und rückseitig auf die Musterverglasung übertragen. Kunden für die Nullblickrichtung die eigenen Pupillen im Spiegel fixieren lassen. Kopf so nach hinten neigen lassen, bis die Fassungsebene senkrecht zum Boden steht. Höhe der Pupillenmitte schätzen und vorn auf die Musterverglasung übertragen. Unter identischen Rahmenbedingungen kontrollieren.'},
+        {q:'Welche Filterfarbe passt zu welchem medizinischen Einsatz reduzierender Gläser?', a:'Blauzapfenmonochromasie: gelb bis rötlich, teils blau. Diabetische Retinopathie: gelblich bis rötlich. Retinopathia pigmentosa: gelblich bis rötlich.'},
+        {q:'Ein Kunde wünscht ein möglichst geringes Brillengewicht — wie erfüllst du das?', a:'Organische Materialien wählen, da sie bei ähnlicher Brechzahl etwa halb so viel wiegen wie mineralische Gläser. Bei Plusgläsern zusätzlich eine kleinere Fassungsgröße empfehlen, da deren Mittendicke vom Linsendurchmesser abhängt.'},
+        {q:'Welche Nachteile gleicht ein Lentikularglas aus?', a:'Große Randdicken und abgeschwächte Abbildung im Randbereich bei Minusgläsern sowie hohes Gewicht, hohe Mittendicke und starke Vorwölbung bei Plusgläsern.'},
+        {q:'Wie ist ein Lentikularglas aufgebaut?', a:'Das optisch wirksame Areal nimmt nur einen Teil des Rohglases ein. Darum liegt ein wirkungsloser Tragrand.'},
+        {q:'Welche Filterkategorie empfiehlst du einem Kunden, der nachts Auto fährt?', a:'Kategorie 0 oder 1 — nur diese Gläser sind nachtfahrtauglich.'},
+        {q:'Was versteht man unter „Slab-Off"?', a:'Eine Schleifart, mit der sich ein durch Anisometropie ausgelöstes Vertikalprisma im Nahbereich eines Mehrstärkenglases kompensieren lässt.'},
       ],
       glossary:[
         {t:'Anisometropie', d:'Unterschiedliche Fehlsichtigkeit beider Augen.'},
@@ -733,86 +805,180 @@ const DATA = {
         {t:'MgF2 (Magnesiumfluorid)', d:'Material zur Entspiegelung mineralischer Gläser, Brechzahl 1,38.'},
       ],
       quiz:[
-        {q:'Wann empfiehlt sich der Einsatz von Hartschichten?', options:['Bei niedrigbrechenden Gläsern','Bei hochbrechenden, kratzempfindlichen organischen Gläsern','Nur bei Sonnenbrillen','Nur bei Kunststoffrahmen'], correct:1, explain:'Hochbrechende organische Gläser besitzen eine besonders kratzempfindliche Oberfläche, die gehärtet werden sollte.'},
-        {q:'Welche Reflexart tritt NICHT am Brillenglas auf?', options:['Vorderer Reflex','Rückwärtiger Reflex','Innerer Reflex','Seitlicher Randreflex'], correct:3, explain:'Die vier Reflexe sind vorderer, rückwärtiger, innerer Reflex und Hornhautreflex.'},
-        {q:'Was ist das Funktionsprinzip des Clean-Coats?', options:['Erhöhte Kratzfestigkeit','Sehr glatte Oberfläche gegen Verunreinigungen, teils antistatisch','Färbung des Glases','Erhöhte Lichtdurchlässigkeit'], correct:1, explain:'Der Clean-Coat sorgt durch seine glatte Oberfläche dafür, dass weniger Schmutz und Fett anhaften.'},
-        {q:'Welche Veredelungsschicht ist am dicksten?', options:['Clean-Coat','Entspiegelungsschicht','Hartschicht','Alle sind gleich dick'], correct:2, explain:'Die Hartschicht ist mit mehreren tausend nm deutlich dicker als Clean-Coat und Entspiegelungsschicht.'},
-        {q:'Was ist das Sturmsche Konoid?', options:['Ein Schleifwerkzeug','Ein räumlich ausgedehntes Bild bei astigmatischer Abbildung','Eine Fassungsform','Ein Beschichtungsverfahren'], correct:1, explain:'Es beschreibt das räumlich ausgedehnte Bild, das bei der Abbildung durch eine astigmatische Linse entsteht.'},
-        {q:'Welches Material eignet sich zur Entspiegelung mineralischer Gläser?', options:['Titandioxid','Magnesiumfluorid (MgF2)','Zirkonoxid','Aluminiumoxid'], correct:1, explain:'MgF2 hat eine Brechzahl von 1,38 und wird häufig zur Entspiegelung mineralischer Gläser eingesetzt.'},
-        {q:'Gemäß TABO-Gradbogenschema: In welcher Richtung liegt "außen" beim rechten Auge?', options:['0°','90°','180°','270°'], correct:2, explain:'Beim rechten Auge liegt "außen" bei 180°, beim linken bei 0°.'},
-        {q:'Was bedeutet ein "wahr negatives" Testergebnis?', options:['Der Test war fehlerhaft','Das Testergebnis war negativ und eine Erkrankung lag wirklich nicht vor','Der Patient hat den Test verweigert','Das Ergebnis muss wiederholt werden'], correct:1, explain:'Wahr negativ bedeutet: kein positiver Befund UND tatsächlich keine Erkrankung vorhanden.'},
-        {q:'Wofür stehen Transmissionskurven?', options:['Die Haltbarkeit eines Glases','Die Transmission des Glases in Abhängigkeit von der Wellenlänge','Den Preis eines Glases nach Dicke','Die Reflexionsstärke bei Nacht'], correct:1, explain:'Transmissionskurven zeigen graphisch, wie viel Licht welcher Wellenlänge durch das Glas gelassen wird.'},
-        {q:'Welche Nachteile sollen Lentikulargläser kompensieren?', options:['Zu geringe Haltbarkeit','Große Randdicken und hohes Gewicht bei starken Wirkungen','Farbverfälschung','Zu geringe Kratzfestigkeit'], correct:1, explain:'Lentikulargläser reduzieren Randdicke, Gewicht und Vorwölbung bei hohen Glasstärken.'},
-        {q:'Wie kannst du einem Kunden mit Wunsch nach geringem Brillengewicht helfen?', options:['Nur mineralische Gläser anbieten', 'Organische Materialien und geringe Fassungsgröße empfehlen', 'Größere Fassungen empfehlen', 'Dickere Gläser verwenden'], correct:1, explain:'Organische Gläser wiegen etwa halb so viel wie mineralische; kleinere Fassungen reduzieren zusätzlich das Gewicht.'},
-        {q:'Was ist beim Übergeben einer Brille mit medizinischem Filter wichtig?', options:['Nichts Besonderes', 'Hinweis, dass kein Fahrzeug geführt werden darf, wegen Farbverfälschung und Signallicht-Problemen', 'Nur ein Pflegehinweis', 'Hinweis auf Garantiezeit'], correct:1, explain:'Medizinische Filter verfälschen Farben stark und können die Signallichttauglichkeit beeinträchtigen.'},
-        {q:'Welche Werkstoffeigenschaften sind bei Brillenfassungen wichtig?', options:['Nur der Preis', 'Elastizität, geringes Gewicht, Korrosionssicherheit, Hautfreundlichkeit', 'Nur die Farbe', 'Nur die Verfügbarkeit'], correct:1, explain:'Fassungsmaterialien müssen mehreren funktionalen Anforderungen gleichzeitig genügen.'},
-        {q:'Was zeichnet Edelstahlfassungen aus?', options:['Geringe Festigkeit, leicht lötbar', 'Hohe Festigkeit, schwierige Umformbarkeit, problematisch lötbar', 'Sehr geringes Gewicht', 'Keine Korrosionssicherheit'], correct:1, explain:'Edelstahl ist fest und korrosionssicher, aber schwer umzuformen und zu löten.'},
+        {q:'Wann empfiehlt sich der Einsatz von Hartschichten?', options:['Bei niedrigbrechenden Gläsern','Bei hochbrechenden, kratzempfindlichen organischen Gläsern','Nur bei Sonnenbrillen','Nur bei Kunststoffrahmen'], correct:1, explain:'Richtig ist: bei hochbrechenden organischen Gläsern. Ihre kratzempfindliche Oberfläche muss durch eine Hartschicht geschützt werden.'},
+        {q:'Welche Reflexart tritt NICHT am Brillenglas auf?', options:['Vorderer Reflex','Rückwärtiger Reflex','Innerer Reflex','Seitlicher Randreflex'], correct:3, explain:'Richtig ist: der seitliche Randreflex existiert nicht. Die vier tatsächlichen Reflexe sind vorderer, rückwärtiger, innerer Reflex und Hornhautreflex.'},
+        {q:'Wie wirkt der Clean-Coat?', options:['Er erhöht die Kratzfestigkeit','Er sorgt durch eine sehr glatte Oberfläche für weniger Verunreinigungen, teils antistatisch','Er färbt das Glas','Er erhöht die Lichtdurchlässigkeit'], correct:1, explain:'Richtig ist: Er sorgt durch seine glatte Oberfläche dafür, dass weniger Schmutz und Fett anhaften.'},
+        {q:'Welche Veredelungsschicht ist am dicksten?', options:['Clean-Coat','Entspiegelungsschicht','Hartschicht','Alle sind gleich dick'], correct:2, explain:'Richtig ist: die Hartschicht. Mit mehreren Tausend nm ist sie deutlich dicker als Clean-Coat und Entspiegelungsschicht.'},
+        {q:'Was beschreibt das Sturmsche Konoid?', options:['Ein Schleifwerkzeug','Ein räumlich ausgedehntes Bild bei astigmatischer Abbildung','Eine Fassungsform','Ein Beschichtungsverfahren'], correct:1, explain:'Richtig ist: das räumlich ausgedehnte Bild, das bei der Abbildung durch eine astigmatische Linse entsteht.'},
+        {q:'Welches Material eignet sich zur Entspiegelung mineralischer Gläser?', options:['Titandioxid','Magnesiumfluorid (MgF2)','Zirkonoxid','Aluminiumoxid'], correct:1, explain:'Richtig ist: Magnesiumfluorid (MgF2), Brechzahl 1,38 — der Standard zur Entspiegelung mineralischer Gläser.'},
+        {q:'Gemäß TABO-Gradbogenschema: In welcher Richtung liegt „außen" beim rechten Auge?', options:['0°','90°','180°','270°'], correct:2, explain:'Richtig ist: 180°. Beim linken Auge liegt "außen" dagegen bei 0°.'},
+        {q:'Was bedeutet ein „wahr negatives" Testergebnis?', options:['Der Test war fehlerhaft','Das Ergebnis war negativ, und eine Erkrankung lag tatsächlich nicht vor','Der Patient hat den Test verweigert','Das Ergebnis muss wiederholt werden'], correct:1, explain:'Richtig ist: kein positiver Befund UND tatsächlich keine Erkrankung vorhanden.'},
+        {q:'Was zeigen Transmissionskurven?', options:['Die Haltbarkeit eines Glases','Die Transmission des Glases in Abhängigkeit von der Wellenlänge','Den Preis eines Glases nach Dicke','Die Reflexionsstärke bei Nacht'], correct:1, explain:'Richtig ist: die Transmission in Abhängigkeit von der Wellenlänge — grafisch dargestellt.'},
+        {q:'Welche Nachteile gleicht ein Lentikularglas aus?', options:['Zu geringe Haltbarkeit','Große Randdicken und hohes Gewicht bei starken Wirkungen','Farbverfälschung','Zu geringe Kratzfestigkeit'], correct:1, explain:'Richtig ist: große Randdicken und hohes Gewicht. Lentikulargläser reduzieren beides bei hohen Glasstärken.'},
+        {q:'Ein Kunde wünscht ein möglichst geringes Brillengewicht. Wie hilfst du ihm am besten?', options:['Nur mineralische Gläser anbieten', 'Organische Materialien und eine kleine Fassungsgröße empfehlen', 'Eine größere Fassung empfehlen', 'Dickere Gläser verwenden'], correct:1, explain:'Richtig ist: organische Gläser wiegen etwa halb so viel wie mineralische, kleinere Fassungen senken das Gewicht zusätzlich.'},
+        {q:'Worauf musst du bei der Übergabe einer Brille mit medizinischem Filter hinweisen?', options:['Auf nichts Besonderes', 'Dass wegen Farbverfälschung und Signallicht-Problemen kein Fahrzeug geführt werden darf', 'Nur auf die Pflegehinweise', 'Nur auf die Garantiezeit'], correct:1, explain:'Richtig ist: der Hinweis aufs Fahrverbot. Medizinische Filter verfälschen Farben stark und beeinträchtigen die Signallichttauglichkeit.'},
+        {q:'Welche Werkstoffeigenschaften sind bei Brillenfassungen besonders wichtig?', options:['Ausschließlich der Preis', 'Elastizität, geringes Gewicht, Korrosionssicherheit, Hautfreundlichkeit', 'Ausschließlich die Farbe', 'Ausschließlich die Verfügbarkeit'], correct:1, explain:'Richtig ist: die genannte Kombination aus Elastizität, Gewicht, Korrosionssicherheit und Hautfreundlichkeit.'},
+        {q:'Was zeichnet Edelstahlfassungen aus?', options:['Geringe Festigkeit, leicht lötbar', 'Hohe Festigkeit, schwierige Umformbarkeit, problematisch lötbar', 'Sehr geringes Gewicht', 'Fehlende Korrosionssicherheit'], correct:1, explain:'Richtig ist: hohe Festigkeit bei schwieriger Umformbarkeit und schwierigem Löten — dafür gute Korrosionssicherheit.'},
       ]
     },
     {
       id:'physiologie', name:'Physiologie des Sehens', accent:'var(--c-physiologie)',
       flashcards:[
-        {q:'Wie groß ist das vom Menschen wahrnehmbare elektromagnetische Spektrum?', a:'Das vom Menschen wahrnehmbare elektromagnetische Spektrum liegt zwischen 380 nm – 780 nm.', hint:'Merksatz: "380 bis 780 — verdoppel die erste Zahl fast und du landest bei der zweiten." Violett (kurz) bis Rot (lang).'},
-        {q:'Vervollständige den Satz: Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', a:'...höhere... Pluswirkung als die Fernkorrektion.', hint:'Merksatz: "Nah = mehr Plus" — je näher man liest, desto mehr Brechkraft braucht das Auge zusätzlich.'},
-        {q:'Was ist der Unterschied zwischen additiver und subtraktiver Farbmischung?', a:'Additive Farbmischung: Licht wird mit Licht überlagert (=Addition), damit wird die Mischung heller. Subtraktive Farbmischung: Ein Teil des Lichts wird entnommen (es wird also "subtrahiert"), daher wird die Mischung dunkler.'},
-        {q:'Was versteht man unter "direktem Sehen"?', a:'Als direktes Sehen bezeichnet man es, wenn ein Auge ein Objekt direkt zentriert, die Abbildung in die Foveola, also auf die Netzhautstelle mit dem höchsten Auflösungsvermögen fällt.'},
+        {q:'In welchem Bereich liegt das vom Menschen wahrnehmbare elektromagnetische Spektrum?', a:'Zwischen 380 nm und 780 nm.', hint:'Merksatz: 380 bis 780 — Violett (kurz) bis Rot (lang).'},
+        {q:'Warum braucht die Nahkorrektion bei Presbyopie stets mehr Pluswirkung als die Fernkorrektion?', a:'Weil das Auge für die Nähe zusätzliche Brechkraft benötigt — die Pluswirkung fällt daher immer höher aus als bei der Fernkorrektion.', hint:'Merksatz: Nah = mehr Plus.'},
+        {q:'Worin unterscheiden sich additive und subtraktive Farbmischung?', a:'Additiv: Licht wird mit Licht überlagert — die Mischung wird heller. Subtraktiv: Ein Teil des Lichts wird entnommen — die Mischung wird dunkler.'},
+        {q:'Was versteht man unter „direktem Sehen"?', a:'Ein Auge zentriert ein Objekt so, dass dessen Abbildung genau in die Foveola fällt — die Netzhautstelle mit dem höchsten Auflösungsvermögen.'},
+        {q:'Wie unterscheiden sich die Untergruppen der Zyklophorie?', a:'Inzyklophorie zeigt eine A-förmige Verrollung, Exzyklophorie eine V-förmige Verrollung — beide weichen von der Orthostellung ab.'},
+        {q:'Was ist Voraussetzung, damit ein Augenpaar die Orthostellung einnimmt?', a:'Vergenzen oder Versionen.'},
+        {q:'Wie berechnest du den Scheitelbrechwert der Nahkorrektion?', a:'SN = SF + Z — die Summe aus Fernkorrektion und Nahzustand.'},
+        {q:'Welche Augenstrukturen verändern sich bei beginnender und fortgeschrittener Presbyopie am stärksten?', a:'In erster Linie Augenlinse, Ziliarkörper und Regenbogenhaut.'},
+        {q:'Was bedeutet Fixation im Kontext des binokularen Sehens?', a:'Die Fixierlinie des Auges ist auf das betrachtete Objekt ausgerichtet, sodass dessen Abbildung in die Netzhautgrube fällt.'},
+        {q:'Wie grenzt du binokular und monokular voneinander ab?', a:'Binokular heißt beidäugig — beide Augen sind am Sehvorgang beteiligt. Monokular heißt einäugig — es sieht nur ein Auge.'},
+        {q:'Woher stammt der Begriff „Presbyopie", und was bedeutet er?', a:'Aus dem Griechischen: présbys (alt) und ops (Auge) — er bezeichnet die Altersweitsichtigkeit.'},
+        {q:'Wie nennt man es, wenn eine Brennlinie vor und die andere hinter der Netzhaut liegt?', a:'Gemischter Astigmatismus (Astigmatismus mixtus).'},
+        {q:'Wie berechnest du den Gesamtastigmatismus?', a:'AG = Aä + Ai — äußerer plus innerer Astigmatismus.'},
+        {q:'Wie wird die Strahlenfigur eines Astigmatismus myopicus compositus bei stark brechender HS in 120° wahrgenommen?', a:'Die Strahlen bei 120° werden deutlicher gesehen als die übrigen.'},
+        {q:'Worin unterscheiden sich Akkommodationsaufwand und Akkommodationserfolg?', a:'Akkommodationsaufwand ist die Brechwertänderung im Auge selbst. Akkommodationserfolg ist das außerhalb des Auges messbare Resultat: ΔA = AR − AE.'},
+        {q:'Wonach richtet sich die Einteilung des regulären Astigmatismus?', a:'Nach der relativen Lage beider Brennpunkte bei Fernakkommodation und der Richtung der Brennlinien nach TABO.'},
+        {q:'Wie heißt der Astigmatismus, bei dem beide Brennlinien hinter der Netzhaut liegen?', a:'Astigmatismus hyperopicus compositus.'},
+        {q:'Wie wirkt sich eine fortschreitende Presbyopie aufs Sehen aus?', a:'Die nötige Brechwertzunahme kann nicht mehr aufgebracht werden. Der Nahpunktabstand vergrößert sich, nahe Objekte werden undeutlich.'},
+        {q:'Welche Vorgänge führen zur Alterssichtigkeit?', a:'Senile Miosis verringert den Lichteinfall. Kontraktions- und Relaxationsvermögen des Ziliarkörpers nehmen ab. Brechwert verringernde Proteine nehmen ab. Appositionelles Linsenwachstum führt zur Sklerotisierung der Augenlinse.'},
+        {q:'Was ist eine physiologische Hyperopie?', a:'Die normale Weitsichtigkeit von Neugeborenen, deren Augenlänge noch zu kurz ist.'},
+        {q:'Was leistet ein Autorefraktometer?', a:'Es misst objektiv und vollautomatisch die Refraktion und liefert damit die Grundlage der subjektiven Brillenglasbestimmung.'},
+        {q:'Wie korrigierst du Myopie, Hyperopie, Astigmatismus und Presbyopie jeweils?', a:'Myopie: Linse mit Minuswirkung. Hyperopie: Linse mit Pluswirkung. Astigmatismus: Linse mit zylindrischer Wirkung. Presbyopie: Linse mit Nahzusatz.'},
+        {q:'Wie hältst du bei Sehprobentafeln die vorgesehene Prüfdistanz auch in kleinen Räumen ein?', a:'Mit Umlenkspiegeln, die die Prüfstrecke optisch verlängern. Alternativ lässt sich der Wert auf den real vorhandenen Visus umrechnen.'},
+        {q:'Wodurch entsteht eine Fehlsichtigkeit (Ametropie)?', a:'Augenlänge und Brechkraft passen nicht zueinander — der Brennpunkt liegt dann vor oder hinter der Netzhaut statt auf ihr.'},
+        {q:'Wann liegt beim binokularen Sehen die Orthostellung vor?', a:'Wenn sich die Fixierlinien beider Augen im anvisierten Objektpunkt schneiden (Fixierlinienschnittpunkt).'},
+        {q:'Wie erscheint ein Gegenstand, der durch ein astigmatisch fehlsichtiges Auge betrachtet wird?', a:'Undeutlich und verzerrt.'},
+        {q:'Beschreibe den Weg des Kammerwassers durchs Auge.', a:'Es wird in der Deckschicht der Ziliarfortsätze gebildet, fließt zwischen Iris und Augenlinse in die vordere Augenkammer und verlässt das Auge im Kammerwinkel über Trabekelwerk und Schlemmschen Kanal. Ein Teil fließt zusätzlich über den uveoskleralen Weg ab und gelangt ins Venengeflecht von Leder- und Bindehaut.'},
+        {q:'Woran erkennst du eine beginnende Presbyopie?', a:'Nahe Objekte werden schlechter gesehen, die Lesenentfernung vergrößert sich, asthenopische Beschwerden treten auf, und ein Nahzusatz gelingt nur bei optimaler Beleuchtung.'},
+        {q:'Wie berechnest du den Brechwert eines emmetropen Auges bei einer Augenlänge von 25 mm?', a:'D = nG / (fA − SH\') = 1,336 / (0,025 m − 0,00183 m) = 57,16 1/m.'},
       ],
       glossary:[
         {t:'Sichtbares Spektrum', d:'Der vom Menschen wahrnehmbare Bereich des elektromagnetischen Spektrums, 380–780 nm.'},
         {t:'Presbyopie', d:'Altersbedingte Weitsichtigkeit; Korrektionsmittel für die Nähe hat stets eine höhere Pluswirkung als für die Ferne.'},
+        {t:'Zyklophorie', d:'Latentes Verrollen eines Auges um die Sehachse; Inzyklophorie = A-förmige, Exzyklophorie = V-förmige Verrollung.'},
+        {t:'Orthostellung', d:'Parallelstand beider Augen; liegt vor, wenn sich die Fixierlinien im anvisierten Objektpunkt schneiden.'},
+        {t:'Fixation', d:'Ausrichtung der Fixierlinie des Auges auf ein Objekt, dessen Abbildung in die Netzhautgrube (Foveola) fällt.'},
+        {t:'Astigmatismus mixtus', d:'Gemischter Astigmatismus, bei dem eine Brennlinie vor und die andere hinter der Netzhaut liegt.'},
+        {t:'TABO-Schema', d:'Technischer Ausschuss für Brillenoptik — Norm zur Angabe der Achslage bei Astigmatismus.'},
+        {t:'Akkommodationsaufwand/-erfolg', d:'Aufwand = Brechwertänderung im Auge; Erfolg = außerhalb des Auges messbares Resultat (ΔA = AR − AE).'},
+        {t:'Autorefraktometer', d:'Gerät zur vollautomatischen objektiven Refraktionsmessung; Grundlage der subjektiven Brillenglasbestimmung.'},
+        {t:'Ametropie', d:'Sammelbegriff für Fehlsichtigkeit, bei der der Brennpunkt nicht auf der Netzhaut liegt (z. B. Myopie, Hyperopie, Astigmatismus).'},
+        {t:'Kammerwasser', d:'In den Ziliarfortsätzen produzierte Flüssigkeit; fließt über die vordere Augenkammer und den Schlemmschen Kanal bzw. den uveoskleralen Weg ab.'},
       ],
       quiz:[
-        {q:'In welchem Bereich liegt das vom Menschen wahrnehmbare elektromagnetische Spektrum?', options:['200–400 nm','380–780 nm','780–1200 nm','100–380 nm'], correct:1, explain:'Das sichtbare Licht für den Menschen liegt zwischen 380 nm und 780 nm.'},
-        {q:'Bei der Korrektion einer Presbyopie besitzt das Korrektionsmittel für die Nähe stets eine ... Pluswirkung als die Fernkorrektion.', options:['geringere','höhere','identische','keine'], correct:1, explain:'Für die Nähe braucht das Auge stets zusätzliche Brechkraft, also eine höhere Pluswirkung als für die Ferne.'},
-        {q:'Was passiert bei additiver Farbmischung?', options:['Die Mischung wird dunkler','Die Mischung wird heller, da Licht mit Licht überlagert wird','Farben werden komplett ausgelöscht','Es entsteht immer Grau'], correct:1, explain:'Additive Mischung überlagert Licht mit Licht — das Ergebnis wird heller.'},
-        {q:'Was passiert bei subtraktiver Farbmischung?', options:['Die Mischung wird heller','Ein Teil des Lichts wird entnommen, die Mischung wird dunkler','Es entsteht immer Weiß','Es findet keine Veränderung statt'], correct:1, explain:'Bei subtraktiver Mischung wird Licht "entnommen" (subtrahiert), wodurch die Mischung dunkler wird.'},
-        {q:'Was versteht man unter "direktem Sehen"?', options:['Sehen ohne Brille','Die Abbildung eines direkt zentrierten Objekts fällt in die Foveola', 'Sehen im Dunkeln','Sehen mit beiden Augen gleichzeitig'], correct:1, explain:'Direktes Sehen liegt vor, wenn die Abbildung auf die Netzhautstelle mit dem höchsten Auflösungsvermögen (Foveola) fällt.'},
+        {q:'In welchem Bereich liegt das vom Menschen wahrnehmbare elektromagnetische Spektrum?', options:['200–400 nm','380–780 nm','780–1200 nm','100–380 nm'], correct:1, explain:'Richtig ist: 380–780 nm. Das ist der Bereich des für den Menschen sichtbaren Lichts.'},
+        {q:'Warum braucht die Nahkorrektion bei Presbyopie mehr Pluswirkung als die Fernkorrektion?', options:['Weil das Auge in der Nähe weniger Brechkraft braucht','Weil das Auge für die Nähe stets zusätzliche Brechkraft benötigt','Weil beide Korrektionen identisch sind','Weil in der Nähe keine Korrektion nötig ist'], correct:1, explain:'Richtig ist: Für die Nähe braucht das Auge zusätzliche Brechkraft, deshalb fällt die Pluswirkung höher aus als bei der Fernkorrektion.'},
+        {q:'Was passiert bei additiver Farbmischung?', options:['Die Mischung wird dunkler','Die Mischung wird heller, da Licht mit Licht überlagert wird','Farben werden vollständig ausgelöscht','Es entsteht stets Grau'], correct:1, explain:'Richtig ist: Additive Mischung überlagert Licht mit Licht — das Ergebnis wird heller.'},
+        {q:'Was passiert bei subtraktiver Farbmischung?', options:['Die Mischung wird heller','Ein Teil des Lichts wird entnommen, die Mischung wird dunkler','Es entsteht stets Weiß','Es findet keine Veränderung statt'], correct:1, explain:'Richtig ist: Bei subtraktiver Mischung wird Licht entnommen, wodurch die Mischung dunkler wird.'},
+        {q:'Was versteht man unter „direktem Sehen"?', options:['Sehen ohne Brille','Die Abbildung eines direkt zentrierten Objekts fällt in die Foveola', 'Sehen im Dunkeln','Sehen mit beiden Augen gleichzeitig'], correct:1, explain:'Richtig ist: Direktes Sehen liegt vor, wenn die Abbildung auf die Netzhautstelle mit dem höchsten Auflösungsvermögen fällt, die Foveola.'},
+        {q:'Wie unterscheiden sich die Untergruppen der Zyklophorie?', options:['Inzyklophorie und Exzyklophorie','Esophorie und Exophorie','Hyperphorie und Hypophorie','Konvergenz und Divergenz'], correct:0, explain:'Richtig ist: Inzyklophorie zeigt eine A-förmige, Exzyklophorie eine V-förmige Verrollung.'},
+        {q:'Was ist Voraussetzung, damit ein Augenpaar die Orthostellung einnimmt?', options:['Nur Akkommodation','Vergenzen oder Versionen','Nur Konvergenz','Miosis'], correct:1, explain:'Richtig ist: Vergenzen oder Versionen sind zum Erreichen der Orthostellung nötig.'},
+        {q:'Wie lautet die Formel für den Scheitelbrechwert der Nahkorrektion?', options:['SN = SF − Z','SN = SF + Z','SN = SF × Z','SN = Z − SF'], correct:1, explain:'Richtig ist: SN = SF + Z — die Summe aus Fernkorrektion und Nahzustand.'},
+        {q:'Welche Augenstrukturen verändern sich bei Presbyopie hauptsächlich?', options:['Hornhaut und Sklera','Augenlinse, Ziliarkörper und Regenbogenhaut','Netzhaut und Sehnerv','Glaskörper und Bindehaut'], correct:1, explain:'Richtig ist: Presbyopie betrifft in erster Linie Augenlinse, Ziliarkörper und Regenbogenhaut.'},
+        {q:'Was bedeutet Fixation im Kontext des binokularen Sehens?', options:['Die Pupille verengt sich','Die Fixierlinie ist auf das Objekt ausgerichtet, dessen Abbildung in die Netzhautgrube fällt','Ein Auge wird geschlossen','Die Linse akkommodiert maximal'], correct:1, explain:'Richtig ist: Fixation liegt vor, wenn die Abbildung des betrachteten Objekts in die Netzhautgrube fällt.'},
+        {q:'Was unterscheidet binokulares von monokularem Sehen?', options:['Binokular ist beidäugig, monokular einäugig','Binokular ist einäugig, monokular beidäugig','Beide bezeichnen dasselbe','Binokular betrifft nur die Ferne'], correct:0, explain:'Richtig ist: Binokular bedeutet beidäugiges, monokular einäugiges Sehen.'},
+        {q:'Woher stammt der Begriff „Presbyopie"?', options:['Aus dem Lateinischen für "scharf"','Aus dem Griechischen für "alt" und "Auge"','Aus dem Griechischen für "nah" und "Licht"','Aus dem Lateinischen für "Linse"'], correct:1, explain:'Richtig ist: aus dem Griechischen präsbys (alt) und ops (Auge) — er bezeichnet die Altersweitsichtigkeit.'},
+        {q:'Wie heißt der Astigmatismus, bei dem eine Brennlinie vor und die andere hinter der Netzhaut liegt?', options:['Astigmatismus myopicus simplex','Astigmatismus hyperopicus simplex','Astigmatismus mixtus','Astigmatismus hyperopicus compositus'], correct:2, explain:'Richtig ist: Astigmatismus mixtus, der gemischte Astigmatismus.'},
+        {q:'Wie lautet die Formel für den Gesamtastigmatismus?', options:['AG = Aä − Ai','AG = Aä + Ai','AG = Aä × Ai','AG = Ai / Aä'], correct:1, explain:'Richtig ist: AG = Aä + Ai — äußerer plus innerer Astigmatismus.'},
+        {q:'Wie heißt der Astigmatismus, bei dem beide Brennlinien hinter der Netzhaut liegen?', options:['Astigmatismus myopicus compositus','Astigmatismus hyperopicus compositus','Astigmatismus mixtus','Astigmatismus simplex'], correct:1, explain:'Richtig ist: Astigmatismus hyperopicus compositus.'},
+        {q:'Worin unterscheiden sich Akkommodationsaufwand und Akkommodationserfolg?', options:['Sie sind identisch','Aufwand ist die Brechwertänderung im Auge, Erfolg das außerhalb messbare Resultat','Aufwand betrifft nur die Ferne, Erfolg nur die Nähe','Der Erfolg ist stets größer als der Aufwand'], correct:1, explain:'Richtig ist: Aufwand ist die Brechwertänderung im Auge, Erfolg das außerhalb messbare Resultat (ΔA = AR − AE).'},
+        {q:'Wonach richtet sich die Einteilung des regulären Astigmatismus?', options:['Nach der Pupillengröße','Nach der relativen Lage der Brennpunkte bei Fernakkommodation und der Richtung der Brennlinien nach TABO','Nach dem Alter des Patienten','Nach der Hornhautdicke'], correct:1, explain:'Richtig ist: nach der Lage der Brennpunkte bei Fernakkommodation und der Richtung der Brennlinien nach dem TABO-Schema.'},
+        {q:'Wie wirkt sich eine fortschreitende Presbyopie aufs Sehen aus?', options:['Der Nahpunktabstand verkleinert sich','Der Nahpunktabstand vergrößert sich, nahe Objekte werden undeutlich', 'Nur das Farbsehen verschlechtert sich','Es gibt keine Auswirkung'], correct:1, explain:'Richtig ist: Der Nahpunktabstand vergrößert sich, weil die nötige Brechwertzunahme nicht mehr aufgebracht werden kann.'},
+        {q:'Welcher Vorgang trägt NICHT zur Alterssichtigkeit bei?', options:['Senile Miosis','Abnahme des Kontraktions- und Relaxationsvermögens des Ziliarkörpers','Appositionelles Linsenwachstum mit Sklerotisierung der Linse','Zunahme brechwertsteigernder Proteine'], correct:3, explain:'Richtig ist: eine Zunahme brechwertsteigernder Proteine — tatsächlich nehmen brechwertverringernde Proteine ab, nicht steigernde zu.'},
+        {q:'Was ist eine physiologische Hyperopie?', options:['Eine krankhafte Weitsichtigkeit im Erwachsenenalter','Die Hyperopie von Neugeborenen, deren Augenlänge noch zu kurz ist','Eine Kurzsichtigkeit im Kindesalter','Ein Astigmatismus bei Neugeborenen'], correct:1, explain:'Richtig ist: die normale Weitsichtigkeit von Neugeborenen aufgrund der noch zu kurzen Augenlänge.'},
+        {q:'Was leistet ein Autorefraktometer?', options:['Es misst den Augeninnendruck','Es liefert eine vollautomatische objektive Refraktionsmessung','Es misst das Gesichtsfeld','Es ist ein rein subjektives Messverfahren'], correct:1, explain:'Richtig ist: Es misst objektiv und vollautomatisch und liefert die Grundlage der subjektiven Brillenglasbestimmung.'},
+        {q:'Wie korrigierst du eine Myopie?', options:['Mit einer Linse mit Pluswirkung','Mit einer Linse mit Minuswirkung','Mit einer zylindrischen Linse','Mit einem Nahzusatz'], correct:1, explain:'Richtig ist: mit einer Linse mit Minuswirkung.'},
+        {q:'Womit hältst du bei Sehprobentafeln die vorgesehene Prüfdistanz auch in kleinen Räumen ein?', options:['Mit einem zweiten Testgerät','Mit Umlenkspiegeln','Mit einem größeren Bildschirm','Mit einer Lupe'], correct:1, explain:'Richtig ist: Umlenkspiegel verlängern die Prüfstrecke optisch, sodass die Distanz auch in kleinen Räumen eingehalten wird.'},
+        {q:'Wodurch entsteht eine Fehlsichtigkeit (Ametropie)?', options:['Der Brennpunkt liegt stets exakt auf der Netzhaut','Augenlänge und Brechkraft passen nicht zueinander, der Brennpunkt liegt vor oder hinter der Netzhaut','Nur die Pupillengröße ist entscheidend','Fehlsichtigkeit entsteht ausschließlich im Alter'], correct:1, explain:'Richtig ist: Passen Augenlänge und Brechkraft nicht zueinander, liegt der Brennpunkt vor oder hinter der Netzhaut.'},
+        {q:'Wann liegt beim binokularen Sehen die Orthostellung vor?', options:['Wenn beide Augen geschlossen sind','Wenn sich die Fixierlinien beider Augen im anvisierten Objektpunkt schneiden','Wenn nur ein Auge fixiert','Wenn die Pupillen maximal erweitert sind'], correct:1, explain:'Richtig ist: wenn sich die Fixierlinien im anvisierten Objektpunkt schneiden — dem Fixierlinienschnittpunkt.'},
+        {q:'Wie erscheint ein Gegenstand bei einem astigmatisch fehlsichtigen Auge?', options:['Scharf und unverzerrt','Undeutlich und verzerrt','Nur in Schwarz-Weiß','Vergrößert, aber scharf'], correct:1, explain:'Richtig ist: undeutlich und verzerrt, da die Brechkraft in den Meridianen unterschiedlich ist.'},
+        {q:'Wo entsteht das Kammerwasser, und wie fließt es größtenteils ab?', options:['Produktion in der Netzhaut, Abfluss über den Sehnerv','Produktion in den Ziliarfortsätzen, Abfluss über Kammerwinkel und Schlemmschen Kanal','Produktion in der Hornhaut, Abfluss über die Tränendrüse','Produktion im Glaskörper, kein Abfluss'], correct:1, explain:'Richtig ist: Kammerwasser entsteht in den Ziliarfortsätzen und verlässt das Auge hauptsächlich über Trabekelwerk und Schlemmschen Kanal.'},
+        {q:'Woran erkennst du eine beginnende Presbyopie?', options:['Ausschließlich an Kopfschmerzen','Nahe Objekte werden schlechter gesehen, die Lesenentfernung vergrößert sich, asthenopische Beschwerden treten auf','An einer plötzlichen Farbenblindheit','An einer verkleinerten Pupille allein'], correct:1, explain:'Richtig ist: schlechteres Sehen naher Objekte, eine vergrößerte Lesenentfernung und asthenopische Beschwerden.'},
+        {q:'Wie berechnest du den Brechwert eines emmetropen Auges bei einer Augenlänge von 25 mm?', options:['D = nG × fA','D = nG / (fA − SH\'), also 1,336 / (0,025 m − 0,00183 m) ≈ 57,16 1/m','D = fA / nG','D = SH\' − fA'], correct:1, explain:'Richtig ist: D = nG / (fA − SH\'); mit den gegebenen Werten ergibt sich D ≈ 57,16 1/m.'},
       ]
     },
     {
       id:'finanzwirtschaft', name:'Finanzwirtschaft', accent:'var(--c-finanzwirtschaft)',
       flashcards:[
-        {q:'Worum handelt es sich beim "Interest Rate Swap"?', a:'Der Interest Rate Swap ist ein Zinsderivat, bei dem die zwei Partner zu vereinbarten Zeitpunkten Zinszahlungen auf vereinbarte Nennbeträge austauschen. Meist zahlt hierbei eine Partei einen fixierten, und die andere einen variablen Zinssatz.'},
-        {q:'Vervollständige den Satz: Bei der Rentabilitätsvergleichsrechnung wird neben der Gewinnvergleichsrechnung auch das ... berücksichtigt.', a:'...eingesetzte Kapital.', hint:'Merksatz: "Rentabilität = Gewinn IM VERHÄLTNIS ZUM Kapital" — Gewinn allein reicht nicht, es zählt was du reingesteckt hast.'},
-        {q:'Worauf basiert die statische Amortisationsrechnung als einziges Investitionsrechenverfahren?', a:'Es basiert auf Zahlungsgrößen.'},
-        {q:'Wie ist die Gründung einer offenen Handelsgesellschaft (OHG) rechtlich festgelegt?', a:'Die Gründung einer OHG ist formfrei. Sie muss aber in das Handelsregister eingetragen werden und auf den Betrieb von einem Handelsgewerbe unter gemeinschaftlicher Firma ausgelegt sein.'},
-        {q:'Wer kann zu den Gründungsmitgliedern einer Gesellschaft bürgerlichen Rechts (GbR) zählen?', a:'Gründungsmitglieder einer GbR können natürliche Personen, juristische Personen und andere Personengesellschaften sein.'},
-        {q:'Welche Daten sollen bei der Investitionsplanung zusammengestellt werden?', a:'Investitionsbezeichnung, Investitionszeitpunkt, Kaufpreis bei Hinzuziehung von Nebenkosten (z. B. Installationen, Transportkosten etc.).'},
-        {q:'Wozu dient die Kostenvergleichsrechnung?', a:'Hier werden die Kosten von Investitionen miteinander verglichen.'},
-        {q:'Nenne Risiken, denen ein Unternehmen im internationalen Geschäft ausgesetzt ist.', a:'Zinsänderungsrisiken, Länderrisiken, Wechselkursrisiken.'},
+        {q:'Was tauschen die Partner bei einem Interest Rate Swap aus?', a:'Zinszahlungen auf einen vereinbarten Nennbetrag zu festgelegten Zeitpunkten — meist zahlt eine Partei einen fixen, die andere einen variablen Zinssatz.'},
+        {q:'Was berücksichtigt die Rentabilitätsvergleichsrechnung zusätzlich zur Gewinnvergleichsrechnung?', a:'Das eingesetzte Kapital.', hint:'Merksatz: Rentabilität setzt den Gewinn ins Verhältnis zum Kapital — Gewinn allein reicht nicht.'},
+        {q:'Worauf basiert die statische Amortisationsrechnung als einziges der klassischen Verfahren?', a:'Auf Zahlungsgrößen.'},
+        {q:'Wie ist die Gründung einer OHG rechtlich geregelt?', a:'Formfrei — sie muss aber ins Handelsregister eingetragen werden und auf den Betrieb eines Handelsgewerbes unter gemeinschaftlicher Firma ausgelegt sein.'},
+        {q:'Wer kann Gründungsmitglied einer GbR sein?', a:'Natürliche Personen, juristische Personen und andere Personengesellschaften.'},
+        {q:'Welche Angaben gehören in eine Investitionsplanung?', a:'Investitionsbezeichnung, Investitionszeitpunkt sowie der Kaufpreis inklusive Nebenkosten wie Installation oder Transport.'},
+        {q:'Wozu dient die Kostenvergleichsrechnung?', a:'Sie vergleicht die Kosten mehrerer Investitionsalternativen miteinander.'},
+        {q:'Welchen Risiken ist ein Unternehmen im internationalen Geschäft ausgesetzt?', a:'Zinsänderungsrisiken, Länderrisiken und Wechselkursrisiken.'},
+        {q:'Was zeigt dir der Barwert einer Investition nicht?', a:'Wie stark sich die Investition tatsächlich rentiert.'},
+        {q:'Welches Problem teilt sich die Gewinnvergleichsrechnung mit der Kostenvergleichsrechnung?', a:'Beide berücksichtigen den zeitlichen Anfall der Gewinne über die Laufzeit der Investition nicht ausreichend.'},
+        {q:'Worum handelt es sich bei „Basel III"?', a:'Um Eigenkapitalvorschriften des Basler Ausschusses für Bankenaufsicht, erlassen zum 1.1.2007. Sie ruhen auf drei Pfeilern: Mindesteigenkapitalanforderungen, aufsichtsrechtlicher Überprüfungsprozess und Kontrolle durch den Markt.'},
+        {q:'Was zeichnet eine selbstschuldnerische Bürgschaft aus?', a:'Der Gläubiger kann sofortige Zahlung vom Bürgen verlangen, sobald der Schuldner seine Verpflichtungen nicht einhält.'},
+        {q:'Wie berechnest du die Eigenkapitalquote, und was zeigt sie?', a:'Eigenkapital geteilt durch Gesamtkapital. Sie zeigt, welcher Anteil der Finanzierung mit Eigenkapital gedeckt ist — je höher, desto sicherer.'},
+        {q:'Was ist ein „Perfect Hedge"?', a:'Eine vollständige Risikominimierung einer Investition durch den gezielten Einsatz mehrerer Sicherungsinstrumente.'},
+        {q:'Welche Laufzeiten gelten für kurz- und langfristige Fremdfinanzierung?', a:'Kurzfristig: bis zu einem Jahr. Langfristig: mehr als ein Jahr.'},
+        {q:'Bei welchem Verfahren fließen Ab- und Rückflüsse einer Investition in die Wahl der gewinnstärksten Alternative ein?', a:'Bei der Gewinnvergleichsrechnung.'},
+        {q:'Was gibt die Insolvenzquote an?', a:'Den Anteil der Insolvenzmasse an allen Verbindlichkeiten des Schuldners.'},
+        {q:'Worin unterscheiden sich Hypothek und Grundschuld?', a:'Die Hypothek ist an die gesicherte Forderung gebunden und erlischt mit deren Rückzahlung. Die Grundschuld ist davon unabhängig und lässt sich erneut mit einem Kredit belegen.'},
       ],
       glossary:[
         {t:'Interest Rate Swap', d:'Zinsderivat zum Austausch von Zinszahlungen (meist fix gegen variabel) auf einen vereinbarten Nennbetrag.'},
         {t:'Amortisationsrechnung', d:'Statisches Investitionsrechenverfahren, das auf Zahlungsgrößen basiert.'},
+        {t:'Basel III', d:'Eigenkapitalvorschriften des Basler Ausschusses für Bankenaufsicht (seit 1.1.2007) mit drei Pfeilern: Mindesteigenkapital, aufsichtsrechtlicher Überprüfungsprozess, Marktkontrolle.'},
+        {t:'Selbstschuldnerische Bürgschaft', d:'Bürgschaftsform, bei der der Gläubiger sofortige Zahlung vom Bürgen verlangen kann, ohne zuerst den Hauptschuldner in Anspruch zu nehmen.'},
+        {t:'Eigenkapitalquote', d:'Eigenkapital / Gesamtkapital; zeigt, welcher Anteil der Finanzierung durch Eigenkapital gedeckt ist — je höher, desto sicherer.'},
+        {t:'Hedging / Perfect Hedge', d:'Reduktion von Investmentrisiken durch Sicherungsinstrumente; beim Perfect Hedge wird das Risiko vollständig eliminiert.'},
+        {t:'Insolvenzquote', d:'Anteil der Insolvenzmasse an allen Verbindlichkeiten des Schuldners.'},
+        {t:'Hypothek vs. Grundschuld', d:'Hypothek ist an den Bestand der gesicherten Forderung gebunden und erlischt mit deren Rückzahlung; Grundschuld ist davon unabhängig und wiederverwendbar.'},
       ],
       quiz:[
-        {q:'Was tauschen die Partner bei einem Interest Rate Swap in der Regel aus?', options:['Aktien gegen Anleihen','Einen fixierten gegen einen variablen Zinssatz','Fremdwährungen','Immobilienwerte'], correct:1, explain:'Meist zahlt eine Partei einen fixierten Zinssatz, die andere einen variablen Zinssatz auf denselben Nennbetrag.'},
-        {q:'Worauf basiert die statische Amortisationsrechnung?', options:['Auf Gewinngrößen','Auf Zahlungsgrößen','Auf Abschreibungen','Auf Zinssätzen'], correct:1, explain:'Als einziges der klassischen statischen Verfahren basiert die Amortisationsrechnung auf Zahlungsgrößen.'},
-        {q:'Wie ist die Gründung einer OHG rechtlich geregelt?', options:['Notarielle Beurkundung erforderlich','Formfrei, aber Eintragung ins Handelsregister nötig','Nur mündlich möglich','Gar nicht geregelt'], correct:1, explain:'Die Gründung ist formfrei, muss aber ins Handelsregister eingetragen werden und auf ein Handelsgewerbe ausgelegt sein.'},
-        {q:'Wer kann Gründungsmitglied einer GbR sein?', options:['Nur natürliche Personen','Natürliche Personen, juristische Personen und andere Personengesellschaften','Nur eingetragene Kaufleute','Nur Kapitalgesellschaften'], correct:1, explain:'Auch juristische Personen und andere Personengesellschaften können GbR-Gründungsmitglieder sein.'},
-        {q:'Wozu dient die Kostenvergleichsrechnung?', options:['Zum Vergleich der Kosten verschiedener Investitionen', 'Zur Berechnung der Umsatzsteuer', 'Zur Ermittlung des Personalbedarfs', 'Zur Preiskalkulation von Endprodukten'], correct:0, explain:'Sie vergleicht die Kosten verschiedener Investitionsalternativen miteinander.'},
-        {q:'Welches ist KEIN typisches Risiko im internationalen Geschäft?', options:['Zinsänderungsrisiko','Länderrisiko','Wechselkursrisiko','Inflationsfreies Risiko'], correct:3, explain:'"Inflationsfreies Risiko" ist kein reales Konzept — Zins-, Länder- und Wechselkursrisiken sind die klassischen internationalen Risiken.'},
+        {q:'Was tauschen die Partner bei einem Interest Rate Swap in der Regel aus?', options:['Aktien gegen Anleihen','Einen fixierten gegen einen variablen Zinssatz','Fremdwährungen','Immobilienwerte'], correct:1, explain:'Richtig ist: ein fixierter gegen einen variablen Zinssatz auf denselben Nennbetrag.'},
+        {q:'Worauf basiert die statische Amortisationsrechnung?', options:['Auf Gewinngrößen','Auf Zahlungsgrößen','Auf Abschreibungen','Auf Zinssätzen'], correct:1, explain:'Richtig ist: auf Zahlungsgrößen — als einziges der klassischen statischen Verfahren.'},
+        {q:'Wie ist die Gründung einer OHG rechtlich geregelt?', options:['Notarielle Beurkundung ist erforderlich','Formfrei, aber mit Eintragung ins Handelsregister','Nur mündlich möglich','Gesetzlich nicht geregelt'], correct:1, explain:'Richtig ist: Die Gründung ist formfrei, verlangt aber die Eintragung ins Handelsregister und ein Handelsgewerbe.'},
+        {q:'Wer kann Gründungsmitglied einer GbR sein?', options:['Nur natürliche Personen','Natürliche Personen, juristische Personen und andere Personengesellschaften','Nur eingetragene Kaufleute','Nur Kapitalgesellschaften'], correct:1, explain:'Richtig ist: auch juristische Personen und andere Personengesellschaften können GbR-Gründungsmitglieder sein.'},
+        {q:'Wozu dient die Kostenvergleichsrechnung?', options:['Zum Vergleich der Kosten verschiedener Investitionen', 'Zur Berechnung der Umsatzsteuer', 'Zur Ermittlung des Personalbedarfs', 'Zur Preiskalkulation von Endprodukten'], correct:0, explain:'Richtig ist: Sie vergleicht die Kosten verschiedener Investitionsalternativen.'},
+        {q:'Welches Risiko zählt NICHT zu den typischen Risiken im internationalen Geschäft?', options:['Zinsänderungsrisiko','Länderrisiko','Wechselkursrisiko','Urlaubsanspruchsrisiko'], correct:3, explain:'Richtig ist: "Urlaubsanspruchsrisiko" ist kein Konzept — Zins-, Länder- und Wechselkursrisiken zählen zu den klassischen internationalen Risiken.'},
+        {q:'Was zeigt der Barwert einer Investition NICHT an?', options:['Ob sich eine Investition überhaupt lohnt','Wie stark sich die Investition rentiert','Den heutigen Wert zukünftiger Zahlungen','Eine Grundlage für die Investitionsentscheidung'], correct:1, explain:'Richtig ist: Wie stark sich die Investition rentiert. Der Barwert sagt nur, ob sie sinnvoll ist, nicht wie rentabel.'},
+        {q:'Welches Problem hat die Gewinnvergleichsrechnung mit der Kostenvergleichsrechnung gemeinsam?', options:['Sie berücksichtigt keine Kosten','Der zeitliche Anfall der Gewinne über die Laufzeit wird nicht ausreichend berücksichtigt','Sie eignet sich nur für kurzfristige Investitionen','Sie ignoriert die Anschaffungskosten vollständig'], correct:1, explain:'Richtig ist: Beide Verfahren berücksichtigen den zeitlichen Anfall der Gewinne über die Laufzeit nicht ausreichend.'},
+        {q:'Worum handelt es sich bei „Basel III"?', options:['Ein EU-Steuerabkommen','Eigenkapitalvorschriften des Basler Ausschusses für Bankenaufsicht mit drei Pfeilern','Ein Freihandelsabkommen','Eine Umweltschutzrichtlinie'], correct:1, explain:'Richtig ist: Eigenkapitalvorschriften mit den Pfeilern Mindesteigenkapital, aufsichtsrechtlicher Überprüfungsprozess und Marktkontrolle.'},
+        {q:'Was zeichnet eine selbstschuldnerische Bürgschaft aus?', options:['Der Gläubiger muss zuerst den Hauptschuldner verklagen','Der Gläubiger kann sofort Zahlung vom Bürgen verlangen, wenn der Schuldner nicht zahlt','Sie ist rechtlich unwirksam','Sie gilt nur für Privatpersonen'], correct:1, explain:'Richtig ist: Der Gläubiger kann direkt vom Bürgen Zahlung verlangen, ohne vorherige Klage gegen den Hauptschuldner.'},
+        {q:'Wie berechnest du die Eigenkapitalquote?', options:['Eigenkapital mal Gesamtkapital','Eigenkapital geteilt durch Gesamtkapital','Gesamtkapital geteilt durch Eigenkapital','Fremdkapital minus Eigenkapital'], correct:1, explain:'Richtig ist: Eigenkapital geteilt durch Gesamtkapital — je höher, desto sicherer die Finanzierung.'},
+        {q:'Was versteht man unter einem „Perfect Hedge"?', options:['Eine Investition ganz ohne Risiko','Eine vollständige Risikominimierung durch mehrere Sicherungsinstrumente','Den maximal möglichen Gewinn einer Investition','Eine zinsfreie Kreditart'], correct:1, explain:'Richtig ist: die vollständige Absicherung eines Investmentrisikos durch geeignete Sicherungsinstrumente.'},
+        {q:'Wie lange läuft eine kurzfristige Fremdfinanzierung typischerweise?', options:['Bis zu einem Jahr','Mindestens 5 Jahre','Genau 2 Jahre','Zeitlich unbegrenzt'], correct:0, explain:'Richtig ist: bis zu einem Jahr — langfristige Fremdfinanzierung läuft länger.'},
+        {q:'Bei welchem Investitionsrechenverfahren fließen Ab- und Rückflüsse in die Wahl der gewinnstärksten Alternative ein?', options:['Kostenvergleichsrechnung','Gewinnvergleichsrechnung','Amortisationsrechnung','Interest Rate Swap'], correct:1, explain:'Richtig ist: die Gewinnvergleichsrechnung — sie kalkuliert Ab- und Rückflüsse und wählt die gewinnstärkste Investition.'},
+        {q:'Was gibt die Insolvenzquote an?', options:['Die Anzahl der Insolvenzen pro Jahr','Den Anteil der Insolvenzmasse an allen Verbindlichkeiten des Schuldners','Den Gewinn eines insolventen Unternehmens','Die Dauer eines Insolvenzverfahrens'], correct:1, explain:'Richtig ist: den Anteil der Insolvenzmasse an allen Verbindlichkeiten des Schuldners.'},
+        {q:'Worin unterscheiden sich Hypothek und Grundschuld?', options:['Es gibt keinen Unterschied','Die Hypothek ist an die gesicherte Forderung gebunden und erlischt mit deren Rückzahlung, die Grundschuld ist davon unabhängig','Die Grundschuld gilt nur für Gewerbeimmobilien','Die Hypothek lässt sich beliebig oft wiederverwenden'], correct:1, explain:'Richtig ist: Die Hypothek erlischt mit Rückzahlung der Forderung, die Grundschuld besteht unabhängig davon fort.'},
       ]
     },
     {
       id:'qm', name:'Qualitätsmanagement', accent:'var(--c-qm)',
       flashcards:[
-        {q:'Welche Voraussetzungen müssen vorliegen, damit QM in einem Unternehmen erfolgreich umgesetzt werden kann?', a:'Möglichst alle Mitarbeiter/innen sollten beteiligt sein und mitarbeiten. Demotivierende Faktoren sollten ausgemacht und abgebaut werden. Innerhalb der gesamten Gruppe sollten Minimalstandards gefunden werden, die dann eingehalten werden.'},
+        {q:'Welche Voraussetzungen müssen erfüllt sein, damit QM im Unternehmen gelingt?', a:'Möglichst alle Mitarbeitenden sollten beteiligt sein und mitarbeiten. Demotivierende Faktoren müssen erkannt und abgebaut werden. Die Gruppe braucht gemeinsame Minimalstandards, die dann auch eingehalten werden.'},
+        {q:'Wofür steht das Kürzel „SMART" bei QM-Zielen?', a:'Spezifisch, messbar, ausführbar, relevant, terminiert.'},
+        {q:'Welchen Vorteil bringt eine Zertifizierung nach der Umsetzung eines QM-Systems?', a:'Sie wirkt motivierend auf die Mitarbeiter — vor allem aber vertrauensbildend auf Kunden und Partner.'},
+        {q:'Was bezeichnet man im QM als „QMB"?', a:'Den Qualitätsmanagementbeauftragten — nach ISO 9001 die zentrale Person des QM-Systems.'},
+        {q:'Welchen Nutzen zieht ein Unternehmen selbst aus QM?', a:'Dauerhaft verbesserte Abläufe, mehr Transparenz, gesteigertes Qualitätsbewusstsein der Mitarbeiter, Kostenvorteile trotz weniger Fehler und höhere Konkurrenzfähigkeit.'},
       ],
       glossary:[
         {t:'QM (Qualitätsmanagement)', d:'Systematische Steuerung von Prozessen zur Sicherung und Verbesserung der Qualität, erfolgreich nur mit breiter Mitarbeiterbeteiligung.'},
+        {t:'SMART-Ziele', d:'Spezifisch, messbar, ausführbar, relevant, terminiert — Kriterien für gut formulierte QM-Ziele.'},
+        {t:'QMB', d:'Qualitätsmanagementbeauftragter — nach ISO 9001 die zentrale Person des QM-Systems im Unternehmen.'},
       ],
       quiz:[
-        {q:'Was ist eine wichtige Voraussetzung für erfolgreiches QM im Unternehmen?', options:['Nur die Führungsebene sollte beteiligt sein','Möglichst alle Mitarbeiter sollten beteiligt sein und mitarbeiten','QM sollte extern ohne Mitarbeiterbeteiligung entwickelt werden','Individuelle Standards für jeden Mitarbeiter'], correct:1, explain:'Erfolgreiches QM setzt breite Mitarbeiterbeteiligung sowie gemeinsame Minimalstandards voraus.'},
+        {q:'Was ist eine wichtige Voraussetzung für erfolgreiches QM im Unternehmen?', options:['Nur die Führungsebene sollte beteiligt sein','Möglichst alle Mitarbeitenden sollten beteiligt sein und mitarbeiten','QM sollte extern ohne Mitarbeiterbeteiligung entwickelt werden','Jeder Mitarbeiter braucht individuelle Standards'], correct:1, explain:'Richtig ist: breite Mitarbeiterbeteiligung. Erfolgreiches QM setzt zudem gemeinsame Minimalstandards voraus.'},
+        {q:'Wofür steht das „R" bei SMART-Zielen im QM?', options:['Realistisch','Relevant','Reduziert','Reguliert'], correct:1, explain:'Richtig ist: Relevant. SMART steht für spezifisch, messbar, ausführbar, relevant und terminiert.'},
+        {q:'Welchen Vorteil bringt die Zertifizierung eines QM-Systems nach der Umsetzung?', options:['Sie ist gesetzlich vorgeschrieben','Sie wirkt motivierend auf Mitarbeiter und vertrauensbildend auf Kunden und Partner','Sie ersetzt die Mitarbeiterbeteiligung','Sie senkt automatisch die Kosten'], correct:1, explain:'Richtig ist: Sie wirkt motivierend auf Mitarbeiter — vor allem aber vertrauensbildend auf Kunden und Partner.'},
+        {q:'Was bezeichnet man im QM als „QMB"?', options:['Ein Qualitätsmanagement-Handbuch','Den Qualitätsmanagementbeauftragten, die zentrale Person des QM-Systems nach ISO 9001','Ein Qualitätsmanagement-Budget','Eine Qualitätsmanagement-Behörde'], correct:1, explain:'Richtig ist: der Qualitätsmanagementbeauftragte — nach ISO 9001 die zentrale Person des QM-Systems.'},
+        {q:'Welchen Nutzen zieht das Unternehmen selbst aus QM?', options:['Keinen messbaren Nutzen','Dauerhaft verbesserte Abläufe, mehr Transparenz, Kostenvorteile und höhere Konkurrenzfähigkeit','Ausschließlich höhere Kosten ohne Gegenwert','Ausschließlich rechtliche Absicherung'], correct:1, explain:'Richtig ist: QM verbessert Abläufe dauerhaft, erhöht Transparenz, bringt Kostenvorteile und stärkt die Konkurrenzfähigkeit.'},
       ]
     },
     {
       id:'steuerrecht', name:'Steuer und Recht', accent:'var(--c-steuerrecht)',
       flashcards:[
-        {q:'Welche Steuersätze im Umsatzsteuerrecht werden unterschieden?', a:'Üblicherweise beträgt der Steuersatz für die Umsatzsteuer 19 %. Unter Anderem für Bücher oder Lebensmittel gibt es einen ermäßigten Steuersatz von 7 %. Zuletzt gibt es nicht steuerbare Umsätze.', hint:'Merksatz: "19 ist normal, 7 ist für\'s Nötigste (Essen, Bücher)".'},
-        {q:'Welche Einkunftsarten gibt es im Einkommensteuerrecht?', a:'Einkünfte aus Gewerbebetrieb, Nichtselbstständiger Arbeit, Selbstständiger Arbeit, Land- und Forstwirtschaft, Vermietung/Verpachtung, Kapitalvermögen, andere Einkünfte.'},
-        {q:'Nenne ein Beispiel für ein geringwertiges Wirtschaftsgut gemäß § 6 Abs. 2 EStG.', a:'Hierzu zählen Wirtschaftsgüter, die beweglich und abnutzbar sind, selbstständig genutzt werden, zum Anlagevermögen gehören, Anschaffungskosten zwischen 150 € und 1000 € beanspruchen. Beispiel: Die Anschaffung eines Laptops für 700 €.', hint:'Merksatz: "150 bis 1000 — die \'GWG-Spanne\'" — leicht zu merken als Preisrahmen für kleine bewegliche Anschaffungen.'},
-        {q:'Wer ist unbeschränkt steuerpflichtig?', a:'Als unbeschränkt steuerpflichtig gelten alle natürlichen Personen, die einen Wohnsitz im Bundesgebiet haben und sich dort üblicherweise aufhalten.'},
+        {q:'Welche Steuersätze unterscheidet das Umsatzsteuerrecht?', a:'Regulär 19 %. Ermäßigt 7 %, etwa für Bücher oder Lebensmittel. Zusätzlich gibt es nicht steuerbare Umsätze.', hint:'Merksatz: 19 ist normal, 7 ist fürs Nötigste — Essen und Bücher.'},
+        {q:'Welche Einkunftsarten kennt das Einkommensteuerrecht?', a:'Einkünfte aus Gewerbebetrieb, nichtselbstständiger Arbeit, selbstständiger Arbeit, Land- und Forstwirtschaft, Vermietung und Verpachtung, Kapitalvermögen sowie sonstige Einkünfte.'},
+        {q:'Wann gilt ein Wirtschaftsgut als geringwertig nach § 6 Abs. 2 EStG?', a:'Wenn es beweglich und abnutzbar ist, selbstständig genutzt wird, zum Anlagevermögen zählt und Anschaffungskosten zwischen 150 € und 1000 € hat — zum Beispiel ein Laptop für 700 €.', hint:'Merksatz: 150 bis 1000 — die GWG-Spanne für kleine bewegliche Anschaffungen.'},
+        {q:'Wer gilt in Deutschland als unbeschränkt steuerpflichtig?', a:'Alle natürlichen Personen mit Wohnsitz und gewöhnlichem Aufenthalt im Bundesgebiet.'},
       ],
       glossary:[
         {t:'Umsatzsteuer', d:'19 % Regelsteuersatz, 7 % ermäßigter Satz (z. B. Bücher, Lebensmittel), sowie nicht steuerbare Umsätze.'},
@@ -820,9 +986,115 @@ const DATA = {
         {t:'Unbeschränkte Steuerpflicht', d:'Gilt für natürliche Personen mit Wohnsitz und gewöhnlichem Aufenthalt im Bundesgebiet.'},
       ],
       quiz:[
-        {q:'Wie hoch ist der reguläre Umsatzsteuersatz in Deutschland?', options:['7 %','9 %','19 %','21 %'], correct:2, explain:'Der reguläre Umsatzsteuersatz beträgt 19 %, der ermäßigte Satz 7 %.'},
-        {q:'Welche Einkunftsart zählt NICHT zu den 7 Einkunftsarten des Einkommensteuerrechts?', options:['Gewerbebetrieb','Kapitalvermögen','Erbschaften','Vermietung/Verpachtung'], correct:2, explain:'Erbschaften unterliegen der Erbschaftsteuer, nicht den 7 Einkunftsarten der Einkommensteuer.'},
-        {q:'In welcher Preisspanne müssen die Anschaffungskosten eines geringwertigen Wirtschaftsguts liegen?', options:['Unter 150 €','150 € – 1000 €','1000 € – 5000 €','Über 5000 €'], correct:1, explain:'Geringwertige Wirtschaftsgüter nach § 6 Abs. 2 EStG liegen zwischen 150 € und 1000 € Anschaffungskosten.'},
+        {q:'Wie hoch ist der reguläre Umsatzsteuersatz in Deutschland?', options:['7 %','9 %','19 %','21 %'], correct:2, explain:'Richtig ist: 19 %. Der ermäßigte Satz liegt bei 7 %.'},
+        {q:'Welche Einkunftsart zählt NICHT zu den sieben Einkunftsarten der Einkommensteuer?', options:['Gewerbebetrieb','Kapitalvermögen','Erbschaften','Vermietung und Verpachtung'], correct:2, explain:'Richtig ist: Erbschaften. Sie unterliegen der Erbschaftsteuer, nicht den sieben Einkunftsarten der Einkommensteuer.'},
+        {q:'In welcher Preisspanne müssen die Anschaffungskosten eines geringwertigen Wirtschaftsguts liegen?', options:['Unter 150 €','150 € bis 1000 €','1000 € bis 5000 €','Über 5000 €'], correct:1, explain:'Richtig ist: 150 € bis 1000 €. So definiert es § 6 Abs. 2 EStG.'},
+      ]
+    },
+    {
+      id:'arbeitsschutz', name:'Arbeitsschutz', accent:'var(--c-arbeitsschutz)',
+      flashcards:[
+        {q:'Wer überwacht im Betrieb die Einhaltung der Berufsgenossenschafts-Vorschriften?', a:'Der Sicherheitsbeauftragte im Betrieb sowie die Berufsgenossenschaft selbst.'},
+        {q:'Wie stärkst du die interne Kommunikation auf verschiedenen Ebenen im Unternehmen?', a:'Arbeitsgruppen bilden, Mitarbeiterbefragungen und ein Vorschlagswesen anbieten, feste Informationsgespräche einführen, eine Offene-Tür-Politik bei Führungskräften pflegen sowie Informationsmaterial bereitstellen und erklären.'},
+        {q:'Was sagst du einem neuen Mitarbeiter grundsätzlich zu Maschinen und technischen Anlagen?', a:'Sie dürfen nur unter strikter Einhaltung der Sicherheitsvorschriften genutzt werden — und erst nach Einweisung durch sachkundige Kollegen.'},
+        {q:'Was muss die Führungskraft für jeden Arbeitsbereich bereitstellen?', a:'Betriebsanweisungen.'},
+        {q:'Ein Mitarbeiter möchte nach dem Beratungsgespräch direkt im Beratungsraum mit der Fertigung beginnen. Ist das zulässig?', a:'Nein — handwerkliche Tätigkeiten gehören in separate Werkstätten, getrennt vom Beratungsraum.'},
+        {q:'Wo findest du eine Checkliste zur Sicherheit und Unfallverhütung, wenn gerade keine zur Hand ist?', a:'Auf der Internetseite der Bundesanstalt für Arbeitsschutz und Arbeitsmedizin (www.baua.de).'},
+        {q:'Worauf musst du bei der Auswahl von Werkstätten in einem Gebäude achten?', a:'Die Werkstatt muss groß genug sein und über ein Fenster oder ein funktionierendes Belüftungssystem verfügen.'},
+        {q:'Was riskiert eine Augenoptikerin, wenn sie sich bei der Arbeit nicht an die Unfallverhütungsvorschriften hält?', a:'Sie verliert ihren Versicherungsschutz, macht sich strafbar und gefährdet sich selbst sowie andere.'},
+        {q:'Wie trägt eine Augenoptikerin zur Vermeidung von Berufsunfällen bei?', a:'Durch umsichtiges Verhalten und die Einhaltung klarer Sicherheitsvorschriften. Die Führungskraft muss diese Vorschriften vorgeben, erklären und ihre Einhaltung einfordern.'},
+        {q:'Welche Sicherheitsrisiken bestehen beim Arbeiten mit dem Lötgerät?', a:'Offene Flamme, giftige Dämpfe und glühende Fassungsteile.'},
+        {q:'Worauf lassen sich die meisten Betriebsunfälle zurückführen, und was folgt daraus für die Praxis?', a:'Meist auf mangelnde Vorsicht. Deshalb wichtig: Gebotszeichen beachten (z. B. Gehörschutz), Geräte erst nach Einweisung nutzen, Schutzkleidung tragen, Reizstoffe meiden und Unfallgefahren sofort melden.'},
+      ],
+      glossary:[
+        {t:'Berufsgenossenschaft', d:'Träger der gesetzlichen Unfallversicherung; überwacht zusammen mit dem Sicherheitsbeauftragten die Einhaltung der Arbeitsschutzvorschriften im Betrieb.'},
+        {t:'Betriebsanweisung', d:'Verbindliche, schriftliche Anweisung, die an allen Arbeitsbereichen bereitgestellt werden muss.'},
+        {t:'BAuA', d:'Bundesanstalt für Arbeitsschutz und Arbeitsmedizin (www.baua.de) — u. a. Quelle für Checklisten zur Sicherheit und Unfallverhütung.'},
+        {t:'Sicherheitsbeauftragter', d:'Innerbetrieblich benannte Person, die die Einhaltung der Berufsgenossenschafts-Vorschriften im Betrieb überwacht.'},
+        {t:'Unfallverhütungsvorschrift', d:'Vorschrift zur Vermeidung von Arbeitsunfällen; ihre Missachtung kann den Versicherungsschutz gefährden und strafbar sein.'},
+      ],
+      quiz:[
+        {q:'Wer überwacht im Betrieb die Einhaltung der Berufsgenossenschafts-Vorschriften?', options:['Nur der Betriebsrat','Der Sicherheitsbeauftragte im Betrieb und die Berufsgenossenschaft','Nur externe Prüfer','Ausschließlich das Gewerbeaufsichtsamt'], correct:1, explain:'Richtig ist: der betriebliche Sicherheitsbeauftragte gemeinsam mit der Berufsgenossenschaft.'},
+        {q:'Welche Maßnahme stärkt NICHT primär die interne Kommunikation im Unternehmen?', options:['Arbeitsgruppen bilden','Eine Offene-Tür-Politik bei Führungskräften pflegen','Feste Informationsgespräche anbieten','Externe Werbekampagnen schalten'], correct:3, explain:'Richtig ist: Externe Werbekampagnen. Sie richten sich an Kunden, nicht an die interne Kommunikation im Betrieb.'},
+        {q:'Was sagst du einem neuen Mitarbeiter zu Maschinen und technischen Anlagen?', options:['Er darf sie frei ausprobieren','Sie dürfen nur unter strikter Einhaltung der Sicherheitsvorschriften und nach Einweisung genutzt werden','Sie sind nur für Führungskräfte zugänglich','Eine Einweisung ist nicht notwendig'], correct:1, explain:'Richtig ist: Erst nach Einweisung durch sachkundige Kollegen und unter strikter Einhaltung der Sicherheitsvorschriften.'},
+        {q:'Was muss an jedem Arbeitsbereich zwingend vorhanden sein?', options:['Ein Erste-Hilfe-Kasten allein reicht aus','Betriebsanweisungen','Nur ein Feuerlöscher','Ein Aushang mit Öffnungszeiten'], correct:1, explain:'Richtig ist: Betriebsanweisungen. Die Führungskraft muss sie an allen Arbeitsbereichen bereitstellen.'},
+        {q:'Darf ein Mitarbeiter nach einem Beratungsgespräch direkt im Beratungsraum mit der Fertigung beginnen?', options:['Ja, das spart Zeit','Nein, handwerkliche Tätigkeiten gehören in separate Werkstätten','Ja, wenn der Kunde einverstanden ist','Nur bei kleinen Reparaturen'], correct:1, explain:'Richtig ist: Nein. Handwerkliche Tätigkeiten müssen aus Sicherheits- und Organisationsgründen räumlich getrennt stattfinden.'},
+        {q:'Wo findest du eine Checkliste zur Sicherheit und Unfallverhütung im Betrieb?', options:['Auf der Seite der IHK','Auf www.baua.de (Bundesanstalt für Arbeitsschutz und Arbeitsmedizin)','Nur beim TÜV','Im Handelsregister'], correct:1, explain:'Richtig ist: www.baua.de. Die Bundesanstalt für Arbeitsschutz und Arbeitsmedizin stellt entsprechende Checklisten bereit.'},
+        {q:'Worauf musst du bei der Auswahl von Werkstätten in einem Gebäude achten?', options:['Nur die Bodenfläche zählt','Ausreichende Größe sowie ein Fenster oder funktionierendes Belüftungssystem','Die Nähe zum Eingang','Die Deckenhöhe ist irrelevant'], correct:1, explain:'Richtig ist: ausreichende Größe plus Fenster oder funktionierendes Belüftungssystem.'},
+        {q:'Was riskiert eine Augenoptikerin, die sich bei der Arbeit nicht an die Unfallverhütungsvorschriften hält?', options:['Nichts, die Vorschriften sind unverbindlich','Sie verliert ihren Versicherungsschutz und macht sich strafbar','Nur eine mündliche Ermahnung','Eine automatische Gehaltskürzung'], correct:1, explain:'Richtig ist: Sie verliert ihren Versicherungsschutz, macht sich strafbar und gefährdet sich und andere.'},
+        {q:'Wie trägt eine Augenoptikerin zur Vermeidung von Berufsunfällen bei?', options:['Indem sie Vorschriften ignoriert, wenn es schneller geht','Indem sie sich umsichtig verhält und Sicherheitsvorschriften einhält','Das liegt allein in der Verantwortung der Führungskraft','Unfälle lassen sich grundsätzlich nicht vermeiden'], correct:1, explain:'Richtig ist: umsichtiges Verhalten und die Einhaltung klarer Sicherheitsvorschriften — meist liegt sicherheitswidriges Verhalten den Unfällen zugrunde.'},
+        {q:'Welches Risiko besteht beim Arbeiten mit dem Lötgerät NICHT typischerweise?', options:['Offene Flamme','Giftige Dämpfe','Glühende Fassungsteile','Stromschlag durch Wasserkontakt'], correct:3, explain:'Richtig ist: Stromschlag durch Wasser ist beim Löten kein typisches Risiko — offene Flamme, Dämpfe und heiße Teile sind es.'},
+        {q:'Worauf lassen sich die meisten betrieblichen Unfälle zurückführen, und was folgt daraus?', options:['Auf technische Defekte allein — regelmäßige Wartung reicht aus','Auf mangelnde Vorsicht — Gebotszeichen, Einweisung, Schutzkleidung und sofortiges Melden von Gefahren sind wichtig','Auf Zufall — Vorbeugung ist nicht möglich','Auf zu hohe Arbeitszeiten allein'], correct:1, explain:'Richtig ist: mangelnde Vorsicht. Gebotszeichen beachten, Einweisung vor Gerätenutzung und Schutzkleidung tragen beugen vor.'},
+      ]
+    },
+    {
+      id:'umweltschutz', name:'Umweltschutz & Ressourcenschonung', accent:'var(--c-umweltschutz)',
+      flashcards:[
+        {q:'Welche drei Abfallkategorien unterscheidet die Kunststoffindustrie?', a:'Thermisch verwertbaren Abfall, Mischkunststoffe (ab 10 % Störstoffe) und sortenreine Thermoplaste, erkennbar am Recycling-Code.'},
+        {q:'Wie sparst du im Büro Ressourcen?', a:'Geräte mit Ausschaltfunktion oder niedrigem Stand-By-Verbrauch nutzen, Energiemanagementsysteme mit automatischer Abschaltung aktivieren, Recyclingpapier verwenden, energiesparende Lampen einsetzen und Ökostrom beziehen.'},
+        {q:'Worauf achtest du bei der Einkaufsmenge von Stoffen mit begrenzter Haltbarkeit und Chemikalien?', a:'Auf angemessene Mengen und Größen — sonst muss unnötig viel entsorgt werden, und Gefahrenpotential sowie Kosten steigen.'},
+        {q:'Wie heizt ein Betrieb umweltschonender?', a:'Heizungsbrenner regelmäßig warten lassen, einen Teil der Energie über Photovoltaik oder Solaranlage gewinnen, voreinstellbare Thermostatventile anbringen, einen Heizkessel unter 15 Jahren mit Brennwert- oder Niedrigtemperaturtechnik nutzen und die Heizung nachts außentemperaturabhängig absenken.'},
+        {q:'Wie spart ein Gebäude selbst Ressourcen, etwa über Wände und Fenster?', a:'Nachträgliche Wärmedämmung, wärmeschutzverglaste Fenster und Lüftungsanlagen mit Wärmerückgewinnung.'},
+        {q:'Wie senkst du den Wasserverbrauch in einem Betrieb?', a:'Wasserhähne mit Durchflussbegrenzern, Toiletten mit Spartasten, sensibilisierte Mitarbeiter und eine Regenwassernutzungsanlage.'},
+        {q:'Worauf achtest du beim Einkauf von Verbrauchsmaterial, Elektrogeräten und Maschinen?', a:'Auf Langlebigkeit, niedrigen Energieverbrauch, niedrigen Ressourcenverbrauch und Reparaturfreundlichkeit.'},
+        {q:'Wie entsorgt ein Betrieb Abfälle umweltschonend?', a:'Alle Abfälle ordnungsgemäß trennen, Rücknahmesysteme der Hersteller nutzen, hochwertige Materialien zur Wiederverwertung sammeln, Altbatterien separat erfassen und jährlich eine Abfallbilanz erstellen.'},
+        {q:'Was brauchen Mitarbeiter für umweltrelevante Arbeitsabläufe wie die Entsorgung von Stoffen?', a:'Verbindliche Arbeitsanweisungen für alle diese Abläufe.'},
+      ],
+      glossary:[
+        {t:'Recycling-Code', d:'Kennzeichnung an Kunststoffprodukten zur Identifikation sortenreiner Thermoplaste für das Recycling.'},
+        {t:'Ökostrom', d:'Strom aus erneuerbaren Energiequellen; Bezug gilt als ressourcenschonende Maßnahme im Betrieb.'},
+        {t:'Regenwassernutzungsanlage', d:'Anlage zur Sammlung und Nutzung von Regenwasser, z. B. für Toilettenspülungen, zur Reduzierung des Trinkwasserverbrauchs.'},
+        {t:'Rücknahmesystem', d:'Von Herstellern organisiertes System zur Rücknahme von Produkten (z. B. Elektrogeräte, Verpackungen) zur Wiederverwertung.'},
+      ],
+      quiz:[
+        {q:'Welche drei Abfallkategorien unterscheidet die Kunststoffindustrie?', options:['Gefährlich, ungefährlich, radioaktiv','Thermisch verwertbaren Abfall, Mischkunststoffe, sortenreine Thermoplaste','Organisch, anorganisch, metallisch','Verpackung, Produktion, Sonderabfall'], correct:1, explain:'Richtig ist: thermisch verwertbarer Abfall, Mischkunststoffe (ab 10 % Störstoffe) und sortenreine Thermoplaste, erkennbar am Recycling-Code.'},
+        {q:'Welche Maßnahme zählt NICHT zu den ressourcenschonenden Maßnahmen im Büro?', options:['Recyclingpapier verwenden','Energiesparende Lampen einsetzen','Geräte dauerhaft im Stand-By-Modus lassen','Ökostrom beziehen'], correct:2, explain:'Richtig ist: Geräte dauerhaft im Stand-By zu lassen. Ressourcenschonend ist stattdessen das Ausschalten oder eine automatische Abschaltung.'},
+        {q:'Worauf achtest du beim Einkauf von Stoffen mit begrenzter Haltbarkeit und Chemikalien?', options:['Möglichst große Mengen einkaufen, um Rabatte zu erhalten','Angemessene Mengen und Größen, um unnötige Entsorgung zu vermeiden','Ausschließlich auf den Preis','Die Haltbarkeit spielt keine Rolle'], correct:1, explain:'Richtig ist: angemessene Mengen. Sie senken Entsorgungsaufwand, Gefahrenpotential und Kosten.'},
+        {q:'Welche Maßnahme trägt NICHT zu umweltschonenderem Heizen bei?', options:['Heizungsbrenner regelmäßig warten lassen','Voreinstellbare Thermostatventile anbringen','Einen möglichst alten Heizkessel ohne moderne Technik betreiben','Außentemperaturabhängig geregelte Heizung mit Nachtabsenkung'], correct:2, explain:'Richtig ist: ein alter Heizkessel ohne moderne Technik. Er sollte unter 15 Jahre alt sein und Brennwert- oder Niedrigtemperaturtechnik nutzen.'},
+        {q:'Welche bauliche Maßnahme am Gebäude spart Ressourcen?', options:['Nachträgliche Wärmedämmung und wärmeschutzverglaste Fenster','Verzicht auf jegliche Dämmung','Möglichst viele ungedämmte Fensterflächen','Lüftungsanlagen ohne Wärmerückgewinnung'], correct:0, explain:'Richtig ist: nachträgliche Wärmedämmung, wärmeschutzverglaste Fenster und Lüftungsanlagen mit Wärmerückgewinnung senken den Energieverbrauch.'},
+        {q:'Wie senkst du den Wasserverbrauch in einem Betrieb?', options:['Durchflussbegrenzer an Wasserhähnen, Spartasten und Regenwassernutzung','Möglichst viel Wasser verbrauchen, um Leitungen sauber zu halten','Mitarbeiter nicht in das Thema einbeziehen','Das ist nur bei Neubauten relevant'], correct:0, explain:'Richtig ist: Durchflussbegrenzer, Spartasten, sensibilisierte Mitarbeiter und eine Regenwassernutzungsanlage senken den Verbrauch.'},
+        {q:'Welches Kriterium ist beim umweltbewussten Einkauf von Geräten und Maschinen NICHT relevant?', options:['Langlebigkeit','Niedriger Energieverbrauch','Reparaturfreundlichkeit','Ausschließlich der niedrigste Anschaffungspreis'], correct:3, explain:'Richtig ist: der niedrigste Preis allein zählt nicht — entscheidend sind Langlebigkeit, Energie- und Ressourcenverbrauch sowie Reparaturfreundlichkeit.'},
+        {q:'Was gehört zu einer umweltschonenden Abfallentsorgung im Betrieb?', options:['Alle Abfälle unsortiert entsorgen','Abfälle trennen, Rücknahmesysteme nutzen und eine jährliche Abfallbilanz erstellen','Nur gesetzlich verpflichtende Abfälle trennen','Altbatterien im Restmüll entsorgen'], correct:1, explain:'Richtig ist: Mülltrennung, Nutzung von Rücknahmesystemen, Sammlung von Altbatterien sowie eine jährliche Abfallbilanz.'},
+        {q:'Was brauchen Mitarbeiter für umweltrelevante Arbeitsabläufe wie die Entsorgung von Stoffen?', options:['Nichts Besonderes, das regelt sich von selbst','Verbindliche Arbeitsanweisungen für diese Abläufe','Nur eine mündliche Absprache','Eine jährliche Erinnerungs-E-Mail'], correct:1, explain:'Richtig ist: verbindliche Arbeitsanweisungen für alle umweltrelevanten Arbeitsabläufe.'},
+      ]
+    },
+    {
+      id:'rechnungswesen', name:'Rechnungswesen & Kostenrechnung', accent:'var(--c-rechnungswesen)',
+      flashcards:[
+        {q:'Welche Werte brauchst du für eine leistungsabhängige Abschreibung?', a:'Die Leistungsmenge der Anlage in der aktuellen Periode sowie ihr gesamtes Leistungspotential.'},
+        {q:'Woran orientiert sich die bilanzielle Abschreibung?', a:'An den Herstellungs- und Anschaffungskosten.'},
+        {q:'Wozu dient die Kostenstellenrechnung?', a:'Sie zeigt, in welcher Organisationseinheit welche Kosten entstanden sind, und ordnet sie den Verantwortungsbereichen der Führungskräfte zu.'},
+        {q:'Was bezeichnet der „Bilanzgewinn"?', a:'Das im Jahresabschluss ermittelte Jahresergebnis.'},
+        {q:'Was besagt das Einzelbewertungsprinzip?', a:'Vermögensgegenstände sind grundsätzlich einzeln zu bewerten.'},
+        {q:'Was besagt das Identitätsprinzip?', a:'Die Wertansätze in Eröffnungs- und Schlussbilanz müssen übereinstimmen.'},
+        {q:'Ein Unternehmen setzt für betriebseigene Räume eine kalkulatorische Miete an. Was gilt dann für kalkulatorische Zinsen und Abschreibungen auf diesen Teil des Anlagevermögens?', a:'Sie entfallen — für diesen Teil werden keine kalkulatorischen Zinsen und Abschreibungen mehr berechnet.'},
+        {q:'Welche Arten von Verteilungsschlüsseln gibt es, mit Beispielen?', a:'Wertschlüssel wie Materialkosten, Lohn, Umsatz oder Warenwert. Mengenschlüssel wie kg, Länge, Höhe, Fläche, Anzahl oder Tage.'},
+        {q:'Wo finden sich die Bilanzierungsgrundsätze?', a:'Nicht in einem eigenen Gesetz — sie tauchen nur verstreut als Erwähnungen im HGB auf.'},
+        {q:'Was zeigt der Jahresabschluss auf?', a:'Die Ertrags-, Finanz- und Vermögenslage des Unternehmens.'},
+        {q:'Was versteht man unter „betrieblichem Rechnungswesen"?', a:'Die Gesamtheit aller Verfahren, die im Unternehmen auftretende Leistungs- und Geldströme in Menge und Wert erfassen. Es besteht aus Bilanzierung, Kostenrechnung und Buchhaltung.'},
+        {q:'Was umfasst die Finanzrechnung eines Unternehmens?', a:'Die regelmäßigen Planungs- und Kontrollrechnungen bezogen auf die Geldströme des Unternehmens.'},
+      ],
+      glossary:[
+        {t:'Bilanzgewinn', d:'Das innerhalb des Jahresabschlusses ermittelte Jahresergebnis.'},
+        {t:'Einzelbewertungsprinzip', d:'Vermögensgegenstände sind grundsätzlich einzeln zu bewerten.'},
+        {t:'Identitätsprinzip', d:'Die Wertansätze in Eröffnungs- und Schlussbilanz müssen übereinstimmen.'},
+        {t:'Verteilungsschlüssel', d:'Grundlage zur Verteilung von Gemeinkosten; Wertschlüssel (z. B. Materialkosten, Lohn) oder Mengenschlüssel (z. B. kg, Fläche, Anzahl).'},
+        {t:'Betriebliches Rechnungswesen', d:'Gesamtheit aller Verfahren, die im Unternehmen auftretende Leistungs- und Geldströme in Menge und Wert erfassen; umfasst Bilanzierung, Kostenrechnung und Buchhaltung.'},
+        {t:'Finanzrechnung', d:'Regelmäßige Planungs- und Kontrollrechnung bezogen auf die Geldströme eines Unternehmens.'},
+      ],
+      quiz:[
+        {q:'Welche Werte brauchst du für eine leistungsabhängige Abschreibung?', options:['Nur den Kaufpreis der Anlage','Die Leistungsmenge der aktuellen Periode und das gesamte Leistungspotential','Nur das Alter der Anlage','Den aktuellen Marktwert der Anlage'], correct:1, explain:'Richtig ist: Leistungsmenge der aktuellen Periode im Verhältnis zum gesamten Leistungspotential der Anlage.'},
+        {q:'Woran orientiert sich die bilanzielle Abschreibung?', options:['Am Marktwert','An den Herstellungs- und Anschaffungskosten','Am Wiederbeschaffungswert','An der Inflation'], correct:1, explain:'Richtig ist: an den Herstellungs- bzw. Anschaffungskosten.'},
+        {q:'Wozu dient die Kostenstellenrechnung?', options:['Zur Ermittlung des Gesamtumsatzes','Dazu, in welcher Organisationseinheit welche Kosten entstanden sind','Zur Berechnung der Umsatzsteuer','Zur Personalplanung'], correct:1, explain:'Richtig ist: Sie ordnet Kosten den Organisationseinheiten und Verantwortungsbereichen zu, in denen sie entstanden sind.'},
+        {q:'Was bezeichnet der Bilanzgewinn?', options:['Den Umsatz eines Geschäftsjahres','Das im Jahresabschluss ermittelte Jahresergebnis','Die Summe aller Rücklagen','Den Kassenbestand am Jahresende'], correct:1, explain:'Richtig ist: das im Jahresabschluss ermittelte Jahresergebnis.'},
+        {q:'Was besagt das Einzelbewertungsprinzip?', options:['Vermögensgegenstände dürfen nur gemeinsam bewertet werden','Vermögensgegenstände sind grundsätzlich einzeln zu bewerten','Nur teure Vermögensgegenstände müssen bewertet werden','Bewertung erfolgt nur alle 5 Jahre'], correct:1, explain:'Richtig ist: Jeder Vermögensgegenstand ist für sich zu bewerten.'},
+        {q:'Was besagt das Identitätsprinzip?', options:['Jeder Vermögensgegenstand braucht eine Seriennummer','Die Wertansätze in Eröffnungs- und Schlussbilanz müssen übereinstimmen','Bilanzen müssen mit dem Vorjahr identisch sein','Es gibt nur eine gültige Bewertungsmethode'], correct:1, explain:'Richtig ist: übereinstimmende Wertansätze zwischen Schlussbilanz und darauffolgender Eröffnungsbilanz.'},
+        {q:'Ein Unternehmen setzt für betriebseigene Räume eine kalkulatorische Miete an. Was gilt dann für kalkulatorische Zinsen und Abschreibungen auf diesen Teil des Anlagevermögens?', options:['Sie werden zusätzlich berechnet','Sie entfallen, da bereits die kalkulatorische Miete angesetzt wird','Sie verdoppeln sich','Sie werden pauschal geschätzt'], correct:1, explain:'Richtig ist: Sie entfallen, um eine Doppelerfassung zu vermeiden.'},
+        {q:'Was ist ein Beispiel für einen Mengenschlüssel zur Kostenverteilung?', options:['Materialkosten','Umsatz','kg oder Fläche','Warenwert'], correct:2, explain:'Richtig ist: kg oder Fläche. Mengenschlüssel basieren auf physischen Größen — im Gegensatz zu Wertschlüsseln wie Materialkosten oder Umsatz.'},
+        {q:'Wo finden sich die Bilanzierungsgrundsätze?', options:['In einem eigenen Bilanzierungsgesetz','Verstreut als Erwähnungen im HGB','Nur in EU-Verordnungen','Sie sind gesetzlich nicht geregelt'], correct:1, explain:'Richtig ist: verstreut als Erwähnungen im HGB — nicht in einem eigenen, gebündelten Gesetz.'},
+        {q:'Was zeigt der Jahresabschluss auf?', options:['Nur den Umsatz des Unternehmens','Die Ertrags-, Finanz- und Vermögenslage des Unternehmens','Nur die Mitarbeiterzahl','Ausschließlich die Steuerlast'], correct:1, explain:'Richtig ist: die Ertrags-, Finanz- und Vermögenslage des Unternehmens.'},
+        {q:'Was versteht man unter „betrieblichem Rechnungswesen"?', options:['Nur die Buchhaltung eines Unternehmens','Die Gesamtheit aller Verfahren zur Erfassung von Leistungs- und Geldströmen, bestehend aus Bilanzierung, Kostenrechnung und Buchhaltung','Ausschließlich die Steuererklärung','Nur die Lohnabrechnung'], correct:1, explain:'Richtig ist: die Gesamtheit aus Bilanzierung, Kostenrechnung und Buchhaltung, die alle Leistungs- und Geldströme erfasst.'},
+        {q:'Was umfasst die Finanzrechnung eines Unternehmens?', options:['Nur die jährliche Steuererklärung','Die regelmäßigen Planungs- und Kontrollrechnungen bezogen auf die Geldströme','Ausschließlich die Lagerbestände','Nur die Gehaltsabrechnungen'], correct:1, explain:'Richtig ist: die regelmäßige Planung und Kontrolle der Geldströme des Unternehmens.'},
       ]
     }
   ]
@@ -1093,6 +1365,20 @@ function renderDashboard(){
       <div class="progress-ring-wrap">
         <div class="progress-ring">
           <svg width="132" height="132" viewBox="0 0 132 132">
+            <g class="ring-ticks" stroke="var(--border)" stroke-width="1.5">
+              <line x1="66" y1="4.5" x2="66" y2="1"></line>
+              <line x1="96.75" y1="12.74" x2="98.5" y2="9.71"></line>
+              <line x1="119.26" y1="35.25" x2="122.29" y2="33.5"></line>
+              <line x1="127.5" y1="66" x2="131" y2="66" stroke="var(--terracotta)" stroke-width="2"></line>
+              <line x1="119.26" y1="96.75" x2="122.29" y2="98.5"></line>
+              <line x1="96.75" y1="119.26" x2="98.5" y2="122.29"></line>
+              <line x1="66" y1="127.5" x2="66" y2="131" stroke="var(--terracotta)" stroke-width="2"></line>
+              <line x1="35.25" y1="119.26" x2="33.5" y2="122.29"></line>
+              <line x1="12.74" y1="96.75" x2="9.71" y2="98.5"></line>
+              <line x1="4.5" y1="66" x2="1" y2="66" stroke="var(--terracotta)" stroke-width="2"></line>
+              <line x1="12.74" y1="35.25" x2="9.71" y2="33.5"></line>
+              <line x1="35.25" y1="12.74" x2="33.5" y2="9.71"></line>
+            </g>
             <circle class="ring-bg" cx="66" cy="66" r="56" fill="none" stroke-width="10"></circle>
             <circle class="ring-fg" cx="66" cy="66" r="56" fill="none" stroke-width="10"
               stroke-dasharray="351.86" stroke-dashoffset="${351.86 - (351.86*overall.pct/100)}" transform="rotate(-90 66 66)"></circle>
